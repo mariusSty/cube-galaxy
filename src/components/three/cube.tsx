@@ -1,8 +1,12 @@
 import { RoundedBox } from "@react-three/drei";
 
-export default function Cube() {
+type CubeProps = {
+  position: [number, number, number];
+};
+
+export default function Cube({ position }: CubeProps) {
   return (
-    <group>
+    <group position={position}>
       <RoundedBox position={[0, 0, 0]}>
         <meshStandardMaterial color="black" />
       </RoundedBox>
