@@ -1,5 +1,5 @@
 import { movements3x3 } from "@/utils/movements";
-import { Center, OrbitControls, Stage } from "@react-three/drei";
+import { Center, OrbitControls } from "@react-three/drei";
 import gsap from "gsap";
 import { button, useControls } from "leva";
 import { useRef } from "react";
@@ -59,12 +59,10 @@ export default function Experience({ dimension }: ExperienceProps) {
   return (
     <>
       <color args={["ivory"]} attach="background" />
-      <OrbitControls makeDefault />
-      <Stage>
-        <Center ref={animatingCubesRef}>
-          <group ref={cubesRef}>{cubes}</group>
-        </Center>
-      </Stage>
+      <OrbitControls makeDefault enableZoom={false} enablePan={false} />
+      <Center ref={animatingCubesRef}>
+        <group ref={cubesRef}>{cubes}</group>
+      </Center>
     </>
   );
 }
