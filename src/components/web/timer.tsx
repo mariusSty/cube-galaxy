@@ -58,7 +58,7 @@ export default function Timer() {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center min-h-[50%] ${
+      className={`flex flex-col justify-center items-center min-h-[40%] ${
         isBeforeStarted ? "bg-green-500" : "bg-blue-600"
       }`}
     >
