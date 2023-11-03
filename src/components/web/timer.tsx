@@ -1,7 +1,11 @@
 import formatTimer from "@/utils/format-timer";
 import { useEffect, useState } from "react";
 
-export default function Timer() {
+type TimerProps = {
+  addTime: () => void;
+};
+
+export default function Timer({ addTime }: TimerProps) {
   const [timer, setTimer] = useState(0);
   const [timestampStarted, setTimestampStarted] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
@@ -37,9 +41,11 @@ export default function Timer() {
     const keyDownHandler = (e) => {
       if (isStarted) {
         // Stop timer
-        setTimer(Date.now() - timestampStarted);
+        const result = Date.now() - timestampStarted;
+        setTimer(result);
         setTimestampStarted(0);
         setIsStarted(false);
+        addTime(result);
       } else {
         if (e.keyCode === 32) {
           setIsBeforeStarted(true);
@@ -54,7 +60,7 @@ export default function Timer() {
       document.removeEventListener("keyup", keyUpHandler);
       document.removeEventListener("keydown", keyDownHandler);
     };
-  }, [isStarted, timestampStarted, token]);
+  }, [isStarted, timestampStarted, token, addTime]);
 
   return (
     <div
