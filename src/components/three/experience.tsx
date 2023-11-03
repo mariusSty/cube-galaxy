@@ -1,5 +1,6 @@
 import { movements3x3 } from "@/utils/movements";
-import { Center, OrbitControls } from "@react-three/drei";
+import { getPositions } from "@/utils/positions";
+import { OrbitControls } from "@react-three/drei";
 import gsap from "gsap";
 import { useEffect, useRef } from "react";
 import { Group } from "three";
@@ -13,11 +14,7 @@ type ExperienceProps = {
 export default function Experience({ dimension, scramble }: ExperienceProps) {
   const cubesRef = useRef<Group>(null);
   const animatingCubesRef = useRef<Group>(null);
-
-  const positions = [];
-  for (let i = 0; i < Math.pow(dimension, 3); i++) {
-    positions.push(Array.from((i >>> 0).toString(dimension).padStart(3, "0")));
-  }
+  const positions = getPositions(dimension);
 
   useEffect(() => {
     if (scramble) {
@@ -27,7 +24,7 @@ export default function Experience({ dimension, scramble }: ExperienceProps) {
           cubesRef.current?.children[i].rotation.set(0, 0, 0);
         }
       }
-      animateScramble([...scramble]);
+      setTimeout(() => animateScramble([...scramble]), 1000);
     }
   }, [scramble, positions]);
 
@@ -67,9 +64,9 @@ export default function Experience({ dimension, scramble }: ExperienceProps) {
   return (
     <>
       <OrbitControls makeDefault enableZoom={false} enablePan={false} />
-      <Center ref={animatingCubesRef}>
+      <group ref={animatingCubesRef}>
         <group ref={cubesRef}>{cubes}</group>
-      </Center>
+      </group>
     </>
   );
 }
