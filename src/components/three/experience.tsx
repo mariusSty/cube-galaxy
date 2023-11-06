@@ -2,7 +2,7 @@ import { movements3x3 } from "@/utils/movements";
 import { getPositions } from "@/utils/positions";
 import { ContactShadows, OrbitControls } from "@react-three/drei";
 import gsap from "gsap";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { Group } from "three";
 import Cube from "../three/cube";
 
@@ -17,7 +17,7 @@ export default function Experience({
 }: ExperienceProps) {
   const cubesRef = useRef<Group>(null);
   const animatingCubesRef = useRef<Group>(null);
-  const positions = getPositions(dimension);
+  const positions = useMemo(() => getPositions(dimension), [dimension]);
 
   useEffect(() => {
     if (scramble) {

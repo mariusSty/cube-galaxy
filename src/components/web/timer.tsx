@@ -2,7 +2,7 @@ import formatTimer from "@/utils/format-timer";
 import { useEffect, useState } from "react";
 
 type TimerProps = {
-  addTime: () => void;
+  addTime: (time: number) => void;
 };
 
 export default function Timer({ addTime }: TimerProps) {
@@ -25,9 +25,9 @@ export default function Timer({ addTime }: TimerProps) {
   }, [isStarted, timestampStarted]);
 
   useEffect(() => {
-    const keyUpHandler = (e) => {
+    const keyUpHandler = (e: KeyboardEvent) => {
       if (!token) {
-        if (e.keyCode === 32) {
+        if (e.code === "Space") {
           // Start timer
           setTimer(0);
           setTimestampStarted(Date.now());
@@ -38,7 +38,7 @@ export default function Timer({ addTime }: TimerProps) {
       setToken(!token);
     };
 
-    const keyDownHandler = (e) => {
+    const keyDownHandler = (e: KeyboardEvent) => {
       if (isStarted) {
         // Stop timer
         const result = Date.now() - timestampStarted;
@@ -47,7 +47,7 @@ export default function Timer({ addTime }: TimerProps) {
         setIsStarted(false);
         addTime(result);
       } else {
-        if (e.keyCode === 32) {
+        if (e.code === "Space") {
           setIsBeforeStarted(true);
         }
       }
@@ -64,7 +64,7 @@ export default function Timer({ addTime }: TimerProps) {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center min-h-[40%] ${
+      className={`flex flex-col justify-center items-center h-[40%] ${
         isBeforeStarted ? "bg-green-500" : "bg-blue-600"
       }`}
     >

@@ -1,9 +1,9 @@
 "use client";
 
 import Experience from "@/components/three/experience";
+import ResultGrid from "@/components/web/resultGrid";
 import ScramblePanel from "@/components/web/scramblePanel";
 import Timer from "@/components/web/timer";
-import formatTimer from "@/utils/format-timer";
 import { Canvas } from "@react-three/fiber";
 import { Bebas_Neue } from "next/font/google";
 import { useState } from "react";
@@ -31,30 +31,21 @@ export default function Home() {
 
   return (
     <main className={`w-full h-full ${bebas.className}`}>
-      <div className="flex flex-col bg-zinc-100 h-full">
+      <div className="flex flex-col bg-zinc-100 h-screen">
         <Timer addTime={addTime} />
-        <ScramblePanel
-          handleGenerateScramble={handleGenerateScramble}
-          scramble={scramble}
-        />
-        <div className="flex h-full">
-          <Canvas
-            camera={{ fov: 45, near: 0.1, far: 200, position: [6, 3, 10] }}
-          >
-            <Experience dimension={3} scramble={scramble} />
-          </Canvas>
-          <div className="grid p-6 min-w-[40%]">
-            <div className="grid grid-cols-1 auto-rows-[50px] border-4 border-blue-600 rounded-lg p-4">
-              {[...times].reverse().map((time, index) => (
-                <div
-                  className="flex justify-start items-center gap-3 text-3xl text-blue-600"
-                  key={index}
-                >
-                  <span>{formatTimer(time)}</span>
-                </div>
-              ))}
-            </div>
+        <div className="flex h-[60%]">
+          <div className="flex flex-col w-full">
+            <ScramblePanel
+              handleGenerateScramble={handleGenerateScramble}
+              scramble={scramble}
+            />
+            <Canvas
+              camera={{ fov: 45, near: 0.1, far: 200, position: [6, 3, 10] }}
+            >
+              <Experience dimension={3} scramble={scramble} />
+            </Canvas>
           </div>
+          <ResultGrid times={times} />
         </div>
       </div>
     </main>
