@@ -25,7 +25,7 @@ export default function ScramblePanel({
     <div className="flex justify-center items-center w-full p-4 gap-4">
       {moveList}
       <button
-        className="bg-blue-600 hover:bg-blue-400 focus:outline text-3xl text-white px-6 py-2 rounded-lg flex items-center justify-center"
+        className="bg-blue-600 hover:bg-blue-400 shadow-lg shadow-blue-500/50 hover:shadow-blue-400/50 focus:outline text-3xl text-white px-6 py-2 rounded-lg flex items-center justify-center"
         onClick={handleGenerateScramble}
       >
         New scramble

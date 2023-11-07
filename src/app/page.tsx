@@ -5,10 +5,10 @@ import ResultGrid from "@/components/web/resultGrid";
 import ScramblePanel from "@/components/web/scramblePanel";
 import Timer from "@/components/web/timer";
 import { Canvas } from "@react-three/fiber";
-import { Bebas_Neue } from "next/font/google";
+import { Rubik } from "next/font/google";
 import { useState } from "react";
 
-const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400" });
+const rubik = Rubik({ subsets: ["latin"], weight: "500" });
 
 const scrambles = [
   ["F", "R", "U", "F'", "R"],
@@ -30,7 +30,7 @@ export default function Home() {
   };
 
   return (
-    <main className={`w-full h-full ${bebas.className}`}>
+    <main className={`w-full h-full ${rubik.className}`}>
       <div className="flex flex-col bg-zinc-100 h-screen">
         <Timer addTime={addTime} />
         <div className="flex h-[60%]">

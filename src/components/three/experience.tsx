@@ -4,7 +4,7 @@ import { ContactShadows, OrbitControls } from "@react-three/drei";
 import gsap from "gsap";
 import { useEffect, useMemo, useRef } from "react";
 import { Group } from "three";
-import Cube from "../three/cube";
+import Cube from "./cube";
 
 type ExperienceProps = {
   dimension: number;
