@@ -40,7 +40,7 @@ export default function Home() {
               scramble={scramble}
             />
             <Canvas
-              camera={{ fov: 45, near: 0.1, far: 200, position: [6, 3, 10] }}
+              camera={{ fov: 45, near: 0.1, far: 200, position: [6, 4, 10] }}
             >
               <Experience dimension={3} scramble={scramble} />
             </Canvas>
