@@ -1,3 +1,5 @@
+import SimpleText from "../atoms/SimpleText";
+
 type ScrambleProps = {
   handleGenerateScramble: () => void;
   scramble: string[] | null;
@@ -11,10 +13,10 @@ export default function Scramble({
     <ul className="flex items-center justify-center gap-2 mr-2">
       {scramble.map((move, index) => (
         <li
-          className="h-10 w-10 text-2xl border-2 border-blue-600 text-blue-600 rounded-md flex items-center justify-center"
+          className="h-10 w-10 rounded-md flex items-center justify-center"
           key={index}
         >
-          {move}
+          <SimpleText size="big">{move}</SimpleText>
         </li>
       ))}
     </ul>
@@ -23,12 +25,14 @@ export default function Scramble({
   );
   return (
     <div className="flex justify-center items-center w-full p-4 gap-4">
-      <div className="flex justify-center items-center gap-2 rounded-lg border-4 border-blue-600 hover:border-blue-400 pointer-events-none">
+      <div className="flex justify-center items-center gap-2 rounded-lg border-4 border-white hover:border-zinc-200 pointer-events-none">
         <button
-          className="bg-blue-600 hover:bg-blue-400 pointer-events-auto text-3xl text-white px-6 py-2 flex items-center justify-center"
+          className="flex items-center justify-center p-3 bg-white hover:bg-zinc-200 pointer-events-auto"
           onClick={handleGenerateScramble}
         >
-          New
+          <span className="material-symbols-outlined text-blue-600">
+            replay
+          </span>
         </button>
         {moveList}
       </div>

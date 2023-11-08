@@ -23,7 +23,7 @@ export default function TimesPanel({ times }: TimesPanelProps) {
   });
 
   return (
-    <div className="h-full min-h-[400px] p-4">
+    <div className="h-full min-h-[400px] lg:min-h-full p-4">
       <div>
         <Tr isThead>
           <Td>

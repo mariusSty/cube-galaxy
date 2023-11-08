@@ -32,12 +32,12 @@ export default function Home() {
   return (
     <main className={`w-full h-full ${rubik.className}`}>
       <div className="flex flex-col h-full w-full">
-        <Timer addTime={addTime} />
-        {/* <ScramblePanel
-              handleGenerateScramble={handleGenerateScramble}
-              scramble={scramble}
-            /> */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[40%]">
+        <Timer
+          scramble={scramble}
+          addTime={addTime}
+          handleGenerateScramble={handleGenerateScramble}
+        />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[40%]">
           <PreviewPanel scramble={scramble} />
           <TimesPanel times={times} />
           <ResumePanel times={times} />

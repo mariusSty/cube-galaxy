@@ -14,7 +14,7 @@ export default function NumberText({
   size = "medium",
 }: NumberText) {
   const sizes = new Map([
-    ["small", "text-2xl"],
+    ["small", "text-3xl"],
     ["medium", "text-5xl"],
     ["big", "text-9xl"],
   ]);
