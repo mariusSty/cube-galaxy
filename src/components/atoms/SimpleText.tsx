@@ -1,5 +1,6 @@
 type SimpleTextProps = {
   children: string;
+  isTextSecondary?: boolean;
   size?: number;
 };
 
@@ -11,6 +12,18 @@ const sizes = new Map([
   [5, "text-2xl"],
 ]);
 
-export default function SimpleText({ children, size = 3 }: SimpleTextProps) {
-  return <span className={`${sizes.get(size)} text-white`}>{children}</span>;
+export default function SimpleText({
+  children,
+  size = 3,
+  isTextSecondary = false,
+}: SimpleTextProps) {
+  return (
+    <span
+      className={`${sizes.get(size)} ${
+        isTextSecondary ? "text-blue-600" : "text-white"
+      }`}
+    >
+      {children}
+    </span>
+  );
 }

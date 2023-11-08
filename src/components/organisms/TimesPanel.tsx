@@ -1,5 +1,8 @@
 import formatTimer from "@/utils/formatTime";
 import { getAverageOf } from "@/utils/getResult";
+import SimpleText from "../atoms/SimpleText";
+import Td from "../atoms/Td";
+import Tr from "../atoms/Tr";
 
 type TimesPanelProps = {
   times: number[];
@@ -19,34 +22,45 @@ export default function TimesPanel({ times }: TimesPanelProps) {
   });
 
   return (
-    <div className="h-[calc(100%-8rem)]">
-      <div className="flex w-full sticky top-0 text-lg lg:text-3xl border-b-2 border-blue-600">
-        <div className="flex justify-center items-center p-4 p-l8">N°</div>
-        <div className="flex justify-center items-center p-4 p-l8 w-full">
-          Time
-        </div>
-        <div className="flex justify-center items-center p-4 p-l8">ao5</div>
-        <div className="flex justify-center items-center p-4 p-l8">ao12</div>
-      </div>
-      <div className="h-[calc(100%-5rem)] overflow-y-auto text-2xl ">
+    <div className="h-full">
+      <Tr border={2}>
+        <Td>
+          <SimpleText isTextSecondary size={4}>
+            N°
+          </SimpleText>
+        </Td>
+        <Td>
+          <SimpleText isTextSecondary size={4}>
+            Time
+          </SimpleText>
+        </Td>
+        <Td>
+          <SimpleText isTextSecondary size={4}>
+            ao5
+          </SimpleText>
+        </Td>
+        <Td>
+          <SimpleText isTextSecondary size={4}>
+            ao12
+          </SimpleText>
+        </Td>
+      </Tr>
+      <div className="h-[calc(100%-5rem)] overflow-y-auto">
         {result.map(({ position, time, ao5, ao12 }) => (
-          <div
-            key={position}
-            className="flex h-16 border-b-[1px] border-blue-600"
-          >
-            <div className="flex justify-center items-center p-4 p-l8 w-24">
-              {position}
-            </div>
-            <div className="flex justify-center items-center p-4 p-l8 w-full">
-              {time}
-            </div>
-            <div className="flex justify-center items-center p-4 p-l8 w-24">
-              {ao5}
-            </div>
-            <div className="flex justify-center items-center p-4 p-l8 w-24">
-              {ao12}
-            </div>
-          </div>
+          <Tr key={position}>
+            <Td>
+              <SimpleText isTextSecondary>{`${position}`}</SimpleText>
+            </Td>
+            <Td>
+              <SimpleText isTextSecondary>{time}</SimpleText>
+            </Td>
+            <Td>
+              <SimpleText isTextSecondary>{ao5}</SimpleText>
+            </Td>
+            <Td>
+              <SimpleText isTextSecondary>{ao12}</SimpleText>
+            </Td>
+          </Tr>
         ))}
       </div>
     </div>
