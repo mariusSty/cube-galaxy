@@ -1,18 +1,18 @@
 import { movements3x3 } from "@/utils/movements";
 import { getPositions } from "@/utils/positions";
-import { ContactShadows, PresentationControls } from "@react-three/drei";
+import { ContactShadows, OrbitControls } from "@react-three/drei";
 import gsap from "gsap";
 import { useEffect, useMemo, useRef } from "react";
 import { Group } from "three";
-import Cube from "./cube";
+import Cube from "../atoms/Cube";
 
 type ExperienceProps = {
-  dimension: number;
+  dimension?: number;
   scramble: string[] | null;
 };
 
 export default function Experience({
-  dimension,
+  dimension = 3,
   scramble = null,
 }: ExperienceProps) {
   const cubesRef = useRef<Group>(null);
@@ -66,16 +66,10 @@ export default function Experience({
 
   return (
     <>
-      <PresentationControls
-        polar={[-Infinity, Infinity]}
-        speed={2}
-        config={{ mass: 2, tension: 400 }}
-        snap={{ mass: 3, tension: 400 }}
-      >
-        <group ref={animatingCubesRef}>
-          <group ref={cubesRef}>{cubes}</group>
-        </group>
-      </PresentationControls>
+      <OrbitControls makeDefault enableZoom={false} enablePan={false} />
+      <group ref={animatingCubesRef}>
+        <group ref={cubesRef}>{cubes}</group>
+      </group>
       <ContactShadows
         width={10}
         height={10}

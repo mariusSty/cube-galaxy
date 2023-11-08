@@ -67,7 +67,7 @@ export default function Timer({ addTime }: TimerProps) {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center h-[40%] ${
+      className={`flex flex-col justify-center items-center h-[60%] ${
         isBeforeStarted
           ? "bg-gradient-to-b from-green-600 to-green-400"
           : "bg-gradient-to-b from-blue-600 to-blue-500"

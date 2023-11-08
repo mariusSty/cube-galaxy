@@ -1,10 +1,10 @@
 "use client";
 
-import Experience from "@/components/three/experience";
-import ResultGrid from "@/components/web/resultGrid";
-import ScramblePanel from "@/components/web/scramblePanel";
-import Timer from "@/components/web/timer";
-import { Canvas } from "@react-three/fiber";
+import Timer from "@/components/molecules/timer";
+import PreviewPanel from "@/components/organisms/PreviewPanel";
+import ResumePanel from "@/components/organisms/ResumePanel";
+import TimesPanel from "@/components/organisms/TimesPanel";
+
 import { Rubik } from "next/font/google";
 import { useState } from "react";
 
@@ -30,22 +30,17 @@ export default function Home() {
   };
 
   return (
-    <main className={`w-full h-full ${rubik.className}`}>
-      <div className="flex flex-col bg-zinc-100 h-screen">
+    <main className={`w-full h-full ${rubik.className} bg-zinc-100`}>
+      <div className="flex flex-col h-full w-full">
         <Timer addTime={addTime} />
-        <div className="flex h-[60%]">
-          <div className="flex flex-col w-full">
-            <ScramblePanel
+        {/* <ScramblePanel
               handleGenerateScramble={handleGenerateScramble}
               scramble={scramble}
-            />
-            <Canvas
-              camera={{ fov: 45, near: 0.1, far: 200, position: [6, 4, 10] }}
-            >
-              <Experience dimension={3} scramble={scramble} />
-            </Canvas>
-          </div>
-          <ResultGrid times={times} />
+            /> */}
+        <div className="grid grid-cols-3 gap-4 h-[40%]">
+          <PreviewPanel scramble={scramble} />
+          <TimesPanel times={times} />
+          <ResumePanel times={times} />
         </div>
       </div>
     </main>

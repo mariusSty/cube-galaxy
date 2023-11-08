@@ -1,17 +1,17 @@
 import formatTimer from "@/utils/formatTime";
 import { getAverage, getBest, getWorst } from "@/utils/getResult";
 
-type ResultResumeProps = {
+type ResumePanelProps = {
   times: number[];
 };
 
-export default function ResultResume({ times }: ResultResumeProps) {
+export default function ResumePanel({ times }: ResumePanelProps) {
   const best = getBest(times);
   const worst = getWorst(times);
   const average = getAverage(times);
 
   return (
-    <div className="grid grid-cols-3 gap-4 h-32 mb-5 text-white">
+    <div className="grid grid-cols-3 gap-4 h-32 p-4">
       <div className="flex justify-center items-center col-span-3 text-3xl p-2 rounded-lg bg-gradient-to-b from-blue-600 to-blue-500">
         <span>Solve : {times.length}</span>
       </div>
