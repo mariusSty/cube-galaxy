@@ -15,9 +15,9 @@ export default function ResumePanel({ times }: ResumePanelProps) {
 
   return (
     <div className="grid grid-cols-3 gap-2 p-4">
-      <ResumeBox colspan={3}>
-        <SimpleText size={5}>Solve</SimpleText>
-        <NumberText size={7}>{`${times.length}`}</NumberText>
+      <ResumeBox isColspan>
+        <SimpleText size="big">Solve</SimpleText>
+        <NumberText>{`${times.length}`}</NumberText>
       </ResumeBox>
       <ResumeBox>
         <SimpleText>Average</SimpleText>

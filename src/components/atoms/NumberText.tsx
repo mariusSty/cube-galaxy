@@ -2,24 +2,29 @@ import { Bebas_Neue } from "next/font/google";
 
 type NumberText = {
   children: string;
-  size?: number;
+  isTextSecondary?: boolean;
+  size?: "small" | "medium" | "big";
 };
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400" });
 
-const sizes = new Map([
-  [1, "text-sm"],
-  [2, "text-md"],
-  [3, "text-lg"],
-  [4, "text-xl"],
-  [5, "text-2xl"],
-  [6, "text-3xl"],
-  [7, "text-4xl"],
-]);
+export default function NumberText({
+  children,
+  isTextSecondary = false,
+  size = "medium",
+}: NumberText) {
+  const sizes = new Map([
+    ["small", "text-2xl"],
+    ["medium", "text-5xl"],
+    ["big", "text-9xl"],
+  ]);
 
-export default function NumberText({ children, size = 5 }: NumberText) {
   return (
-    <span className={`${bebas.className} ${sizes.get(size)} text-white`}>
+    <span
+      className={`${bebas.className} ${sizes.get(size)} ${
+        isTextSecondary ? "text-blue-600" : "text-white"
+      }`}
+    >
       {children}
     </span>
   );

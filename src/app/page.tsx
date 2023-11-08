@@ -1,6 +1,6 @@
 "use client";
 
-import Timer from "@/components/molecules/timer";
+import Timer from "@/components/molecules/Timer";
 import PreviewPanel from "@/components/organisms/PreviewPanel";
 import ResumePanel from "@/components/organisms/ResumePanel";
 import TimesPanel from "@/components/organisms/TimesPanel";
@@ -30,14 +30,14 @@ export default function Home() {
   };
 
   return (
-    <main className={`w-full h-full ${rubik.className} bg-zinc-100`}>
+    <main className={`w-full h-full ${rubik.className}`}>
       <div className="flex flex-col h-full w-full">
         <Timer addTime={addTime} />
         {/* <ScramblePanel
               handleGenerateScramble={handleGenerateScramble}
               scramble={scramble}
             /> */}
-        <div className="grid grid-cols-3 gap-4 h-[40%]">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-[40%]">
           <PreviewPanel scramble={scramble} />
           <TimesPanel times={times} />
           <ResumePanel times={times} />

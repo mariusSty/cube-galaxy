@@ -1,5 +1,6 @@
 import formatTimer from "@/utils/formatTime";
 import { getAverageOf } from "@/utils/getResult";
+import NumberText from "../atoms/NumberText";
 import SimpleText from "../atoms/SimpleText";
 import Td from "../atoms/Td";
 import Tr from "../atoms/Tr";
@@ -22,43 +23,55 @@ export default function TimesPanel({ times }: TimesPanelProps) {
   });
 
   return (
-    <div className="h-full">
-      <Tr border={2}>
-        <Td>
-          <SimpleText isTextSecondary size={4}>
-            N°
-          </SimpleText>
-        </Td>
-        <Td>
-          <SimpleText isTextSecondary size={4}>
-            Time
-          </SimpleText>
-        </Td>
-        <Td>
-          <SimpleText isTextSecondary size={4}>
-            ao5
-          </SimpleText>
-        </Td>
-        <Td>
-          <SimpleText isTextSecondary size={4}>
-            ao12
-          </SimpleText>
-        </Td>
-      </Tr>
-      <div className="h-[calc(100%-5rem)] overflow-y-auto">
+    <div className="h-full min-h-[400px] p-4">
+      <div>
+        <Tr isThead>
+          <Td>
+            <SimpleText isTextSecondary size="big">
+              N°
+            </SimpleText>
+          </Td>
+          <Td>
+            <SimpleText isTextSecondary size="big">
+              Time
+            </SimpleText>
+          </Td>
+          <Td>
+            <SimpleText isTextSecondary size="big">
+              ao5
+            </SimpleText>
+          </Td>
+          <Td>
+            <SimpleText isTextSecondary size="big">
+              ao12
+            </SimpleText>
+          </Td>
+        </Tr>
+      </div>
+
+      <div className="overflow-y-auto h-[calc(100%-70px)]">
         {result.map(({ position, time, ao5, ao12 }) => (
           <Tr key={position}>
             <Td>
-              <SimpleText isTextSecondary>{`${position}`}</SimpleText>
+              <NumberText
+                isTextSecondary
+                size="small"
+              >{`${position}`}</NumberText>
             </Td>
             <Td>
-              <SimpleText isTextSecondary>{time}</SimpleText>
+              <NumberText isTextSecondary size="small">
+                {time}
+              </NumberText>
             </Td>
             <Td>
-              <SimpleText isTextSecondary>{ao5}</SimpleText>
+              <NumberText isTextSecondary size="small">
+                {ao5}
+              </NumberText>
             </Td>
             <Td>
-              <SimpleText isTextSecondary>{ao12}</SimpleText>
+              <NumberText isTextSecondary size="small">
+                {ao12}
+              </NumberText>
             </Td>
           </Tr>
         ))}

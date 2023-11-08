@@ -65,13 +65,13 @@ export default function Timer({ addTime }: TimerProps) {
 
   return (
     <div
-      className={`flex justify-center items-center h-[60%] ${
+      className={`flex justify-center items-center min-h-[400px] md:h-[60%] ${
         isBeforeStarted
           ? "bg-gradient-to-b from-green-600 to-green-400"
           : "bg-gradient-to-b from-blue-600 to-blue-500"
       }`}
     >
-      <NumberText size={7}>{formatTimer(timer)}</NumberText>
+      <NumberText size="big">{formatTimer(timer)}</NumberText>
     </div>
   );
 }

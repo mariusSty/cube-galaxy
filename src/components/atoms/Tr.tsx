@@ -2,13 +2,15 @@ import { ReactNode } from "react";
 
 type TrProps = {
   children: ReactNode;
-  border?: number;
+  isThead?: boolean;
 };
 
-export default function Tr({ children, border = 1 }: TrProps) {
+export default function Tr({ children, isThead = false }: TrProps) {
   return (
     <div
-      className={`grid grid-cols-4 border-b-[${border.toString()}px] border-blue-600`}
+      className={`grid grid-cols-4 bg-white ${
+        isThead ? `border-b-2` : `border-b-[1px]`
+      } border-blue-600`}
     >
       {children}
     </div>
