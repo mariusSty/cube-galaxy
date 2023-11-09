@@ -1,75 +1,64 @@
 import { movements3x3 } from "@/utils/movements";
 import { getPositions } from "@/utils/positions";
 import { ContactShadows, OrbitControls } from "@react-three/drei";
-import gsap from "gsap";
 import { useEffect, useMemo, useRef } from "react";
 import { Group } from "three";
 import Cube from "../atoms/Cube";
 
 type ExperienceProps = {
   dimension?: number;
-  scramble: string[] | null;
+  scramble: string[];
 };
 
 export default function Experience({
   dimension = 3,
-  scramble = null,
+  scramble = [],
 }: ExperienceProps) {
   const cubesRef = useRef<Group>(null);
-  const animatingCubesRef = useRef<Group>(null);
   const positions = useMemo(() => getPositions(dimension), [dimension]);
 
   useEffect(() => {
-    if (scramble) {
-      if (cubesRef.current?.children) {
-        for (let i = 0; i < positions.length; i++) {
-          cubesRef.current?.children[i].position.set(...positions[i]);
-          cubesRef.current?.children[i].rotation.set(0, 0, 0);
-        }
-      }
-      setTimeout(() => animateScramble([...scramble]), 1000);
+    if (!cubesRef.current) return;
+
+    // Re-init cube
+    for (let i = 0; i < positions.length; i++) {
+      cubesRef.current.children[i].position.set(...positions[i]);
+      cubesRef.current.children[i].rotation.set(0, 0, 0);
     }
+
+    scramble.map((move) => {
+      if (!cubesRef.current) return;
+
+      // Get movement
+      const movement = movements3x3.get(move);
+      if (!movement) throw new Error("Invalid movement");
+
+      // Get cubes who need rotation
+      const cubesNeedRotation = cubesRef.current.children.filter((cube) =>
+        movement.cubesNeedRotation(cube.position)
+      );
+
+      // Create a group and do the rotation
+      const rotationGroup = new Group();
+      cubesNeedRotation.map((cube) => rotationGroup.attach(cube));
+      cubesRef.current.attach(rotationGroup);
+      const rotation = movement.rotation(rotationGroup.rotation);
+      rotationGroup.rotation.set(rotation.x, rotation.y, rotation.z);
+
+      // Destroy group
+      cubesNeedRotation.map((cube) => cubesRef.current?.attach(cube));
+      cubesRef.current.remove(rotationGroup);
+    });
   }, [scramble, positions]);
 
   const cubes = positions.map((position, index) => (
     <Cube key={index} position={position} />
   ));
 
-  const animateScramble = (scramble: string[]) => {
-    doMove(scramble[0]);
-
-    function doMove(move: string) {
-      const movement = movements3x3.get(move);
-      if (!movement || !animatingCubesRef.current) return;
-
-      const group = new Group();
-      cubesRef.current?.children
-        .filter((child) => movement?.cubesNeedRotation(child.position))
-        .map((cube) => group?.attach(cube));
-      animatingCubesRef.current.attach(group);
-
-      gsap.to(group.rotation, {
-        duration: 0.3,
-        ...movement.rotation(group.rotation),
-        onComplete: () => {
-          while (group.children.length > 0) {
-            cubesRef.current?.attach(group.children[0]);
-          }
-          if (!animatingCubesRef.current) return;
-          animatingCubesRef.current.remove(group);
-          scramble.shift();
-          if (scramble.length > 0) doMove(scramble[0]);
-        },
-      });
-    }
-  };
-
   return (
     <>
       <OrbitControls makeDefault enableZoom={false} enablePan={false} />
-      <group ref={animatingCubesRef}>
-        <group ref={cubesRef}>{cubes}</group>
-      </group>
+      <group ref={cubesRef}>{cubes}</group>
       <ContactShadows
         width={10}
         height={10}

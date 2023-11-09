@@ -1,16 +1,9 @@
-import { Canvas } from "@react-three/fiber";
-import Experience from "../molecules/Experience";
+import { ReactNode } from "react";
 
 type PreviewPanelProps = {
-  scramble: string[] | null;
+  children: ReactNode;
 };
 
-export default function PreviewPanel({ scramble }: PreviewPanelProps) {
-  return (
-    <div className="min-h-[250px]">
-      <Canvas camera={{ fov: 45, near: 0.1, far: 200, position: [6, 4, 8] }}>
-        <Experience scramble={scramble} />
-      </Canvas>
-    </div>
-  );
+export default function PreviewPanel({ children }: PreviewPanelProps) {
+  return <div className="min-h-[250px]">{children}</div>;
 }

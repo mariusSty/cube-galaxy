@@ -1,9 +1,12 @@
 "use client";
 
+import Experience from "@/components/molecules/Experience";
+import Scramble from "@/components/molecules/Scramble";
 import Timer from "@/components/molecules/Timer";
 import PreviewPanel from "@/components/organisms/PreviewPanel";
 import ResumePanel from "@/components/organisms/ResumePanel";
 import TimesPanel from "@/components/organisms/TimesPanel";
+import { Canvas } from "@react-three/fiber";
 
 import { Rubik } from "next/font/google";
 import { useState } from "react";
@@ -18,11 +21,15 @@ const scrambles = [
 ];
 
 export default function Home() {
-  const [scramble, setScramble] = useState<string[] | null>(null);
+  const [currentScramble, setCurrentScramble] = useState<string[]>([]);
   const [times, setTimes] = useState<number[]>([]);
 
   const handleGenerateScramble = () => {
-    setScramble(scrambles[Math.round(Math.random() * (scrambles.length - 1))]);
+    setCurrentScramble(
+      scrambles.filter((scramble) => scramble !== currentScramble)[
+        Math.round(Math.random() * (scrambles.length - 2))
+      ]
+    );
   };
 
   const addTime = (time: number) => {
@@ -32,14 +39,21 @@ export default function Home() {
   return (
     <main className={`w-full h-full ${rubik.className}`}>
       <div className="flex flex-col h-full w-full">
-        <Timer
-          scramble={scramble}
-          addTime={addTime}
-          handleGenerateScramble={handleGenerateScramble}
-        />
+        <Timer addTime={addTime}>
+          <Scramble
+            handleGenerateScramble={handleGenerateScramble}
+            scramble={currentScramble}
+          />
+        </Timer>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 h-[40%]">
-          <PreviewPanel scramble={scramble} />
           <TimesPanel times={times} />
+          <PreviewPanel>
+            <Canvas
+              camera={{ fov: 45, near: 0.1, far: 200, position: [6, 4, 8] }}
+            >
+              <Experience scramble={currentScramble} />
+            </Canvas>
+          </PreviewPanel>
           <ResumePanel times={times} />
         </div>
       </div>

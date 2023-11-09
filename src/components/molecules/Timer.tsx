@@ -1,19 +1,13 @@
 import formatTimer from "@/utils/formatTime";
-import { useEffect, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import NumberText from "../atoms/NumberText";
-import Scramble from "./Scramble";
 
 type TimerProps = {
-  scramble: string[] | null;
   addTime: (time: number) => void;
-  handleGenerateScramble: () => void;
+  children?: ReactNode;
 };
 
-export default function Timer({
-  addTime,
-  handleGenerateScramble,
-  scramble,
-}: TimerProps) {
+export default function Timer({ addTime, children }: TimerProps) {
   const [timer, setTimer] = useState(0);
   const [timestampStarted, setTimestampStarted] = useState(0);
   const [isStarted, setIsStarted] = useState(false);
@@ -79,10 +73,7 @@ export default function Timer({
       }`}
     >
       <NumberText size="big">{formatTimer(timer)}</NumberText>
-      <Scramble
-        handleGenerateScramble={handleGenerateScramble}
-        scramble={scramble}
-      />
+      {children}
     </div>
   );
 }
