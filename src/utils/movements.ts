@@ -68,6 +68,72 @@ export const movements3x3 = new Map([
     },
   ],
   [
+    "U2",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.y) == 1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x,
+        y: rotation.y - Math.PI,
+        z: rotation.z,
+      }),
+    },
+  ],
+  [
+    "D2",
+    {
+      cubesNeedRotation: (position) => Math.round(position.y) == -1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x,
+        y: rotation.y - Math.PI,
+        z: rotation.z,
+      }),
+    },
+  ],
+  [
+    "R2",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.x) == 1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x - Math.PI,
+        y: rotation.y,
+        z: rotation.z,
+      }),
+    },
+  ],
+  [
+    "L2",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.x) == -1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x + Math.PI,
+        y: rotation.y,
+        z: rotation.z,
+      }),
+    },
+  ],
+  [
+    "F2",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.z) == 1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x,
+        y: rotation.y,
+        z: rotation.z - Math.PI,
+      }),
+    },
+  ],
+  [
+    "B2",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.z) == -1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x,
+        y: rotation.y,
+        z: rotation.z + Math.PI,
+      }),
+    },
+  ],
+  [
     "M",
     {
       cubesNeedRotation: (position: Vector3) => Math.round(position.x) == 0,
@@ -163,6 +229,72 @@ export const movements3x3 = new Map([
         x: rotation.x,
         y: rotation.y,
         z: rotation.z - Math.PI * 0.5,
+      }),
+    },
+  ],
+  [
+    "U2'",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.y) == 1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x,
+        y: rotation.y + Math.PI,
+        z: rotation.z,
+      }),
+    },
+  ],
+  [
+    "D2'",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.y) == -1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x,
+        y: rotation.y + Math.PI,
+        z: rotation.z,
+      }),
+    },
+  ],
+  [
+    "R2'",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.x) == 1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x + Math.PI,
+        y: rotation.y,
+        z: rotation.z,
+      }),
+    },
+  ],
+  [
+    "L2'",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.x) == -1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x - Math.PI,
+        y: rotation.y,
+        z: rotation.z,
+      }),
+    },
+  ],
+  [
+    "F2'",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.z) == 1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x,
+        y: rotation.y,
+        z: rotation.z + Math.PI,
+      }),
+    },
+  ],
+  [
+    "B2'",
+    {
+      cubesNeedRotation: (position: Vector3) => Math.round(position.z) == -1,
+      rotation: (rotation: Euler) => ({
+        x: rotation.x,
+        y: rotation.y,
+        z: rotation.z - Math.PI,
       }),
     },
   ],

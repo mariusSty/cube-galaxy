@@ -7,29 +7,20 @@ import PreviewPanel from "@/components/organisms/PreviewPanel";
 import ResumePanel from "@/components/organisms/ResumePanel";
 import TimesPanel from "@/components/organisms/TimesPanel";
 import { Canvas } from "@react-three/fiber";
+import { randomScrambleForEvent } from "cubing/scramble";
 
 import { Rubik } from "next/font/google";
 import { useState } from "react";
 
 const rubik = Rubik({ subsets: ["latin"], weight: "500" });
 
-const scrambles = [
-  ["F", "R", "U", "F'", "R"],
-  ["F", "R", "F", "U'", "D"],
-  ["R", "D", "U", "D'", "R"],
-  ["F'", "D", "U", "F'", "D'"],
-];
-
 export default function Home() {
   const [currentScramble, setCurrentScramble] = useState<string[]>([]);
   const [times, setTimes] = useState<number[]>([]);
 
-  const handleGenerateScramble = () => {
-    setCurrentScramble(
-      scrambles.filter((scramble) => scramble !== currentScramble)[
-        Math.round(Math.random() * (scrambles.length - 2))
-      ]
-    );
+  const handleGenerateScramble = async () => {
+    const scramble = await randomScrambleForEvent("333");
+    setCurrentScramble(scramble.toString().split(" "));
   };
 
   const addTime = (time: number) => {
