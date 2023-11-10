@@ -1,77 +1,86 @@
+import { Time } from "@/app/page";
 import formatTimer from "@/utils/formatTime";
 import { getAverageOf } from "@/utils/getResult";
-import NumberText from "../atoms/NumberText";
 import SimpleText from "../atoms/SimpleText";
 import Td from "../atoms/Td";
 import Tr from "../atoms/Tr";
 
 type TimesPanelProps = {
-  times: number[];
+  times: Time[];
+  markAsDNF: (id: string) => void;
+  removeTime: (id: string) => void;
 };
 
-export default function TimesPanel({ times }: TimesPanelProps) {
-  const result = [...times].reverse().map((time, index) => {
-    const position = times.length - index;
-    const ao5 = getAverageOf(times, position, 5);
-    const ao12 = getAverageOf(times, position, 12);
-    return {
-      position,
-      time: formatTimer(time),
-      ao5: ao5 ? formatTimer(ao5) : "-",
-      ao12: ao12 ? formatTimer(ao12) : "-",
-    };
-  });
+export default function TimesPanel({
+  times,
+  markAsDNF,
+  removeTime,
+}: TimesPanelProps) {
+  const result = [...times]
+    .sort((timeA, timeB) => timeA.createdAt - timeB.createdAt)
+    .reverse()
+    .map((time, index) => {
+      const position = times.length - index;
+      const ao5 = getAverageOf(times, position);
+      const ao12 = getAverageOf(times, position, 12);
+
+      return {
+        id: time.id,
+        position,
+        time: time.isDNF ? "DNF" : formatTimer(time.value),
+        ao5,
+        ao12,
+        isDNF: time.isDNF,
+      };
+    });
 
   return (
-    <div className="h-full min-h-[400px] lg:min-h-full p-4">
-      <div>
-        <Tr isThead>
-          <Td>
-            <SimpleText isTextSecondary size="big">
-              N°
-            </SimpleText>
-          </Td>
-          <Td>
-            <SimpleText isTextSecondary size="big">
-              Time
-            </SimpleText>
-          </Td>
-          <Td>
-            <SimpleText isTextSecondary size="big">
-              ao5
-            </SimpleText>
-          </Td>
-          <Td>
-            <SimpleText isTextSecondary size="big">
-              ao12
-            </SimpleText>
-          </Td>
-        </Tr>
-      </div>
+    <div className="row-start-3 lg:row-start-2 xl:row-start-1 h-full min-h-[400px] p-4">
+      <Tr isThead>
+        <Td>
+          <SimpleText isTextSecondary>N°</SimpleText>
+        </Td>
+        <Td>
+          <SimpleText isTextSecondary>Time</SimpleText>
+        </Td>
+        <Td>
+          <SimpleText isTextSecondary>ao5</SimpleText>
+        </Td>
+        <Td>
+          <SimpleText isTextSecondary>ao12</SimpleText>
+        </Td>
+      </Tr>
 
       <div className="overflow-y-auto h-[calc(100%-70px)]">
-        {result.map(({ position, time, ao5, ao12 }) => (
-          <Tr key={position}>
+        {result.map(({ id, position, time, ao5, ao12, isDNF }) => (
+          <Tr key={id}>
             <Td>
-              <NumberText
-                isTextSecondary
-                size="small"
-              >{`${position}`}</NumberText>
+              <SimpleText isTextSecondary>{`${position}`}</SimpleText>
             </Td>
             <Td>
-              <NumberText isTextSecondary size="small">
-                {time}
-              </NumberText>
+              <SimpleText isTextSecondary>{time}</SimpleText>
             </Td>
             <Td>
-              <NumberText isTextSecondary size="small">
-                {ao5}
-              </NumberText>
+              <SimpleText isTextSecondary>{ao5}</SimpleText>
             </Td>
             <Td>
-              <NumberText isTextSecondary size="small">
-                {ao12}
-              </NumberText>
+              <SimpleText isTextSecondary>{ao12}</SimpleText>
+            </Td>
+            <Td>
+              <button
+                onClick={() => markAsDNF(id)}
+                className="hover:text-blue-400"
+              >
+                <SimpleText isTextSecondary>{isDNF ? "OK" : "DNF"}</SimpleText>
+              </button>
+            </Td>
+            <Td>
+              <button
+                onClick={() => removeTime(id)}
+                className="flex items-center justify-center text-blue-600 hover:text-blue-400"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
             </Td>
           </Tr>
         ))}

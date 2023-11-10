@@ -1,11 +1,10 @@
-import formatTimer from "@/utils/formatTime";
+import { Time } from "@/app/page";
 import { getAverage, getBest, getWorst } from "@/utils/getResult";
-import NumberText from "../atoms/NumberText";
 import SimpleText from "../atoms/SimpleText";
 import ResumeBox from "../molecules/ResumeBox";
 
 type ResumePanelProps = {
-  times: number[];
+  times: Time[];
 };
 
 export default function ResumePanel({ times }: ResumePanelProps) {
@@ -16,20 +15,20 @@ export default function ResumePanel({ times }: ResumePanelProps) {
   return (
     <div className="grid grid-cols-3 gap-2 p-4">
       <ResumeBox isColspan>
-        <SimpleText size="big">Solve</SimpleText>
-        <NumberText>{`${times.length}`}</NumberText>
+        <SimpleText>Solve</SimpleText>
+        <SimpleText size="big">{`${times.length}`}</SimpleText>
       </ResumeBox>
       <ResumeBox>
         <SimpleText>Average</SimpleText>
-        <NumberText>{average ? formatTimer(average) : "-"}</NumberText>
+        <SimpleText size="big">{average}</SimpleText>
       </ResumeBox>
       <ResumeBox>
         <SimpleText>Best</SimpleText>
-        <NumberText>{best ? formatTimer(best) : "-"}</NumberText>
+        <SimpleText size="big">{best}</SimpleText>
       </ResumeBox>
       <ResumeBox>
         <SimpleText>Worst</SimpleText>
-        <NumberText>{worst ? formatTimer(worst) : "-"}</NumberText>
+        <SimpleText size="big">{worst}</SimpleText>
       </ResumeBox>
     </div>
   );

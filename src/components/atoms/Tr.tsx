@@ -8,7 +8,7 @@ type TrProps = {
 export default function Tr({ children, isThead = false }: TrProps) {
   return (
     <div
-      className={`grid grid-cols-4 bg-white ${
+      className={`grid grid-cols-6 bg-white ${
         isThead ? `border-b-2` : `border-b-[1px]`
       } border-blue-600`}
     >

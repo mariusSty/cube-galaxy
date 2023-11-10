@@ -5,5 +5,9 @@ type PreviewPanelProps = {
 };
 
 export default function PreviewPanel({ children }: PreviewPanelProps) {
-  return <div className="min-h-[250px]">{children}</div>;
+  return (
+    <div className="min-h-[300px] col-span-1 lg:col-span-2 xl:col-span-1">
+      {children}
+    </div>
+  );
 }
