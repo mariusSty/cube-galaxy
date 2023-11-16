@@ -6,10 +6,9 @@ import Timer from "@/components/molecules/Timer";
 import PreviewPanel from "@/components/organisms/PreviewPanel";
 import ResumePanel from "@/components/organisms/ResumePanel";
 import TimesPanel from "@/components/organisms/TimesPanel";
-import { Canvas } from "@react-three/fiber";
-import { v4 as uuidv4 } from "uuid";
-
+import { useTimer } from "@/hooks/useTimer";
 import { generateScramble } from "@/utils/generateScramble";
+import { Canvas } from "@react-three/fiber";
 import { Rubik } from "next/font/google";
 import { useState } from "react";
 
@@ -25,38 +24,11 @@ export type Time = {
 
 export default function Home() {
   const [currentScramble, setCurrentScramble] = useState<string[]>([]);
-  const [times, setTimes] = useState<Time[]>([]);
+  const { times, addTime, markAsDNF, removeAllTimes, removeTime } = useTimer();
 
   const handleGenerateScramble = () => {
     const scramble = generateScramble();
     setCurrentScramble(scramble);
-  };
-
-  const addTime = (value: number) => {
-    const time: Time = {
-      id: uuidv4(),
-      value,
-      isDNF: false,
-      createdAt: Date.now(),
-      updatedAt: Date.now(),
-    };
-    setTimes([...times, time]);
-  };
-
-  const removeTime = (id: string) => {
-    setTimes(times.filter((time) => time.id !== id));
-  };
-
-  const removeAllTimes = () => {
-    setTimes([]);
-  };
-
-  const markAsDNF = (id: string) => {
-    const time = times.find((time) => time.id === id);
-    if (!time) throw new Error("Can't mark as DNF, time not found");
-    time.isDNF = !time.isDNF;
-    time.updatedAt = Date.now();
-    setTimes([...times.filter((time) => time.id !== id), time]);
   };
 
   return (
