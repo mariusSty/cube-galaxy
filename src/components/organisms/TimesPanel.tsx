@@ -1,6 +1,7 @@
 import { Time } from "@/app/page";
 import formatTimer from "@/utils/formatTime";
 import { getAverageOf } from "@/utils/getResult";
+import Button from "../atoms/Button";
 import SimpleText from "../atoms/SimpleText";
 import Td from "../atoms/Td";
 import Tr from "../atoms/Tr";
@@ -9,12 +10,14 @@ type TimesPanelProps = {
   times: Time[];
   markAsDNF: (id: string) => void;
   removeTime: (id: string) => void;
+  removeAllTimes: () => void;
 };
 
 export default function TimesPanel({
   times,
   markAsDNF,
   removeTime,
+  removeAllTimes,
 }: TimesPanelProps) {
   const result = [...times]
     .sort((timeA, timeB) => timeA.createdAt - timeB.createdAt)
@@ -49,6 +52,14 @@ export default function TimesPanel({
         <Td>
           <SimpleText isTextSecondary>ao12</SimpleText>
         </Td>
+        <Td>
+          <></>
+        </Td>
+        <Td>
+          <Button handleClick={removeAllTimes}>
+            <span className="material-symbols-outlined">close</span>
+          </Button>
+        </Td>
       </Tr>
 
       <div className="overflow-y-auto h-[calc(100%-70px)]">
@@ -67,20 +78,14 @@ export default function TimesPanel({
               <SimpleText isTextSecondary>{ao12}</SimpleText>
             </Td>
             <Td>
-              <button
-                onClick={() => markAsDNF(id)}
-                className="hover:text-blue-400"
-              >
-                <SimpleText isTextSecondary>{isDNF ? "OK" : "DNF"}</SimpleText>
-              </button>
+              <Button handleClick={() => markAsDNF(id)}>
+                {isDNF ? "OK" : "DNF"}
+              </Button>
             </Td>
             <Td>
-              <button
-                onClick={() => removeTime(id)}
-                className="flex items-center justify-center text-blue-600 hover:text-blue-400"
-              >
+              <Button handleClick={() => removeTime(id)}>
                 <span className="material-symbols-outlined">close</span>
-              </button>
+              </Button>
             </Td>
           </Tr>
         ))}

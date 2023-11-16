@@ -47,6 +47,10 @@ export default function Home() {
     setTimes(times.filter((time) => time.id !== id));
   };
 
+  const removeAllTimes = () => {
+    setTimes([]);
+  };
+
   const markAsDNF = (id: string) => {
     const time = times.find((time) => time.id === id);
     if (!time) throw new Error("Can't mark as DNF, time not found");
@@ -68,6 +72,7 @@ export default function Home() {
           <TimesPanel
             times={times}
             removeTime={removeTime}
+            removeAllTimes={removeAllTimes}
             markAsDNF={markAsDNF}
           />
           <PreviewPanel>

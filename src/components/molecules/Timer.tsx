@@ -13,6 +13,7 @@ export default function Timer({ addTime, children }: TimerProps) {
   const [isStarted, setIsStarted] = useState(false);
   const [isBeforeStarted, setIsBeforeStarted] = useState(false);
   const [token, setToken] = useState(false);
+  const isTimerFocused = isStarted || isBeforeStarted;
 
   useEffect(() => {
     let interval: NodeJS.Timeout;
@@ -78,13 +79,13 @@ export default function Timer({ addTime, children }: TimerProps) {
           ? "bg-gradient-to-b from-green-600 to-green-400"
           : "bg-gradient-to-b from-blue-600 to-blue-500"
       } ${
-        isStarted || isBeforeStarted
-          ? "absolute top-0 h-screen w-screen z-10"
+        isTimerFocused
+          ? "fixed top-0 h-screen w-screen z-10 overflow-hidden"
           : "lg:h-[60%] "
       }`}
     >
       <NumberText size="big">{formatTimer(timer)}</NumberText>
-      {children}
+      {!isTimerFocused && children}
     </div>
   );
 }
