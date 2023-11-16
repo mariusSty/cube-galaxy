@@ -28,8 +28,12 @@ export default function Timer({ addTime, children }: TimerProps) {
 
   useEffect(() => {
     const keyUpHandler = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+      }
       if (!token) {
         if (e.code === "Space") {
+          e.preventDefault();
           // Start timer
           setTimer(0);
           setTimestampStarted(Date.now());
@@ -41,6 +45,9 @@ export default function Timer({ addTime, children }: TimerProps) {
     };
 
     const keyDownHandler = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+      }
       if (isStarted) {
         // Stop timer
         const result = Date.now() - timestampStarted;
@@ -66,10 +73,14 @@ export default function Timer({ addTime, children }: TimerProps) {
 
   return (
     <div
-      className={`flex flex-col justify-center items-center min-h-[400px] lg:h-[60%] ${
+      className={`flex flex-col justify-center items-center min-h-[400px] ${
         isBeforeStarted
           ? "bg-gradient-to-b from-green-600 to-green-400"
           : "bg-gradient-to-b from-blue-600 to-blue-500"
+      } ${
+        isStarted || isBeforeStarted
+          ? "absolute top-0 h-screen w-screen z-10"
+          : "lg:h-[60%] "
       }`}
     >
       <NumberText size="big">{formatTimer(timer)}</NumberText>

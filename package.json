@@ -12,7 +12,6 @@
     "@react-three/drei": "^9.88.9",
     "@react-three/fiber": "^8.15.9",
     "@types/three": "^0.158.0",
-    "cubing": "^0.43.8",
     "gsap": "^3.12.2",
     "leva": "^0.9.35",
     "next": "14.0.0",

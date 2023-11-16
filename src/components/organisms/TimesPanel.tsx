@@ -35,7 +35,7 @@ export default function TimesPanel({
     });
 
   return (
-    <div className="row-start-3 lg:row-start-2 xl:row-start-1 h-full min-h-[400px] p-4">
+    <div className="row-start-3 lg:row-start-2 xl:row-start-1 h-full max-h-[40vh] p-4">
       <Tr isThead>
         <Td>
           <SimpleText isTextSecondary>N°</SimpleText>

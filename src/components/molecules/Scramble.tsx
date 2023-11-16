@@ -15,10 +15,10 @@ export default function Scramble({
   };
 
   const moveList = scramble ? (
-    <ul className="flex items-center justify-center gap-2">
+    <ul className="flex flex-wrap items-center justify-start">
       {scramble.map((move, index) => (
         <li
-          className="h-10 w-10 rounded-md flex items-center justify-center"
+          className="flex items-center justify-center h-10 w-10 m-1"
           key={index}
         >
           <SimpleText size="big">{move}</SimpleText>
@@ -30,9 +30,9 @@ export default function Scramble({
   );
   return (
     <div className="flex justify-center items-center w-full p-4 gap-4">
-      <div className="flex justify-center items-center rounded-lg border-4 border-white hover:border-zinc-200 pointer-events-none">
+      <div className="flex justify-center items-center rounded-lg h-full border-4 border-white hover:border-zinc-200 pointer-events-none">
         <button
-          className="flex items-center justify-center p-3 bg-white hover:bg-zinc-200 pointer-events-auto"
+          className="flex items-center justify-center h-full p-3 bg-white hover:bg-zinc-200 pointer-events-auto"
           onClick={handleGenerateScramble}
           onKeyUp={prevent}
           onKeyDown={prevent}

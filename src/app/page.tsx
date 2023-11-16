@@ -9,8 +9,7 @@ import TimesPanel from "@/components/organisms/TimesPanel";
 import { Canvas } from "@react-three/fiber";
 import { v4 as uuidv4 } from "uuid";
 
-import { randomScrambleForEvent } from "cubing/scramble";
-
+import { generateScramble } from "@/utils/generateScramble";
 import { Rubik } from "next/font/google";
 import { useState } from "react";
 
@@ -28,9 +27,9 @@ export default function Home() {
   const [currentScramble, setCurrentScramble] = useState<string[]>([]);
   const [times, setTimes] = useState<Time[]>([]);
 
-  const handleGenerateScramble = async () => {
-    const scramble = await randomScrambleForEvent("333");
-    setCurrentScramble(scramble.toString().split(" "));
+  const handleGenerateScramble = () => {
+    const scramble = generateScramble();
+    setCurrentScramble(scramble);
   };
 
   const addTime = (value: number) => {
@@ -65,7 +64,7 @@ export default function Home() {
             scramble={currentScramble}
           />
         </Timer>
-        <div className="grid grid-cols-1 xl:col-span-1 lg:grid-cols-2  xl:grid-cols-3 gap-4 h-[40%]">
+        <div className="grid grid-cols-1 xl:col-span-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 h-[40%]">
           <TimesPanel
             times={times}
             removeTime={removeTime}
