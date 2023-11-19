@@ -42,12 +42,13 @@ export default function Timer({ addTime, children }: TimerProps) {
 
   const stopTimer = useCallback(
     function () {
-      setNow(Date.now());
-      setTimerState(TimerState.Stop);
       clearInterval(intervalRef.current);
-      addTime(now && startTime ? now - startTime : 0);
+      const finishNow = Date.now();
+      setNow(finishNow);
+      setTimerState(TimerState.Stop);
+      addTime(finishNow && startTime ? finishNow - startTime : 0);
     },
-    [addTime, now, startTime]
+    [addTime, startTime]
   );
 
   const handleTimer = useCallback(
