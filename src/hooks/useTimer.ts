@@ -1,6 +1,14 @@
-import { Time } from "@/app/page";
 import { useReducer } from "react";
 import { v4 as uuidv4 } from "uuid";
+
+export type Time = {
+  id: string;
+  value: number;
+  isDNF: boolean;
+  isPlusTwo: boolean;
+  createdAt: number;
+  updatedAt: number;
+};
 
 type TimeReducerAction = {
   type: string;
@@ -19,6 +27,7 @@ function timesReducer(times: Time[], action: TimeReducerAction): Time[] {
           id: uuidv4(),
           value: action.value,
           isDNF: false,
+          isPlusTwo: false,
           createdAt: Date.now(),
           updatedAt: Date.now(),
         },
@@ -42,6 +51,20 @@ function timesReducer(times: Time[], action: TimeReducerAction): Time[] {
       ];
     }
 
+    case "markedAsPlusTwo": {
+      const time = times.find((time) => time.id === action.id);
+      if (!time) throw new Error("Can't mark as Plus two, time not found");
+      return [
+        ...times.filter((time) => time.id !== action.id),
+        {
+          ...time,
+          value: time.isPlusTwo ? time.value - 2000 : time.value + 2000,
+          isPlusTwo: !time.isPlusTwo,
+          updatedAt: Date.now(),
+        },
+      ];
+    }
+
     default:
       throw new Error(`Unknown action : ${action.type}`);
   }
@@ -60,5 +83,6 @@ export function useTimer() {
     removeTime: (id: string) => dispatch({ type: "deleted", id }),
     removeAllTimes: () => dispatch({ type: "deletedAll" }),
     markAsDNF: (id: string) => dispatch({ type: "markedAsDnf", id }),
+    markAsPlusTwo: (id: string) => dispatch({ type: "markedAsPlusTwo", id }),
   };
 }

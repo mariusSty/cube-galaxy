@@ -1,4 +1,4 @@
-import { Time } from "@/app/page";
+import { Time } from "@/hooks/useTimer";
 import formatTimer from "@/utils/formatTime";
 import { getAverageOf } from "@/utils/getResult";
 import Button from "../atoms/Button";
@@ -9,6 +9,7 @@ import Tr from "../atoms/Tr";
 type TimesPanelProps = {
   times: Time[];
   markAsDNF: (id: string) => void;
+  markAsPlusTwo: (id: string) => void;
   removeTime: (id: string) => void;
   removeAllTimes: () => void;
 };
@@ -16,6 +17,7 @@ type TimesPanelProps = {
 export default function TimesPanel({
   times,
   markAsDNF,
+  markAsPlusTwo,
   removeTime,
   removeAllTimes,
 }: TimesPanelProps) {
@@ -34,6 +36,7 @@ export default function TimesPanel({
         ao5,
         ao12,
         isDNF: time.isDNF,
+        isPlusTwo: time.isPlusTwo,
       };
     });
 
@@ -56,6 +59,9 @@ export default function TimesPanel({
           <></>
         </Td>
         <Td>
+          <></>
+        </Td>
+        <Td>
           <Button handleClick={removeAllTimes}>
             <span className="material-symbols-outlined">close</span>
           </Button>
@@ -63,7 +69,7 @@ export default function TimesPanel({
       </Tr>
 
       <div className="overflow-y-auto h-[calc(100%-70px)]">
-        {result.map(({ id, position, time, ao5, ao12, isDNF }) => (
+        {result.map(({ id, position, time, ao5, ao12, isDNF, isPlusTwo }) => (
           <Tr key={id}>
             <Td>
               <SimpleText isTextSecondary>{`${position}`}</SimpleText>
@@ -76,6 +82,11 @@ export default function TimesPanel({
             </Td>
             <Td>
               <SimpleText isTextSecondary>{ao12}</SimpleText>
+            </Td>
+            <Td>
+              <Button handleClick={() => markAsPlusTwo(id)}>
+                {isPlusTwo ? "OK" : "+2"}
+              </Button>
             </Td>
             <Td>
               <Button handleClick={() => markAsDNF(id)}>

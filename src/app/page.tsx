@@ -14,17 +14,16 @@ import { useState } from "react";
 
 const rubik = Rubik({ subsets: ["latin"], weight: "500" });
 
-export type Time = {
-  id: string;
-  value: number;
-  isDNF: boolean;
-  createdAt: number;
-  updatedAt: number;
-};
-
 export default function Home() {
   const [currentScramble, setCurrentScramble] = useState<string[]>([]);
-  const { times, addTime, markAsDNF, removeAllTimes, removeTime } = useTimer();
+  const {
+    times,
+    addTime,
+    markAsDNF,
+    markAsPlusTwo,
+    removeAllTimes,
+    removeTime,
+  } = useTimer();
 
   const handleGenerateScramble = () => {
     const scramble = generateScramble();
@@ -46,6 +45,7 @@ export default function Home() {
             removeTime={removeTime}
             removeAllTimes={removeAllTimes}
             markAsDNF={markAsDNF}
+            markAsPlusTwo={markAsPlusTwo}
           />
           <PreviewPanel>
             <Canvas
