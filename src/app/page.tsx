@@ -2,20 +2,27 @@
 
 import Experience from "@/components/molecules/Experience";
 import Scramble from "@/components/molecules/Scramble";
+import SwiperMenu from "@/components/molecules/SwiperMenu";
 import Timer from "@/components/molecules/Timer";
 import PreviewPanel from "@/components/organisms/PreviewPanel";
 import ResumePanel from "@/components/organisms/ResumePanel";
 import TimesPanel from "@/components/organisms/TimesPanel";
-import { useTimer } from "@/hooks/useTimer";
+import { useTimes } from "@/hooks/useTimes";
 import { Canvas } from "@react-three/fiber";
 import { Rubik } from "next/font/google";
 import { useState } from "react";
 import { Scrambow } from "scrambow";
 
+import { Navigation, Pagination } from "swiper/modules";
+import { Swiper, SwiperSlide } from "swiper/react";
+
 const rubik = Rubik({ subsets: ["latin"], weight: "500" });
 
 export default function Home() {
   const [currentScramble, setCurrentScramble] = useState<string[]>([]);
+  const [activeSlide, setActiveSlide] = useState<number>(1);
+  const [isMenuVisible, setIsMenuVisible] = useState<boolean>(true);
+
   const {
     times,
     addTime,
@@ -23,7 +30,7 @@ export default function Home() {
     markAsPlusTwo,
     removeAllTimes,
     removeTime,
-  } = useTimer();
+  } = useTimes();
 
   const handleGenerateScramble = () => {
     const scrambow = new Scrambow();
@@ -36,14 +43,15 @@ export default function Home() {
 
   return (
     <main className={`w-full h-full ${rubik.className}`}>
-      <div className="flex flex-col h-full w-full">
-        <Timer addTime={addTime}>
-          <Scramble
-            handleGenerateScramble={handleGenerateScramble}
-            scramble={currentScramble}
-          />
-        </Timer>
-        <div className="grid grid-cols-1 xl:col-span-1 lg:grid-cols-2 xl:grid-cols-3 gap-4 h-[40%]">
+      <Swiper
+        allowTouchMove={false}
+        className="w-full h-full"
+        initialSlide={1}
+        modules={[Pagination, Navigation]}
+        onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
+      >
+        <SwiperSlide>
+          <ResumePanel times={times} />
           <TimesPanel
             times={times}
             removeTime={removeTime}
@@ -51,6 +59,16 @@ export default function Home() {
             markAsDNF={markAsDNF}
             markAsPlusTwo={markAsPlusTwo}
           />
+        </SwiperSlide>
+        <SwiperSlide>
+          <Timer addTime={addTime} handleSwiperEnabled={setIsMenuVisible}>
+            <Scramble
+              handleGenerateScramble={handleGenerateScramble}
+              scramble={currentScramble}
+            />
+          </Timer>
+        </SwiperSlide>
+        <SwiperSlide>
           <PreviewPanel>
             <Canvas
               camera={{ fov: 45, near: 0.1, far: 200, position: [6, 4, 8] }}
@@ -58,9 +76,9 @@ export default function Home() {
               <Experience scramble={currentScramble} />
             </Canvas>
           </PreviewPanel>
-          <ResumePanel times={times} />
-        </div>
-      </div>
+        </SwiperSlide>
+        {isMenuVisible && <SwiperMenu activeSlide={activeSlide} />}
+      </Swiper>
     </main>
   );
 }

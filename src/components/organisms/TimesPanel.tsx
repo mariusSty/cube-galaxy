@@ -1,4 +1,4 @@
-import { Time } from "@/hooks/useTimer";
+import { Time } from "@/hooks/useTimes";
 import formatTimer from "@/utils/formatTime";
 import { getAverageOf } from "@/utils/getResult";
 import Button from "../atoms/Button";

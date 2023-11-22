@@ -11,6 +11,7 @@ import NumberText from "../atoms/NumberText";
 
 type TimerProps = {
   addTime: (time: number) => void;
+  handleSwiperEnabled: (enabled: boolean) => void;
   children?: ReactNode;
 };
 
@@ -25,7 +26,11 @@ enum GestureType {
   Down = "DOWN",
 }
 
-export default function Timer({ addTime, children }: TimerProps) {
+export default function Timer({
+  addTime,
+  handleSwiperEnabled,
+  children,
+}: TimerProps) {
   const [now, setNow] = useState<number | null>(null);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [timerState, setTimerState] = useState<TimerState>(TimerState.Stop);
@@ -33,9 +38,13 @@ export default function Timer({ addTime, children }: TimerProps) {
   const isTouchEventAvailable =
     typeof window !== "undefined" && "ontouchstart" in window;
 
-  function readyTimer() {
-    setTimerState(TimerState.Ready);
-  }
+  const readyTimer = useCallback(
+    function () {
+      handleSwiperEnabled(false);
+      setTimerState(TimerState.Ready);
+    },
+    [handleSwiperEnabled]
+  );
 
   function startTimer() {
     setNow(Date.now());
@@ -54,8 +63,9 @@ export default function Timer({ addTime, children }: TimerProps) {
       setNow(finishNow);
       setTimerState(TimerState.Stop);
       addTime(finishNow && startTime ? finishNow - startTime : 0);
+      handleSwiperEnabled(true);
     },
-    [addTime, startTime]
+    [addTime, startTime, handleSwiperEnabled]
   );
 
   const handleTimer = useCallback(
@@ -81,7 +91,7 @@ export default function Timer({ addTime, children }: TimerProps) {
           stopTimer();
         }
     },
-    [stopTimer, timerState, isTouchEventAvailable]
+    [stopTimer, timerState, isTouchEventAvailable, readyTimer]
   );
 
   useEffect(() => {
@@ -115,22 +125,17 @@ export default function Timer({ addTime, children }: TimerProps) {
       onMouseDown={(e) => handleTimer(GestureType.Down, e, true)}
       onMouseUp={(e) => handleTimer(GestureType.Up, e, true)}
       onContextMenu={(e) => e.preventDefault()}
-      className={`flex flex-col justify-center items-center min-h-[400px] bg-gradient-to-b from-blue-600 to-blue-500
+      className={`flex flex-col justify-center items-center h-full bg-gradient-to-b from-blue-600 to-blue-500
       ${
         timerState === TimerState.Ready
           ? "bg-gradient-to-b from-green-600 to-green-400"
           : "bg-gradient-to-b from-blue-600 to-blue-500"
-      }
-      ${
-        timerState === TimerState.Ready || timerState === TimerState.Start
-          ? "fixed top-0 h-screen w-screen z-10 overflow-hidden"
-          : "lg:h-[60%] "
       }`}
     >
       <NumberText size="big">
         {formatTimer(now && startTime ? now - startTime : 0)}
       </NumberText>
-      {timerState !== TimerState.Start && children}
+      {timerState === TimerState.Stop && children}
     </div>
   );
 }
