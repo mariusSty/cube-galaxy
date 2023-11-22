@@ -1,12 +1,5 @@
-import formatTimer from "@/utils/formatTime";
-import {
-  ReactNode,
-  SyntheticEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import useTimer, { TimerState } from "@/hooks/useTimer";
+import { ReactNode, SyntheticEvent, useCallback, useEffect } from "react";
 import NumberText from "../atoms/NumberText";
 
 type TimerProps = {
@@ -14,12 +7,6 @@ type TimerProps = {
   handleSwiperEnabled: (enabled: boolean) => void;
   children?: ReactNode;
 };
-
-enum TimerState {
-  Ready = "READY",
-  Start = "START",
-  Stop = "STOP",
-}
 
 enum GestureType {
   Up = "UP",
@@ -31,53 +18,24 @@ export default function Timer({
   handleSwiperEnabled,
   children,
 }: TimerProps) {
-  const [now, setNow] = useState<number | null>(null);
-  const [startTime, setStartTime] = useState<number | null>(null);
-  const [timerState, setTimerState] = useState<TimerState>(TimerState.Stop);
-  const intervalRef = useRef<NodeJS.Timeout>();
   const isTouchEventAvailable =
     typeof window !== "undefined" && "ontouchstart" in window;
 
-  const readyTimer = useCallback(
-    function () {
-      handleSwiperEnabled(false);
-      setTimerState(TimerState.Ready);
-    },
-    [handleSwiperEnabled]
-  );
-
-  function startTimer() {
-    setNow(Date.now());
-    setStartTime(Date.now());
-    setTimerState(TimerState.Start);
-
-    intervalRef.current = setInterval(() => {
-      setNow(Date.now());
-    }, 10);
-  }
-
-  const stopTimer = useCallback(
-    function () {
-      clearInterval(intervalRef.current);
-      const finishNow = Date.now();
-      setNow(finishNow);
-      setTimerState(TimerState.Stop);
-      addTime(finishNow && startTime ? finishNow - startTime : 0);
-      handleSwiperEnabled(true);
-    },
-    [addTime, startTime, handleSwiperEnabled]
-  );
+  const { currentResult, timerState, readyTimer, startTimer, stopTimer } =
+    useTimer({
+      handleReady: () => handleSwiperEnabled(false),
+      handleStop: (newTime: number) => {
+        addTime(newTime);
+        handleSwiperEnabled(true);
+      },
+    });
 
   const handleTimer = useCallback(
     function (gesture: GestureType, e?: SyntheticEvent, isMouseEvent = false) {
       if (isTouchEventAvailable && isMouseEvent) return;
       if (e) {
         const eventTarget = e.target as HTMLDivElement;
-        if (
-          eventTarget.parentElement &&
-          eventTarget.parentElement?.id === "scrambleButton"
-        )
-          return;
+        if (eventTarget.parentElement?.id === "scrambleButton") return;
       }
       if (typeof TouchEvent !== undefined)
         if (timerState === TimerState.Stop) {
@@ -91,7 +49,7 @@ export default function Timer({
           stopTimer();
         }
     },
-    [stopTimer, timerState, isTouchEventAvailable, readyTimer]
+    [stopTimer, timerState, isTouchEventAvailable, readyTimer, startTimer]
   );
 
   useEffect(() => {
@@ -132,9 +90,7 @@ export default function Timer({
           : "bg-gradient-to-b from-blue-600 to-blue-500"
       }`}
     >
-      <NumberText size="big">
-        {formatTimer(now && startTime ? now - startTime : 0)}
-      </NumberText>
+      <NumberText size="big">{currentResult}</NumberText>
       {timerState === TimerState.Stop && children}
     </div>
   );

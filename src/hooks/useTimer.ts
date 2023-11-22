@@ -1,88 +1,67 @@
-import { useReducer } from "react";
-import { v4 as uuidv4 } from "uuid";
+import formatTimer from "@/utils/formatTime";
+import { useCallback, useRef, useState } from "react";
 
-export type Time = {
-  id: string;
-  value: number;
-  isDNF: boolean;
-  isPlusTwo: boolean;
-  createdAt: number;
-  updatedAt: number;
-};
-
-type TimeReducerAction = {
-  type: string;
-  id?: string;
-  value?: number;
-};
-
-function timesReducer(times: Time[], action: TimeReducerAction): Time[] {
-  switch (action.type) {
-    case "added": {
-      if (!action.value)
-        throw new Error("Can't add new value, time is missing");
-      return [
-        ...times,
-        {
-          id: uuidv4(),
-          value: action.value,
-          isDNF: false,
-          isPlusTwo: false,
-          createdAt: Date.now(),
-          updatedAt: Date.now(),
-        },
-      ];
-    }
-
-    case "deleted": {
-      return times.filter((time) => time.id !== action.id);
-    }
-
-    case "deletedAll": {
-      return [];
-    }
-
-    case "markedAsDnf": {
-      const time = times.find((time) => time.id === action.id);
-      if (!time) throw new Error("Can't mark as DNF, time not found");
-      return [
-        ...times.filter((time) => time.id !== action.id),
-        { ...time, isDNF: !time.isDNF, updatedAt: Date.now() },
-      ];
-    }
-
-    case "markedAsPlusTwo": {
-      const time = times.find((time) => time.id === action.id);
-      if (!time) throw new Error("Can't mark as Plus two, time not found");
-      return [
-        ...times.filter((time) => time.id !== action.id),
-        {
-          ...time,
-          value: time.isPlusTwo ? time.value - 2000 : time.value + 2000,
-          isPlusTwo: !time.isPlusTwo,
-          updatedAt: Date.now(),
-        },
-      ];
-    }
-
-    default:
-      throw new Error(`Unknown action : ${action.type}`);
-  }
+export enum TimerState {
+  Ready = "READY",
+  Start = "START",
+  Stop = "STOP",
 }
 
-export function useTimer() {
-  const [times, dispatch] = useReducer(timesReducer, []);
+type UseTimerProps = {
+  handleReady?: (params?: any) => void;
+  handleStart?: (params?: any) => void;
+  handleStop?: (params?: any) => void;
+};
+
+export default function useTimer({
+  handleReady,
+  handleStart,
+  handleStop,
+}: UseTimerProps) {
+  const [now, setNow] = useState<number | null>(null);
+  const [startTime, setStartTime] = useState<number | null>(null);
+  const [timerState, setTimerState] = useState<TimerState>(TimerState.Stop);
+  const intervalRef = useRef<NodeJS.Timeout>();
+
+  const readyTimer = useCallback(
+    function () {
+      setTimerState(TimerState.Ready);
+      handleReady && handleReady();
+    },
+    [handleReady]
+  );
+
+  const startTimer = useCallback(
+    function () {
+      setNow(Date.now());
+      setStartTime(Date.now());
+      setTimerState(TimerState.Start);
+      handleStart && handleStart();
+
+      intervalRef.current = setInterval(() => {
+        setNow(Date.now());
+      }, 10);
+    },
+    [handleStart]
+  );
+
+  const stopTimer = useCallback(
+    function () {
+      clearInterval(intervalRef.current);
+      const finishNow = Date.now();
+      setNow(finishNow);
+      setTimerState(TimerState.Stop);
+      handleStop &&
+        handleStop(finishNow && startTime ? finishNow - startTime : 0);
+    },
+    [handleStop, startTime]
+  );
 
   return {
-    times,
-    addTime: (value: number) =>
-      dispatch({
-        type: "added",
-        value,
-      }),
-    removeTime: (id: string) => dispatch({ type: "deleted", id }),
-    removeAllTimes: () => dispatch({ type: "deletedAll" }),
-    markAsDNF: (id: string) => dispatch({ type: "markedAsDnf", id }),
-    markAsPlusTwo: (id: string) => dispatch({ type: "markedAsPlusTwo", id }),
+    currentResult: formatTimer(now && startTime ? now - startTime : 0),
+    timerState,
+    readyTimer,
+    startTimer,
+    stopTimer,
   };
 }
