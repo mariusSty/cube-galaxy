@@ -7,10 +7,10 @@ import PreviewPanel from "@/components/organisms/PreviewPanel";
 import ResumePanel from "@/components/organisms/ResumePanel";
 import TimesPanel from "@/components/organisms/TimesPanel";
 import { useTimer } from "@/hooks/useTimer";
-import { generateScramble } from "@/utils/generateScramble";
 import { Canvas } from "@react-three/fiber";
 import { Rubik } from "next/font/google";
 import { useState } from "react";
+import { Scrambow } from "scrambow";
 
 const rubik = Rubik({ subsets: ["latin"], weight: "500" });
 
@@ -26,7 +26,11 @@ export default function Home() {
   } = useTimer();
 
   const handleGenerateScramble = () => {
-    const scramble = generateScramble();
+    const scrambow = new Scrambow();
+    const scramble3x3 = scrambow.get();
+    const scramble = scramble3x3[0].scramble_string
+      .split(" ")
+      .filter((scramble) => scramble !== "");
     setCurrentScramble(scramble);
   };
 

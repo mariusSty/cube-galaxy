@@ -1,5 +1,12 @@
 import formatTimer from "@/utils/formatTime";
-import { ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import {
+  ReactNode,
+  SyntheticEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import NumberText from "../atoms/NumberText";
 
 type TimerProps = {
@@ -52,8 +59,16 @@ export default function Timer({ addTime, children }: TimerProps) {
   );
 
   const handleTimer = useCallback(
-    function (gesture: GestureType, isMouseEvent = false) {
+    function (gesture: GestureType, e?: SyntheticEvent, isMouseEvent = false) {
       if (isTouchEventAvailable && isMouseEvent) return;
+      if (e) {
+        const eventTarget = e.target as HTMLDivElement;
+        if (
+          eventTarget.parentElement &&
+          eventTarget.parentElement?.id === "scrambleButton"
+        )
+          return;
+      }
       if (typeof TouchEvent !== undefined)
         if (timerState === TimerState.Stop) {
           if (gesture === GestureType.Up) return;
@@ -95,10 +110,10 @@ export default function Timer({ addTime, children }: TimerProps) {
 
   return (
     <div
-      onTouchStart={() => handleTimer(GestureType.Down)}
-      onTouchEnd={() => handleTimer(GestureType.Up)}
-      onMouseDown={() => handleTimer(GestureType.Down, true)}
-      onMouseUp={() => handleTimer(GestureType.Up, true)}
+      onTouchStart={(e) => handleTimer(GestureType.Down, e)}
+      onTouchEnd={(e) => handleTimer(GestureType.Up, e)}
+      onMouseDown={(e) => handleTimer(GestureType.Down, e, true)}
+      onMouseUp={(e) => handleTimer(GestureType.Up, e, true)}
       onContextMenu={(e) => e.preventDefault()}
       className={`flex flex-col justify-center items-center min-h-[400px] bg-gradient-to-b from-blue-600 to-blue-500
       ${
@@ -115,7 +130,7 @@ export default function Timer({ addTime, children }: TimerProps) {
       <NumberText size="big">
         {formatTimer(now && startTime ? now - startTime : 0)}
       </NumberText>
-      {timerState === TimerState.Start ?? children}
+      {timerState !== TimerState.Start && children}
     </div>
   );
 }
