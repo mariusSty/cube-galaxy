@@ -1,4 +1,4 @@
-import { Time } from "@/app/page";
+import { Time } from "@/hooks/useTimes";
 import { getAverage, getBest, getWorst } from "@/utils/getResult";
 import SimpleText from "../atoms/SimpleText";
 import ResumeBox from "../molecules/ResumeBox";

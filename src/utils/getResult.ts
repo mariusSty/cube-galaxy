@@ -1,4 +1,4 @@
-import { Time } from "@/app/page";
+import { Time } from "@/hooks/useTimes";
 import formatTimer from "./formatTime";
 
 export function getWorst(times: Time[]): string {
