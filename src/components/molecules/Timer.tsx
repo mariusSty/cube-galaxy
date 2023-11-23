@@ -1,11 +1,13 @@
-import useTimer, { TimerState } from "@/hooks/useTimer";
-import { ReactNode, SyntheticEvent, useCallback, useEffect } from "react";
+import { TimerState } from "@/hooks/useTimer";
+import { SyntheticEvent, useCallback, useEffect } from "react";
 import NumberText from "../atoms/NumberText";
 
 type TimerProps = {
-  addTime: (time: number) => void;
-  handleSwiperEnabled: (enabled: boolean) => void;
-  children?: ReactNode;
+  readyTimer: () => void;
+  startTimer: () => void;
+  stopTimer: () => void;
+  timerState: TimerState;
+  currentResult: string;
 };
 
 enum GestureType {
@@ -14,40 +16,35 @@ enum GestureType {
 }
 
 export default function Timer({
-  addTime,
-  handleSwiperEnabled,
-  children,
+  readyTimer,
+  startTimer,
+  stopTimer,
+  timerState,
+  currentResult,
 }: TimerProps) {
   const isTouchEventAvailable =
     typeof window !== "undefined" && "ontouchstart" in window;
 
-  const { currentResult, timerState, readyTimer, startTimer, stopTimer } =
-    useTimer({
-      handleReady: () => handleSwiperEnabled(false),
-      handleStop: (newTime: number) => {
-        addTime(newTime);
-        handleSwiperEnabled(true);
-      },
-    });
-
   const handleTimer = useCallback(
     function (gesture: GestureType, e?: SyntheticEvent, isMouseEvent = false) {
+      console.log("clic", gesture, isMouseEvent, e);
       if (isTouchEventAvailable && isMouseEvent) return;
       if (e) {
         const eventTarget = e.target as HTMLDivElement;
         if (eventTarget.parentElement?.id === "scrambleButton") return;
       }
-      if (typeof TouchEvent !== undefined)
-        if (timerState === TimerState.Stop) {
-          if (gesture === GestureType.Up) return;
-          readyTimer();
-        } else if (timerState === TimerState.Ready) {
-          if (gesture === GestureType.Down) return;
-          startTimer();
-        } else {
-          if (gesture === GestureType.Down) return;
-          stopTimer();
-        }
+      if (typeof TouchEvent === undefined) return;
+
+      if (timerState === TimerState.Stop) {
+        if (gesture === GestureType.Up) return;
+        readyTimer();
+      } else if (timerState === TimerState.Ready) {
+        if (gesture === GestureType.Down) return;
+        startTimer();
+      } else {
+        if (gesture === GestureType.Down) return;
+        stopTimer();
+      }
     },
     [stopTimer, timerState, isTouchEventAvailable, readyTimer, startTimer]
   );
@@ -82,7 +79,6 @@ export default function Timer({
       onTouchEnd={(e) => handleTimer(GestureType.Up, e)}
       onMouseDown={(e) => handleTimer(GestureType.Down, e, true)}
       onMouseUp={(e) => handleTimer(GestureType.Up, e, true)}
-      onContextMenu={(e) => e.preventDefault()}
       className={`flex flex-col justify-center items-center h-full bg-gradient-to-b from-blue-600 to-blue-500
       ${
         timerState === TimerState.Ready
@@ -91,7 +87,6 @@ export default function Timer({
       }`}
     >
       <NumberText size="big">{currentResult}</NumberText>
-      {timerState === TimerState.Stop && children}
     </div>
   );
 }

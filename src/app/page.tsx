@@ -7,6 +7,7 @@ import Timer from "@/components/molecules/Timer";
 import PreviewPanel from "@/components/organisms/PreviewPanel";
 import ResumePanel from "@/components/organisms/ResumePanel";
 import TimesPanel from "@/components/organisms/TimesPanel";
+import useTimer, { TimerState } from "@/hooks/useTimer";
 import { useTimes } from "@/hooks/useTimes";
 import { Canvas } from "@react-three/fiber";
 import { Rubik } from "next/font/google";
@@ -21,7 +22,6 @@ const rubik = Rubik({ subsets: ["latin"], weight: "500" });
 export default function Home() {
   const [currentScramble, setCurrentScramble] = useState<string[]>([]);
   const [activeSlide, setActiveSlide] = useState<number>(1);
-  const [isMenuVisible, setIsMenuVisible] = useState<boolean>(true);
 
   const {
     times,
@@ -32,6 +32,11 @@ export default function Home() {
     removeTime,
   } = useTimes();
 
+  const { currentResult, timerState, readyTimer, startTimer, stopTimer } =
+    useTimer({
+      handleStop: (newTime: number) => addTime(newTime),
+    });
+
   const handleGenerateScramble = () => {
     const scrambow = new Scrambow();
     const scramble3x3 = scrambow.get();
@@ -41,8 +46,13 @@ export default function Home() {
     setCurrentScramble(scramble);
   };
 
+  const isTimerFocused = timerState !== TimerState.Stop;
+
   return (
-    <main className={`w-full h-full ${rubik.className}`}>
+    <main
+      className={`w-full h-full ${rubik.className}`}
+      onContextMenu={(e) => e.preventDefault()}
+    >
       <Swiper
         allowTouchMove={false}
         className="w-full h-full"
@@ -61,12 +71,19 @@ export default function Home() {
           />
         </SwiperSlide>
         <SwiperSlide>
-          <Timer addTime={addTime} handleSwiperEnabled={setIsMenuVisible}>
+          <Timer
+            readyTimer={readyTimer}
+            startTimer={startTimer}
+            stopTimer={stopTimer}
+            timerState={timerState}
+            currentResult={currentResult}
+          />
+          {!isTimerFocused && (
             <Scramble
               handleGenerateScramble={handleGenerateScramble}
               scramble={currentScramble}
             />
-          </Timer>
+          )}
         </SwiperSlide>
         <SwiperSlide>
           <PreviewPanel>
@@ -77,7 +94,7 @@ export default function Home() {
             </Canvas>
           </PreviewPanel>
         </SwiperSlide>
-        {isMenuVisible && <SwiperMenu activeSlide={activeSlide} />}
+        {!isTimerFocused && <SwiperMenu activeSlide={activeSlide} />}
       </Swiper>
     </main>
   );

@@ -24,7 +24,7 @@ export default function Scramble({
     <></>
   );
   return (
-    <div className="flex justify-center items-center w-full p-4 gap-4">
+    <div className="absolute bottom-20 flex justify-center items-center w-full p-4 gap-4">
       <div className="flex justify-center items-center rounded-lg h-full border-4 border-white hover:border-zinc-200 pointer-events-none">
         <button
           id="scrambleButton"

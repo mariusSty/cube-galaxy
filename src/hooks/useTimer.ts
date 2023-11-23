@@ -50,9 +50,9 @@ export default function useTimer({
       clearInterval(intervalRef.current);
       const finishNow = Date.now();
       setNow(finishNow);
-      setTimerState(TimerState.Stop);
       handleStop &&
         handleStop(finishNow && startTime ? finishNow - startTime : 0);
+      setTimeout(() => setTimerState(TimerState.Stop), 100);
     },
     [handleStop, startTime]
   );
