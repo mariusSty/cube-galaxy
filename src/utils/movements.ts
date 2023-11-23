@@ -18,7 +18,7 @@ export const movements3x3 = new Map([
       cubesNeedRotation: (position) => Math.round(position.y) == -1,
       rotation: (rotation: Euler) => ({
         x: rotation.x,
-        y: rotation.y - Math.PI * 0.5,
+        y: rotation.y + Math.PI * 0.5,
         z: rotation.z,
       }),
     },
@@ -84,7 +84,7 @@ export const movements3x3 = new Map([
       cubesNeedRotation: (position) => Math.round(position.y) == -1,
       rotation: (rotation: Euler) => ({
         x: rotation.x,
-        y: rotation.y - Math.PI,
+        y: rotation.y + Math.PI,
         z: rotation.z,
       }),
     },
@@ -183,7 +183,7 @@ export const movements3x3 = new Map([
       cubesNeedRotation: (position: Vector3) => Math.round(position.y) == -1,
       rotation: (rotation: Euler) => ({
         x: rotation.x,
-        y: rotation.y + Math.PI * 0.5,
+        y: rotation.y - Math.PI * 0.5,
         z: rotation.z,
       }),
     },
@@ -249,7 +249,7 @@ export const movements3x3 = new Map([
       cubesNeedRotation: (position: Vector3) => Math.round(position.y) == -1,
       rotation: (rotation: Euler) => ({
         x: rotation.x,
-        y: rotation.y + Math.PI,
+        y: rotation.y - Math.PI,
         z: rotation.z,
       }),
     },

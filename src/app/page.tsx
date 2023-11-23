@@ -32,11 +32,6 @@ export default function Home() {
     removeTime,
   } = useTimes();
 
-  const { currentResult, timerState, readyTimer, startTimer, stopTimer } =
-    useTimer({
-      handleStop: (newTime: number) => addTime(newTime),
-    });
-
   const handleGenerateScramble = () => {
     const scrambow = new Scrambow();
     const scramble3x3 = scrambow.get();
@@ -45,6 +40,14 @@ export default function Home() {
       .filter((scramble) => scramble !== "");
     setCurrentScramble(scramble);
   };
+
+  const { currentResult, timerState, readyTimer, startTimer, stopTimer } =
+    useTimer({
+      handleStop: (newTime: number) => {
+        addTime(newTime);
+        handleGenerateScramble();
+      },
+    });
 
   const isTimerFocused = timerState !== TimerState.Stop;
 
