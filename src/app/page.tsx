@@ -41,13 +41,19 @@ export default function Home() {
     setCurrentScramble(scramble);
   };
 
-  const { currentResult, timerState, readyTimer, startTimer, stopTimer } =
-    useTimer({
-      handleStop: (newTime: number) => {
-        addTime(newTime);
-        handleGenerateScramble();
-      },
-    });
+  const {
+    currentResult,
+    timerState,
+    readyTimer,
+    startTimer,
+    liberateTimer,
+    stopTimer,
+  } = useTimer({
+    handleStop: (newTime: number) => {
+      addTime(newTime);
+      handleGenerateScramble();
+    },
+  });
 
   const isTimerFocused = timerState !== TimerState.Stop;
 
@@ -78,6 +84,7 @@ export default function Home() {
             readyTimer={readyTimer}
             startTimer={startTimer}
             stopTimer={stopTimer}
+            liberateTimer={liberateTimer}
             timerState={timerState}
             currentResult={currentResult}
           />

@@ -1,9 +1,10 @@
 import formatTimer from "@/utils/formatTime";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export enum TimerState {
   Ready = "READY",
   Start = "START",
+  Stopping = "STOPPING",
   Stop = "STOP",
 }
 
@@ -21,7 +22,7 @@ export default function useTimer({
   const [now, setNow] = useState<number | null>(null);
   const [startTime, setStartTime] = useState<number | null>(null);
   const [timerState, setTimerState] = useState<TimerState>(TimerState.Stop);
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const intervalRef = useRef<number>();
 
   const readyTimer = useCallback(
     function () {
@@ -33,35 +34,51 @@ export default function useTimer({
 
   const startTimer = useCallback(
     function () {
-      setNow(Date.now());
-      setStartTime(Date.now());
+      const startNow = Date.now();
+      setStartTime(startNow);
+      setNow(startNow);
       setTimerState(TimerState.Start);
       handleStart && handleStart();
-
-      intervalRef.current = setInterval(() => {
-        setNow(Date.now());
-      }, 10);
     },
     [handleStart]
   );
 
   const stopTimer = useCallback(
     function () {
-      clearInterval(intervalRef.current);
       const finishNow = Date.now();
       setNow(finishNow);
+      setTimerState(TimerState.Stopping);
       handleStop &&
         handleStop(finishNow && startTime ? finishNow - startTime : 0);
-      setTimeout(() => setTimerState(TimerState.Stop), 100);
     },
     [handleStop, startTime]
   );
+
+  const liberateTimer = () => {
+    setTimerState(TimerState.Stop);
+  };
+
+  const runTimer = useCallback(() => {
+    setNow(Date.now());
+    intervalRef.current = requestAnimationFrame(runTimer);
+  }, []);
+
+  useEffect(() => {
+    if (timerState === TimerState.Start) {
+      intervalRef.current = requestAnimationFrame(runTimer);
+    }
+
+    return () => {
+      if (intervalRef.current) cancelAnimationFrame(intervalRef.current);
+    };
+  }, [timerState, runTimer]);
 
   return {
     currentResult: formatTimer(now && startTime ? now - startTime : 0),
     timerState,
     readyTimer,
     startTimer,
+    liberateTimer,
     stopTimer,
   };
 }

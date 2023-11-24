@@ -6,6 +6,7 @@ type TimerProps = {
   readyTimer: () => void;
   startTimer: () => void;
   stopTimer: () => void;
+  liberateTimer: () => void;
   timerState: TimerState;
   currentResult: string;
 };
@@ -19,6 +20,7 @@ export default function Timer({
   readyTimer,
   startTimer,
   stopTimer,
+  liberateTimer,
   timerState,
   currentResult,
 }: TimerProps) {
@@ -27,7 +29,6 @@ export default function Timer({
 
   const handleTimer = useCallback(
     function (gesture: GestureType, e?: SyntheticEvent, isMouseEvent = false) {
-      console.log("clic", gesture, isMouseEvent, e);
       if (isTouchEventAvailable && isMouseEvent) return;
       if (e) {
         const eventTarget = e.target as HTMLDivElement;
@@ -35,18 +36,35 @@ export default function Timer({
       }
       if (typeof TouchEvent === undefined) return;
 
-      if (timerState === TimerState.Stop) {
-        if (gesture === GestureType.Up) return;
+      if (timerState === TimerState.Stop && gesture === GestureType.Down) {
         readyTimer();
-      } else if (timerState === TimerState.Ready) {
-        if (gesture === GestureType.Down) return;
+      } else if (
+        timerState === TimerState.Ready &&
+        gesture === GestureType.Up
+      ) {
         startTimer();
-      } else {
-        if (gesture === GestureType.Down) return;
+      } else if (
+        timerState === TimerState.Start &&
+        gesture === GestureType.Down
+      ) {
         stopTimer();
+      } else if (
+        timerState === TimerState.Stopping &&
+        gesture === GestureType.Up
+      ) {
+        liberateTimer();
+      } else {
+        return;
       }
     },
-    [stopTimer, timerState, isTouchEventAvailable, readyTimer, startTimer]
+    [
+      stopTimer,
+      timerState,
+      isTouchEventAvailable,
+      readyTimer,
+      startTimer,
+      liberateTimer,
+    ]
   );
 
   useEffect(() => {
