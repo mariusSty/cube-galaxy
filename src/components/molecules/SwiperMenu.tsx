@@ -1,50 +1,36 @@
 import { useSwiper } from "swiper/react";
 
-const menuLabel = new Map([
-  [0, [undefined, "Timer"]],
-  [1, ["Stats", "Scramble"]],
-  [2, ["Timer", undefined]],
-]);
-
 type SwiperMenuProps = {
   activeSlide: number;
 };
 
+const menuLabel = [
+  { id: 0, label: "Stats", icon: "monitoring" },
+  { id: 1, label: "Timer", icon: "timer" },
+  { id: 2, label: "Scramble", icon: "deployed_code" },
+];
+
 export default function SwiperMenu({ activeSlide }: SwiperMenuProps) {
   const swiper = useSwiper();
 
-  const menuLabels = menuLabel.get(activeSlide);
-  const prevLabel = menuLabels ? menuLabels[0] : "Précedent";
-  const nextLabel = menuLabels ? menuLabels[1] : "Suivant";
-
-  const handlePrevClick = () => {
-    swiper.slidePrev();
-  };
-
-  const handleNextClick = () => {
-    swiper.slideNext();
-  };
+  const menu = menuLabel.map(({ id, label, icon }) => (
+    <button
+      key={id}
+      className={`flex justify-center align-middle gap-2 bg-[#030027] ${
+        activeSlide === id
+          ? `border-4 text-[#F6511D] border-[#F6511D]`
+          : `border-2 text-[#FFB400] border-[#FFB400]`
+      } p-4 w-24 sm:w-36 rounded-2xl`}
+      onClick={() => swiper.slideTo(id)}
+    >
+      <span className="material-symbols-outlined">{icon}</span>
+      <span className="hidden sm:inline">{label}</span>
+    </button>
+  ));
 
   return (
-    <div className="flex justify-center align-middle absolute w-full bottom-5 z-10">
-      <div className="rounded-3xl">
-        {prevLabel && (
-          <button
-            className="bg-green-500 text-white p-4"
-            onClick={handlePrevClick}
-          >
-            {prevLabel}
-          </button>
-        )}
-        {nextLabel && (
-          <button
-            className="bg-red-500 text-white p-4"
-            onClick={handleNextClick}
-          >
-            {nextLabel}
-          </button>
-        )}
-      </div>
+    <div className="flex justify-evenly align-middle absolute w-full bottom-10 z-10">
+      {menu}
     </div>
   );
 }

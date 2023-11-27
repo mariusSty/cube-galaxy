@@ -2,7 +2,6 @@ import { Bebas_Neue } from "next/font/google";
 
 type NumberText = {
   children: string;
-  isTextSecondary?: boolean;
   size?: "small" | "medium" | "big";
 };
 
@@ -14,17 +13,9 @@ const sizes = new Map([
   ["big", "text-9xl"],
 ]);
 
-export default function NumberText({
-  children,
-  isTextSecondary = false,
-  size = "medium",
-}: NumberText) {
+export default function NumberText({ children, size = "medium" }: NumberText) {
   return (
-    <span
-      className={`${bebas.className} ${sizes.get(size)} ${
-        isTextSecondary ? "text-blue-600" : "text-white"
-      }`}
-    >
+    <span className={`${bebas.className} ${sizes.get(size)} text-[#FFB400]`}>
       {children}
     </span>
   );

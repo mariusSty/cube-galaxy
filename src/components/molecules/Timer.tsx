@@ -98,12 +98,8 @@ export default function Timer({
       onTouchEnd={(e) => handleTimer(GestureType.Up, e)}
       onMouseDown={(e) => handleTimer(GestureType.Down, e, true)}
       onMouseUp={(e) => handleTimer(GestureType.Up, e, true)}
-      className={`flex flex-col justify-center items-center h-full bg-gradient-to-b from-blue-600 to-blue-500 cursor-pointer
-      ${
-        timerState === TimerState.Ready
-          ? "bg-gradient-to-b from-green-600 to-green-400"
-          : "bg-gradient-to-b from-blue-600 to-blue-500"
-      }`}
+      className={`flex flex-col justify-center items-center h-full cursor-pointer
+      ${timerState === TimerState.Ready ? "bg-[#06A77D]" : "bg-[#151E3F]"}`}
     >
       <NumberText size="big">{currentResult}</NumberText>
     </div>

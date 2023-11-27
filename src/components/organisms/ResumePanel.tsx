@@ -13,21 +13,21 @@ export default function ResumePanel({ times }: ResumePanelProps) {
   const average = getAverage(times);
 
   return (
-    <div className="grid grid-cols-3 gap-2 p-4">
+    <div className="grid grid-cols-3 gap-2 sm:gap-8">
       <ResumeBox isColspan>
-        <SimpleText>Solve</SimpleText>
+        <SimpleText size="small">Solve</SimpleText>
         <SimpleText size="big">{`${times.length}`}</SimpleText>
       </ResumeBox>
       <ResumeBox>
-        <SimpleText>Average</SimpleText>
+        <SimpleText size="small">Average</SimpleText>
         <SimpleText size="big">{average}</SimpleText>
       </ResumeBox>
       <ResumeBox>
-        <SimpleText>Best</SimpleText>
+        <SimpleText size="small">Best</SimpleText>
         <SimpleText size="big">{best}</SimpleText>
       </ResumeBox>
       <ResumeBox>
-        <SimpleText>Worst</SimpleText>
+        <SimpleText size="small">Worst</SimpleText>
         <SimpleText size="big">{worst}</SimpleText>
       </ResumeBox>
     </div>

@@ -76,16 +76,26 @@ export default function Home() {
         runCallbacksOnInit={false}
       >
         <SwiperSlide>
-          <ResumePanel times={times} />
-          <TimesPanel
-            times={times}
-            removeTime={removeTime}
-            removeAllTimes={removeAllTimes}
-            markAsDNF={markAsDNF}
-            markAsPlusTwo={markAsPlusTwo}
-          />
+          <div className="bg-[#030027] h-full">
+            <div className="flex flex-col p-8 sm:p-12 gap-8 sm:gap-12 h-[calc(100%-100px)]">
+              <ResumePanel times={times} />
+              <TimesPanel
+                times={times}
+                removeTime={removeTime}
+                removeAllTimes={removeAllTimes}
+                markAsDNF={markAsDNF}
+                markAsPlusTwo={markAsPlusTwo}
+              />
+            </div>
+          </div>
         </SwiperSlide>
         <SwiperSlide>
+          {!isTimerFocused && (
+            <Scramble
+              handleGenerateScramble={handleGenerateScramble}
+              scramble={currentScramble}
+            />
+          )}
           <Timer
             readyTimer={readyTimer}
             startTimer={startTimer}
@@ -94,12 +104,6 @@ export default function Home() {
             timerState={timerState}
             currentResult={currentResult}
           />
-          {!isTimerFocused && (
-            <Scramble
-              handleGenerateScramble={handleGenerateScramble}
-              scramble={currentScramble}
-            />
-          )}
         </SwiperSlide>
         <SwiperSlide>
           <PreviewPanel>

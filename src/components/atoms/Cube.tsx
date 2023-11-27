@@ -16,7 +16,7 @@ export default function Cube({ position }: CubeProps) {
       </mesh>
       <mesh position={[-0.501, 0, 0]} rotation-y={-Math.PI * 0.5}>
         <planeGeometry args={[0.8, 0.8]} />
-        <meshBasicMaterial color="orange" />
+        <meshBasicMaterial color="#F6511D" />
       </mesh>
       <mesh position={[0, 0.501, 0]} rotation-x={-Math.PI * 0.5}>
         <planeGeometry args={[0.8, 0.8]} />
@@ -24,11 +24,11 @@ export default function Cube({ position }: CubeProps) {
       </mesh>
       <mesh position={[0, -0.501, 0]} rotation-x={Math.PI * 0.5}>
         <planeGeometry args={[0.8, 0.8]} />
-        <meshBasicMaterial color="yellow" />
+        <meshBasicMaterial color="#FFB400" />
       </mesh>
       <mesh position={[0, 0, 0.501]}>
         <planeGeometry args={[0.8, 0.8]} />
-        <meshBasicMaterial color="green" />
+        <meshBasicMaterial color="#06A77D" />
       </mesh>
       <mesh position={[0, 0, -0.501]} rotation-y={Math.PI}>
         <planeGeometry args={[0.8, 0.8]} />

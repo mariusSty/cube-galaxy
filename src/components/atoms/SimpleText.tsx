@@ -1,26 +1,29 @@
 type SimpleTextProps = {
   children: string;
-  isTextSecondary?: boolean;
+  color?: "white" | "yellow" | "orange" | "green";
   size?: "small" | "medium" | "big";
 };
+
+const sizes = new Map([
+  ["small", "text-sm"],
+  ["medium", "text-md"],
+  ["big", "text-xl"],
+]);
+
+const colors = new Map([
+  ["white", "text-[#FFFFFF]"],
+  ["yellow", "text-[#FFB400]"],
+  ["orange", "text-[#F6511D]"],
+  ["green", "text-[#06A77D]"],
+]);
 
 export default function SimpleText({
   children,
   size = "medium",
-  isTextSecondary = false,
+  color = "white",
 }: SimpleTextProps) {
-  const sizes = new Map([
-    ["small", "text-md"],
-    ["medium", "text-xl"],
-    ["big", "text-3xl"],
-  ]);
-
   return (
-    <span
-      className={`${sizes.get(size)} ${
-        isTextSecondary ? "text-blue-600" : "text-white"
-      }`}
-    >
+    <span className={`${sizes.get(size)} ${colors.get(color)}`}>
       {children}
     </span>
   );

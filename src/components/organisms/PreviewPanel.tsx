@@ -5,5 +5,5 @@ type PreviewPanelProps = {
 };
 
 export default function PreviewPanel({ children }: PreviewPanelProps) {
-  return <div className="h-full">{children}</div>;
+  return <div className="bg-[#030027] w-full h-full">{children}</div>;
 }

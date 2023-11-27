@@ -41,19 +41,19 @@ export default function TimesPanel({
     });
 
   return (
-    <div className="row-start-3 lg:row-start-2 xl:row-start-1 h-full max-h-[40vh] p-4">
+    <div className="h-full bg-[#151E3F] rounded-2xl p-4 overflow-y-auto">
       <Tr isThead>
         <Td>
-          <SimpleText isTextSecondary>N°</SimpleText>
+          <SimpleText>N°</SimpleText>
         </Td>
         <Td>
-          <SimpleText isTextSecondary>Time</SimpleText>
+          <SimpleText>Time</SimpleText>
         </Td>
         <Td>
-          <SimpleText isTextSecondary>ao5</SimpleText>
+          <SimpleText>ao5</SimpleText>
         </Td>
         <Td>
-          <SimpleText isTextSecondary>ao12</SimpleText>
+          <SimpleText>ao12</SimpleText>
         </Td>
         <Td>
           <></>
@@ -63,39 +63,49 @@ export default function TimesPanel({
         </Td>
         <Td>
           <Button handleClick={removeAllTimes}>
-            <span className="material-symbols-outlined">close</span>
+            <span className="material-symbols-outlined text-white">delete</span>
           </Button>
         </Td>
       </Tr>
 
-      <div className="overflow-y-auto h-[calc(100%-70px)]">
+      <div className="">
         {result.map(({ id, position, time, ao5, ao12, isDNF, isPlusTwo }) => (
           <Tr key={id}>
             <Td>
-              <SimpleText isTextSecondary>{`${position}`}</SimpleText>
+              <SimpleText>{`${position}`}</SimpleText>
             </Td>
             <Td>
-              <SimpleText isTextSecondary>{time}</SimpleText>
+              <SimpleText>{time}</SimpleText>
             </Td>
             <Td>
-              <SimpleText isTextSecondary>{ao5}</SimpleText>
+              <SimpleText>{ao5}</SimpleText>
             </Td>
             <Td>
-              <SimpleText isTextSecondary>{ao12}</SimpleText>
+              <SimpleText>{ao12}</SimpleText>
             </Td>
             <Td>
               <Button handleClick={() => markAsPlusTwo(id)}>
-                {isPlusTwo ? "OK" : "+2"}
+                {isPlusTwo ? (
+                  <SimpleText color="orange">+2</SimpleText>
+                ) : (
+                  <SimpleText color="green">+2</SimpleText>
+                )}
               </Button>
             </Td>
             <Td>
               <Button handleClick={() => markAsDNF(id)}>
-                {isDNF ? "OK" : "DNF"}
+                {isDNF ? (
+                  <SimpleText color="orange">DNF</SimpleText>
+                ) : (
+                  <SimpleText color="green">DNF</SimpleText>
+                )}
               </Button>
             </Td>
             <Td>
               <Button handleClick={() => removeTime(id)}>
-                <span className="material-symbols-outlined">close</span>
+                <span className="material-symbols-outlined text-white">
+                  close
+                </span>
               </Button>
             </Td>
           </Tr>
