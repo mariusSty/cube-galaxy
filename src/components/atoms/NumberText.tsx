@@ -8,17 +8,17 @@ type NumberText = {
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400" });
 
+const sizes = new Map([
+  ["small", "text-3xl"],
+  ["medium", "text-5xl"],
+  ["big", "text-9xl"],
+]);
+
 export default function NumberText({
   children,
   isTextSecondary = false,
   size = "medium",
 }: NumberText) {
-  const sizes = new Map([
-    ["small", "text-3xl"],
-    ["medium", "text-5xl"],
-    ["big", "text-9xl"],
-  ]);
-
   return (
     <span
       className={`${bebas.className} ${sizes.get(size)} ${

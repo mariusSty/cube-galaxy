@@ -11,13 +11,14 @@ import useTimer, { TimerState } from "@/hooks/useTimer";
 import { useTimes } from "@/hooks/useTimes";
 import { Canvas } from "@react-three/fiber";
 import { Rubik } from "next/font/google";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { Scrambow } from "scrambow";
 
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const rubik = Rubik({ subsets: ["latin"], weight: "500" });
+const scrambow = new Scrambow();
 
 export default function Home() {
   const [currentScramble, setCurrentScramble] = useState<string[]>([]);
@@ -32,14 +33,21 @@ export default function Home() {
     removeTime,
   } = useTimes();
 
-  const handleGenerateScramble = () => {
-    const scrambow = new Scrambow();
+  const handleGenerateScramble = useCallback(function () {
     const scramble3x3 = scrambow.get();
     const scramble = scramble3x3[0].scramble_string
       .split(" ")
       .filter((scramble) => scramble !== "");
     setCurrentScramble(scramble);
-  };
+  }, []);
+
+  const handleStop = useCallback(
+    function (newTime: number) {
+      addTime(newTime);
+      handleGenerateScramble();
+    },
+    [addTime, handleGenerateScramble]
+  );
 
   const {
     currentResult,
@@ -49,10 +57,7 @@ export default function Home() {
     liberateTimer,
     stopTimer,
   } = useTimer({
-    handleStop: (newTime: number) => {
-      addTime(newTime);
-      handleGenerateScramble();
-    },
+    handleStop,
   });
 
   const isTimerFocused = timerState !== TimerState.Stop;
@@ -68,6 +73,7 @@ export default function Home() {
         initialSlide={1}
         modules={[Pagination, Navigation]}
         onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
+        runCallbacksOnInit={false}
       >
         <SwiperSlide>
           <ResumePanel times={times} />

@@ -28,13 +28,16 @@ export default function Timer({
     typeof window !== "undefined" && "ontouchstart" in window;
 
   const handleTimer = useCallback(
-    function (gesture: GestureType, e?: SyntheticEvent, isMouseEvent = false) {
+    function (
+      gesture: GestureType,
+      e: SyntheticEvent | KeyboardEvent,
+      isMouseEvent = false
+    ) {
       if (isTouchEventAvailable && isMouseEvent) return;
-      if (e) {
-        const eventTarget = e.target as HTMLDivElement;
-        if (eventTarget.parentElement?.id === "scrambleButton") return;
+
+      if (isMouseEvent || gesture === GestureType.Up) {
+        e.preventDefault();
       }
-      if (typeof TouchEvent === undefined) return;
 
       if (timerState === TimerState.Stop && gesture === GestureType.Down) {
         readyTimer();
@@ -70,15 +73,13 @@ export default function Timer({
   useEffect(() => {
     const keyUpHandler = (e: KeyboardEvent) => {
       if (e.code === "Space") {
-        e.preventDefault();
-        handleTimer(GestureType.Up);
+        handleTimer(GestureType.Up, e);
       }
     };
 
     const keyDownHandler = (e: KeyboardEvent) => {
       if (e.code === "Space") {
-        e.preventDefault();
-        handleTimer(GestureType.Down);
+        handleTimer(GestureType.Down, e);
       }
     };
 
@@ -89,7 +90,7 @@ export default function Timer({
       document.removeEventListener("keyup", keyUpHandler);
       document.removeEventListener("keydown", keyDownHandler);
     };
-  }, [handleTimer, timerState]);
+  }, [handleTimer]);
 
   return (
     <div
@@ -97,7 +98,7 @@ export default function Timer({
       onTouchEnd={(e) => handleTimer(GestureType.Up, e)}
       onMouseDown={(e) => handleTimer(GestureType.Down, e, true)}
       onMouseUp={(e) => handleTimer(GestureType.Up, e, true)}
-      className={`flex flex-col justify-center items-center h-full bg-gradient-to-b from-blue-600 to-blue-500
+      className={`flex flex-col justify-center items-center h-full bg-gradient-to-b from-blue-600 to-blue-500 cursor-pointer
       ${
         timerState === TimerState.Ready
           ? "bg-gradient-to-b from-green-600 to-green-400"

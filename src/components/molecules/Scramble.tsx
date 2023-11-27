@@ -27,7 +27,6 @@ export default function Scramble({
     <div className="absolute bottom-20 flex justify-center items-center w-full p-4 gap-4">
       <div className="flex justify-center items-center rounded-lg h-full border-4 border-white hover:border-zinc-200 pointer-events-none">
         <button
-          id="scrambleButton"
           className="flex items-center justify-center h-full p-3 bg-white hover:bg-zinc-200 pointer-events-auto"
           onClick={(e) => {
             e.preventDefault();

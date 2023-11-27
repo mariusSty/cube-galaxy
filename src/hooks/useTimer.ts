@@ -54,9 +54,9 @@ export default function useTimer({
     [handleStop, startTime]
   );
 
-  const liberateTimer = () => {
+  const liberateTimer = useCallback(function () {
     setTimerState(TimerState.Stop);
-  };
+  }, []);
 
   const runTimer = useCallback(() => {
     setNow(Date.now());
@@ -68,9 +68,9 @@ export default function useTimer({
       intervalRef.current = requestAnimationFrame(runTimer);
     }
 
-    return () => {
-      if (intervalRef.current) cancelAnimationFrame(intervalRef.current);
-    };
+    if (timerState === TimerState.Stopping && intervalRef.current) {
+      cancelAnimationFrame(intervalRef.current);
+    }
   }, [timerState, runTimer]);
 
   return {
