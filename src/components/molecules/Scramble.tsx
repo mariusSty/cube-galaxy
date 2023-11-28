@@ -11,7 +11,7 @@ export default function Scramble({
 }: ScrambleProps) {
   const moveList =
     scramble && scramble.length > 0 ? (
-      <ul className="grid grid-cols-7 py-4 md:grid-cols-10 lg:grid-cols-12 w-full bg-[#030027] border-y-[1px] border-[#FFB400]">
+      <ul className="grid grid-cols-7 py-4 md:grid-cols-10 lg:grid-cols-12 w-full bg-[#030027] border-y-[1px] border-[#F6511D]">
         {scramble.map((move, index) => (
           <li className="flex items-center justify-center h-8" key={index}>
             <SimpleText size="big">{move}</SimpleText>

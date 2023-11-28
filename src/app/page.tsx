@@ -1,5 +1,6 @@
 "use client";
 
+import CurrentResult from "@/components/molecules/CurrentResult";
 import Experience from "@/components/molecules/Experience";
 import Scramble from "@/components/molecules/Scramble";
 import SwiperMenu from "@/components/molecules/SwiperMenu";
@@ -108,6 +109,7 @@ export default function Home() {
             timerState={timerState}
             currentResult={currentResult}
           />
+          {!isTimerFocused && <CurrentResult times={times} />}
         </SwiperSlide>
         <SwiperSlide>
           <PreviewPanel>
