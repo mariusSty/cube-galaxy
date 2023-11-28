@@ -49,12 +49,16 @@ export default function TimesPanel({
         <Td>
           <SimpleText>Time</SimpleText>
         </Td>
-        <Td>
-          <SimpleText>ao5</SimpleText>
-        </Td>
-        <Td>
-          <SimpleText>ao12</SimpleText>
-        </Td>
+        <div className="hidden sm:block">
+          <Td>
+            <SimpleText>ao5</SimpleText>
+          </Td>
+        </div>
+        <div className="hidden md:block">
+          <Td>
+            <SimpleText>ao12</SimpleText>
+          </Td>
+        </div>
         <Td>
           <></>
         </Td>
@@ -77,12 +81,16 @@ export default function TimesPanel({
             <Td>
               <SimpleText>{time}</SimpleText>
             </Td>
-            <Td>
-              <SimpleText>{ao5}</SimpleText>
-            </Td>
-            <Td>
-              <SimpleText>{ao12}</SimpleText>
-            </Td>
+            <div className="hidden sm:block">
+              <Td>
+                <SimpleText>{ao5}</SimpleText>
+              </Td>
+            </div>
+            <div className="hidden md:block">
+              <Td>
+                <SimpleText>{ao12}</SimpleText>
+              </Td>
+            </div>
             <Td>
               <Button handleClick={() => markAsPlusTwo(id)}>
                 {isPlusTwo ? (
