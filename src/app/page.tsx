@@ -11,7 +11,7 @@ import useTimer, { TimerState } from "@/hooks/useTimer";
 import { useTimes } from "@/hooks/useTimes";
 import { Canvas } from "@react-three/fiber";
 import { Rubik } from "next/font/google";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Scrambow } from "scrambow";
 
 import { Navigation, Pagination } from "swiper/modules";
@@ -61,6 +61,10 @@ export default function Home() {
   });
 
   const isTimerFocused = timerState !== TimerState.Stop;
+
+  useEffect(() => {
+    handleGenerateScramble();
+  }, [handleGenerateScramble]);
 
   return (
     <main
