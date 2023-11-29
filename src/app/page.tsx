@@ -12,9 +12,9 @@ import useTimer, { TimerState } from "@/hooks/useTimer";
 import { useTimes } from "@/hooks/useTimes";
 import { Canvas } from "@react-three/fiber";
 import { Rubik } from "next/font/google";
-import { useCallback, useEffect, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
 import { Scrambow } from "scrambow";
-
 import { Navigation, Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -49,6 +49,27 @@ export default function Home() {
     },
     [addTime, handleGenerateScramble]
   );
+
+  const CloseButton = ({
+    closeToast,
+  }: {
+    closeToast: (e: MouseEvent<HTMLElement>) => void;
+  }) => (
+    <span className="material-symbols-outlined text-white" onClick={closeToast}>
+      close
+    </span>
+  );
+
+  function handleCopyToClipBoard() {
+    if (!currentScramble) return;
+    navigator.clipboard.writeText(currentScramble.join(" "));
+    toast.info(<span className={rubik.className}>Scramble copied !</span>, {
+      position: toast.POSITION.BOTTOM_CENTER,
+      toastId: "copy-id",
+      theme: "dark",
+      icon: false,
+    });
+  }
 
   const {
     currentResult,
@@ -98,6 +119,7 @@ export default function Home() {
           {!isTimerFocused && (
             <Scramble
               handleGenerateScramble={handleGenerateScramble}
+              handleCopyToClipBoard={handleCopyToClipBoard}
               scramble={currentScramble}
             />
           )}
@@ -122,6 +144,8 @@ export default function Home() {
         </SwiperSlide>
         {!isTimerFocused && <SwiperMenu activeSlide={activeSlide} />}
       </Swiper>
+
+      <ToastContainer closeButton={CloseButton} />
     </main>
   );
 }
