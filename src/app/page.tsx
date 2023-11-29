@@ -44,10 +44,10 @@ export default function Home() {
 
   const handleStop = useCallback(
     function (newTime: number) {
-      addTime(newTime);
+      addTime(newTime, currentScramble);
       handleGenerateScramble();
     },
-    [addTime, handleGenerateScramble]
+    [addTime, handleGenerateScramble, currentScramble]
   );
 
   const CloseButton = ({

@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 export type Time = {
   id: string;
   value: number;
+  scramble: string[];
   isDNF: boolean;
   isPlusTwo: boolean;
   createdAt: number;
@@ -14,6 +15,7 @@ type TimeReducerAction = {
   type: string;
   id?: string;
   value?: number;
+  scramble?: string[];
 };
 
 function timesReducer(times: Time[], action: TimeReducerAction): Time[] {
@@ -26,6 +28,7 @@ function timesReducer(times: Time[], action: TimeReducerAction): Time[] {
         {
           id: uuidv4(),
           value: action.value,
+          scramble: action.scramble ?? [],
           isDNF: false,
           isPlusTwo: false,
           createdAt: Date.now(),
@@ -75,10 +78,11 @@ export function useTimes() {
 
   return {
     times,
-    addTime: (value: number) =>
+    addTime: (value: number, scramble: string[]) =>
       dispatch({
         type: "added",
         value,
+        scramble,
       }),
     removeTime: (id: string) => dispatch({ type: "deleted", id }),
     removeAllTimes: () => dispatch({ type: "deletedAll" }),

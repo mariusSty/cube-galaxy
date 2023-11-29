@@ -1,6 +1,35 @@
 import { Time } from "@/hooks/useTimes";
 import formatTimer from "./formatTime";
 
+export type Result = Omit<Time, "value" | "createdAt" | "updatedAt"> & {
+  time: string;
+  position: number;
+  ao5: string;
+  ao12: string;
+};
+
+export function getResult(times: Time[]): Result[] {
+  return [...times]
+    .sort((timeA, timeB) => timeA.createdAt - timeB.createdAt)
+    .reverse()
+    .map((time, index) => {
+      const position = times.length - index;
+      const ao5 = getAverageOf(times, position);
+      const ao12 = getAverageOf(times, position, 12);
+
+      return {
+        id: time.id,
+        position,
+        time: time.isDNF ? "DNF" : formatTimer(time.value),
+        scramble: time.scramble,
+        ao5,
+        ao12,
+        isDNF: time.isDNF,
+        isPlusTwo: time.isPlusTwo,
+      };
+    });
+}
+
 export function getWorst(times: Time[]): string {
   if (times.length === 0) return "-";
   const timesWithoutDNF = times.filter((time) => time.isDNF === false);
