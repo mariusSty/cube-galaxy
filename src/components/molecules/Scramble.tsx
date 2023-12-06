@@ -1,3 +1,4 @@
+import Button from "../atoms/Button";
 import SimpleText from "../atoms/SimpleText";
 
 type ScrambleProps = {
@@ -26,25 +27,16 @@ export default function Scramble({
   return (
     <div className="absolute left-1/2 -translate-x-1/2 top-5 flex flex-col justify-center items-center w-[80%] gap-2 p-4 pointer-events-none rounded-2xl bg-[#030027] border-[1px] border-[#F6511D]">
       <div className="flex items-center justify-center w-full gap-4">
-        <button
-          className="flex items-center justify-center h-full p-3 rounded-2xl bg-[#FFB400] pointer-events-auto"
-          onClick={(e) => {
-            e.preventDefault();
-            handleGenerateScramble();
-          }}
-        >
-          <span className="material-symbols-outlined text-[#030027]">
+        <Button handleClick={handleGenerateScramble}>
+          <span className="material-symbols-outlined text-[#030027] m-3">
             replay
           </span>
-        </button>
-        <button
-          className="flex items-center justify-center h-full p-3 rounded-2xl bg-[#FFB400] pointer-events-auto"
-          onClick={handleCopyToClipBoard}
-        >
-          <span className="material-symbols-outlined text-[#030027]">
+        </Button>
+        <Button handleClick={handleCopyToClipBoard}>
+          <span className="material-symbols-outlined text-[#030027] m-3">
             content_copy
           </span>
-        </button>
+        </Button>
       </div>
       {moveList}
     </div>

@@ -13,11 +13,11 @@ export default function CurrentResult({ times }: CurrentResultProps) {
   return (
     <div className="flex flex-col w-[80%] sm:w-auto absolute left-1/2 -translate-x-1/2 bottom-32 p-4 gap-2 bg-[#030027] border-[1px] border-[#F6511D] rounded-2xl">
       <div className="flex justify-start align-middle gap-2">
-        <SimpleText size="big">Current ao5 : </SimpleText>
+        <SimpleText size="big">ao5 : </SimpleText>
         <SimpleText size="big">{ao5}</SimpleText>
       </div>
       <div className="flex justify-start align-middle gap-2">
-        <SimpleText size="big">Current ao12 : </SimpleText>
+        <SimpleText size="big">ao12 : </SimpleText>
         <SimpleText size="big">{ao12}</SimpleText>
       </div>
     </div>

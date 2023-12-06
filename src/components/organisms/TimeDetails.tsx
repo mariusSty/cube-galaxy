@@ -37,19 +37,21 @@ export default function TimeDetails({
           </span>
         </button>
         <div className="flex gap-4">
-          <Button handleClick={() => markAsPlusTwo(id)}>
-            {isPlusTwo ? (
-              <SimpleText color="orange">+2</SimpleText>
-            ) : (
-              <SimpleText color="green">+2</SimpleText>
-            )}
+          <Button
+            handleClick={() => markAsPlusTwo(id)}
+            color={isPlusTwo ? "orange" : "green"}
+          >
+            <span className="my-1 mx-2">
+              <SimpleText color="blue">+2</SimpleText>
+            </span>
           </Button>
-          <Button handleClick={() => markAsDNF(id)}>
-            {isDNF ? (
-              <SimpleText color="orange">DNF</SimpleText>
-            ) : (
-              <SimpleText color="green">DNF</SimpleText>
-            )}
+          <Button
+            handleClick={() => markAsDNF(id)}
+            color={isDNF ? "orange" : "green"}
+          >
+            <span className="my-1 mx-2">
+              <SimpleText color="blue">DNF</SimpleText>
+            </span>
           </Button>
         </div>
         <Button
@@ -57,8 +59,11 @@ export default function TimeDetails({
             swiper.slidePrev();
             removeTime(id);
           }}
+          color="orange"
         >
-          <span className="material-symbols-outlined text-white">delete</span>
+          <span className="material-symbols-outlined text-[#151E3F] m-1">
+            delete
+          </span>
         </Button>
       </div>
 

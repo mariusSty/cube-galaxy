@@ -16,11 +16,11 @@ export default function SwiperMenu({ activeSlide }: SwiperMenuProps) {
   const menu = menuLabel.map(({ id, label, icon }) => (
     <button
       key={id}
-      className={`flex justify-center align-middle gap-2 bg-[#030027] ${
+      className={`flex justify-center align-middle gap-2 p-4  ${
         activeSlide === id
-          ? `border-4 text-[#F6511D] border-[#F6511D]`
-          : `border-2 text-[#FFB400] border-[#FFB400]`
-      } p-4 w-24 sm:w-36 rounded-2xl`}
+          ? `text-[#F6511D] bg-[#030027]`
+          : `text-[#FFB400] bg-[#151E3F]`
+      }`}
       onClick={() => swiper.slideTo(id)}
     >
       <span className="material-symbols-outlined">{icon}</span>
@@ -29,7 +29,7 @@ export default function SwiperMenu({ activeSlide }: SwiperMenuProps) {
   ));
 
   return (
-    <div className="flex justify-evenly align-middle absolute w-full bottom-10 z-10">
+    <div className="grid grid-cols-3 absolute w-full bottom-0 z-10 gap-1">
       {menu}
     </div>
   );

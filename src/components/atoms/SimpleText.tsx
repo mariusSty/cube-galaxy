@@ -1,6 +1,6 @@
 type SimpleTextProps = {
   children: string;
-  color?: "white" | "yellow" | "orange" | "green";
+  color?: "white" | "yellow" | "orange" | "green" | "blue";
   size?: "small" | "medium" | "big";
 };
 
@@ -15,6 +15,7 @@ const colors = new Map([
   ["yellow", "text-[#FFB400]"],
   ["orange", "text-[#F6511D]"],
   ["green", "text-[#06A77D]"],
+  ["blue", "text-[#151E3F]"],
 ]);
 
 export default function SimpleText({

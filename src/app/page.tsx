@@ -90,7 +90,7 @@ export default function Home() {
 
   return (
     <main
-      className={`w-full h-full ${rubik.className}`}
+      className={`w-full h-full bg-[#030027] ${rubik.className}`}
       onContextMenu={(e) => e.preventDefault()}
     >
       <Swiper
@@ -102,8 +102,8 @@ export default function Home() {
         runCallbacksOnInit={false}
       >
         <SwiperSlide>
-          <div className="bg-[#030027] h-full">
-            <div className="flex flex-col p-8 sm:p-12 gap-8 sm:gap-12 h-[calc(100%-100px)]">
+          <div className=" h-full">
+            <div className="flex flex-col p-8 sm:p-12 gap-8 sm:gap-12 h-[calc(100%-60px)]">
               <ResumePanel times={times} />
               <TimesPanel
                 times={times}

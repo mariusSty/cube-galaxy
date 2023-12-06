@@ -23,6 +23,7 @@ export default function TimesTable({
   setTimeFocused,
 }: TimesTableProps) {
   const swiper = useSwiper();
+
   function handleDetails(id: string) {
     setTimeFocused(id);
     swiper.slideNext();
@@ -54,8 +55,10 @@ export default function TimesTable({
           </Td>
         </div>
         <Td>
-          <Button handleClick={removeAllTimes}>
-            <span className="material-symbols-outlined text-white">delete</span>
+          <Button handleClick={removeAllTimes} color="orange">
+            <span className="material-symbols-outlined text-white m-1">
+              delete_history
+            </span>
           </Button>
         </Td>
       </Tr>
@@ -79,37 +82,39 @@ export default function TimesTable({
           </Td>
           <div className="hidden sm:block">
             <Td>
-              <Button handleClick={() => markAsPlusTwo(id)}>
-                {isPlusTwo ? (
-                  <SimpleText color="orange">+2</SimpleText>
-                ) : (
-                  <SimpleText color="green">+2</SimpleText>
-                )}
+              <Button
+                handleClick={() => markAsPlusTwo(id)}
+                color={isPlusTwo ? "orange" : "green"}
+              >
+                <span className="my-1 mx-2">
+                  <SimpleText color="blue">+2</SimpleText>
+                </span>
               </Button>
             </Td>
           </div>
           <div className="hidden sm:block">
             <Td>
-              <Button handleClick={() => markAsDNF(id)}>
-                {isDNF ? (
-                  <SimpleText color="orange">DNF</SimpleText>
-                ) : (
-                  <SimpleText color="green">DNF</SimpleText>
-                )}
+              <Button
+                handleClick={() => markAsDNF(id)}
+                color={isDNF ? "orange" : "green"}
+              >
+                <span className="my-1 mx-2">
+                  <SimpleText color="blue">DNF</SimpleText>
+                </span>
               </Button>
             </Td>
           </div>
           <Td>
             <div className="hidden sm:block">
-              <Button handleClick={() => removeTime(id)}>
-                <span className="material-symbols-outlined text-white">
+              <Button handleClick={() => removeTime(id)} color="orange">
+                <span className="material-symbols-outlined text-[#151E3F] m-1">
                   close
                 </span>
               </Button>
             </div>
             <div className="block sm:hidden">
-              <Button handleClick={() => handleDetails(id)}>
-                <span className="material-symbols-outlined text-white">
+              <Button handleClick={() => handleDetails(id)} color="blue">
+                <span className="material-symbols-outlined text-white m-1">
                   navigate_next
                 </span>
               </Button>
