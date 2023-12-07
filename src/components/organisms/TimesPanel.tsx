@@ -32,7 +32,7 @@ export default function TimesPanel({
     <div className="h-full bg-[#151E3F] rounded-2xl p-4 overflow-y-auto">
       <Swiper
         allowTouchMove={false}
-        className="w-full h-full"
+        className="w-full"
         runCallbacksOnInit={false}
       >
         <SwiperSlide>
