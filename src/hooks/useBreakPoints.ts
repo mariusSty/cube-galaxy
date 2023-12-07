@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export default function useBreakPoints() {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState<number>(Infinity);
 
   const resize = () => {
     setWindowWidth(window.innerWidth);
@@ -12,12 +12,13 @@ export default function useBreakPoints() {
   const isLowerThan = (value: number) => value > windowWidth;
 
   useEffect(() => {
+    if (windowWidth === Infinity) setWindowWidth(window.innerWidth);
     window.addEventListener("resize", resize);
 
     return () => {
       window.removeEventListener("resize", resize);
     };
-  }, []);
+  }, [windowWidth]);
 
   return {
     windowWidth,

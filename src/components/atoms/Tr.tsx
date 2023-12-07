@@ -1,4 +1,4 @@
-import useBreakPoints from "@/hooks/usBreakPoints";
+import useBreakPoints from "@/hooks/useBreakPoints";
 import { ReactNode } from "react";
 import Td from "./Td";
 

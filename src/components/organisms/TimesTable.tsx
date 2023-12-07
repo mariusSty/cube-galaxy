@@ -1,4 +1,4 @@
-import useBreakPoints from "@/hooks/usBreakPoints";
+import useBreakPoints from "@/hooks/useBreakPoints";
 import { Result } from "@/utils/getResult";
 import { useSwiper } from "swiper/react";
 import SimpleText from "../atoms/SimpleText";
