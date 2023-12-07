@@ -32,7 +32,7 @@ export default function TimesTable({
   }
 
   return (
-    <>
+    <div className="h-full overflow-y-auto">
       <Tr
         isThead
         renderLastItem={() => (
@@ -87,6 +87,6 @@ export default function TimesTable({
           />
         </Tr>
       ))}
-    </>
+    </div>
   );
 }
