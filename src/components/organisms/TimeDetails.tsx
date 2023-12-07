@@ -1,6 +1,7 @@
 import { Result } from "@/utils/getResult";
 import { useSwiper } from "swiper/react";
 import Button from "../atoms/Button";
+import Icon from "../atoms/Icon";
 import SimpleText from "../atoms/SimpleText";
 
 type TimeDetailsProps = {
@@ -31,11 +32,9 @@ export default function TimeDetails({
   return (
     <div className="flex flex-col justify-between w-full h-full">
       <div className="flex justify-between">
-        <button className="" onClick={handleGoToTable}>
-          <span className="text-white material-symbols-outlined">
-            navigate_before
-          </span>
-        </button>
+        <Button handleClick={handleGoToTable} color="blue">
+          <Icon name="navigate_before" style="text-white" />
+        </Button>
         <div className="flex gap-4">
           <Button
             handleClick={() => markAsPlusTwo(id)}
@@ -61,9 +60,7 @@ export default function TimeDetails({
           }}
           color="orange"
         >
-          <span className="material-symbols-outlined text-[#151E3F] m-1">
-            delete
-          </span>
+          <Icon name="delete" style="text-[#151E3F] m-1" />
         </Button>
       </div>
 

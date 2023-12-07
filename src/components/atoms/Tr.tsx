@@ -1,18 +1,36 @@
+import useBreakPoints from "@/hooks/usBreakPoints";
 import { ReactNode } from "react";
+import Td from "./Td";
 
 type TrProps = {
-  children: ReactNode;
   isThead?: boolean;
+  children: ReactNode[];
+  renderLastItem?: () => JSX.Element;
 };
 
-export default function Tr({ children, isThead = false }: TrProps) {
+export default function Tr({
+  isThead = false,
+  children = [],
+  renderLastItem,
+}: TrProps) {
+  const { isSmallScreen } = useBreakPoints();
+
+  const contentToDisplay = isSmallScreen
+    ? children.slice(0, 4)
+    : children.slice();
+  const content = contentToDisplay.map((td, i) => <Td key={i}>{td}</Td>);
+
   return (
     <div
-      className={`grid grid-cols-5 sm:grid-cols-7 ${
-        isThead ? `border-b-2` : `border-0`
-      } border-white`}
+      className={`grid ${isSmallScreen ? "grid-cols-5" : "grid-cols-7"} 
+      ${isThead ? `border-b-2 border-white` : `border-0`}`}
     >
-      {children}
+      {content}
+      {renderLastItem && (
+        <Td style={isSmallScreen ? "col-start-5" : "col-start-7"}>
+          {renderLastItem()}
+        </Td>
+      )}
     </div>
   );
 }

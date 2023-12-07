@@ -1,9 +1,10 @@
+import useBreakPoints from "@/hooks/usBreakPoints";
 import { Result } from "@/utils/getResult";
 import { useSwiper } from "swiper/react";
-import Button from "../atoms/Button";
 import SimpleText from "../atoms/SimpleText";
-import Td from "../atoms/Td";
 import Tr from "../atoms/Tr";
+import BadgeButton from "../molecules/BadgeButton";
+import IconButton from "../molecules/IconButton";
 
 type TimesTableProps = {
   results: Result[];
@@ -23,6 +24,7 @@ export default function TimesTable({
   setTimeFocused,
 }: TimesTableProps) {
   const swiper = useSwiper();
+  const { isSmallScreen } = useBreakPoints();
 
   function handleDetails(id: string) {
     setTimeFocused(id);
@@ -31,95 +33,58 @@ export default function TimesTable({
 
   return (
     <>
-      <Tr isThead>
-        <Td>
-          <SimpleText>N°</SimpleText>
-        </Td>
-        <Td>
-          <SimpleText>Time</SimpleText>
-        </Td>
-        <Td>
-          <SimpleText>ao5</SimpleText>
-        </Td>
-        <Td>
-          <SimpleText>ao12</SimpleText>
-        </Td>
-        <div className="hidden sm:block">
-          <Td>
-            <></>
-          </Td>
-        </div>
-        <div className="hidden sm:block">
-          <Td>
-            <></>
-          </Td>
-        </div>
-        <Td>
-          <Button handleClick={removeAllTimes} color="orange">
-            <span className="material-symbols-outlined text-white m-1">
-              delete_history
-            </span>
-          </Button>
-        </Td>
+      <Tr
+        isThead
+        renderLastItem={() => (
+          <IconButton
+            iconName="delete_history"
+            buttonColor="orange"
+            handleClick={removeAllTimes}
+          />
+        )}
+      >
+        <SimpleText>N°</SimpleText>
+        <SimpleText>Time</SimpleText>
+        <SimpleText>ao5</SimpleText>
+        <SimpleText>ao12</SimpleText>
       </Tr>
       {results.map(({ id, position, time, ao5, ao12, isDNF, isPlusTwo }) => (
-        <Tr key={id}>
-          <Td>
-            <SimpleText>{`${position}`}</SimpleText>
-          </Td>
-          <Td>
-            {isPlusTwo || isDNF ? (
-              <SimpleText color="orange">{time}</SimpleText>
+        <Tr
+          key={id}
+          renderLastItem={() =>
+            isSmallScreen ? (
+              <IconButton
+                iconName="navigate_next"
+                iconColor="white"
+                buttonColor="blue"
+                handleClick={() => handleDetails(id)}
+              />
             ) : (
-              <SimpleText color="green">{time}</SimpleText>
-            )}
-          </Td>
-          <Td>
-            <SimpleText>{ao5}</SimpleText>
-          </Td>
-          <Td>
-            <SimpleText>{ao12}</SimpleText>
-          </Td>
-          <div className="hidden sm:block">
-            <Td>
-              <Button
-                handleClick={() => markAsPlusTwo(id)}
-                color={isPlusTwo ? "orange" : "green"}
-              >
-                <span className="my-1 mx-2">
-                  <SimpleText color="blue">+2</SimpleText>
-                </span>
-              </Button>
-            </Td>
-          </div>
-          <div className="hidden sm:block">
-            <Td>
-              <Button
-                handleClick={() => markAsDNF(id)}
-                color={isDNF ? "orange" : "green"}
-              >
-                <span className="my-1 mx-2">
-                  <SimpleText color="blue">DNF</SimpleText>
-                </span>
-              </Button>
-            </Td>
-          </div>
-          <Td>
-            <div className="hidden sm:block">
-              <Button handleClick={() => removeTime(id)} color="orange">
-                <span className="material-symbols-outlined text-[#151E3F] m-1">
-                  close
-                </span>
-              </Button>
-            </div>
-            <div className="block sm:hidden">
-              <Button handleClick={() => handleDetails(id)} color="blue">
-                <span className="material-symbols-outlined text-white m-1">
-                  navigate_next
-                </span>
-              </Button>
-            </div>
-          </Td>
+              <IconButton
+                iconName="remove"
+                iconColor="blue"
+                buttonColor="orange"
+                handleClick={() => removeTime(id)}
+              />
+            )
+          }
+        >
+          <SimpleText>{`${position}`}</SimpleText>
+          <SimpleText color={isPlusTwo || isDNF ? "orange" : "green"}>
+            {time}
+          </SimpleText>
+          <SimpleText>{ao5}</SimpleText>
+          <SimpleText>{ao12}</SimpleText>
+          <BadgeButton
+            text="+2"
+            handleClick={() => markAsPlusTwo(id)}
+            isActive={isPlusTwo}
+          />
+          <BadgeButton
+            text="DNF"
+            handleClick={() => markAsDNF(id)}
+            isActive={isDNF}
+          />
         </Tr>
       ))}
     </>

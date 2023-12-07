@@ -2,10 +2,13 @@ import { ReactNode } from "react";
 
 type TdProps = {
   children: ReactNode;
+  style?: string;
 };
 
-export default function Td({ children }: TdProps) {
+export default function Td({ children, style }: TdProps) {
   return (
-    <div className="flex justify-center items-center p-4 p-l8">{children}</div>
+    <div className={`flex justify-center items-center p-4 ${style}`}>
+      {children}
+    </div>
   );
 }

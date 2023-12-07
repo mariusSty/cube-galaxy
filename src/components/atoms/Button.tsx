@@ -19,10 +19,10 @@ export default function Button({
   children,
   color = "yellow",
 }: ButtonProps) {
-  const handleButtonClick = (e: MouseEvent) => {
+  function handleButtonClick(e: MouseEvent) {
     e.preventDefault();
     handleClick();
-  };
+  }
 
   return (
     <button

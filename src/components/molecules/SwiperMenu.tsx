@@ -1,4 +1,5 @@
 import { useSwiper } from "swiper/react";
+import Icon from "../atoms/Icon";
 
 type SwiperMenuProps = {
   activeSlide: number;
@@ -23,7 +24,7 @@ export default function SwiperMenu({ activeSlide }: SwiperMenuProps) {
       }`}
       onClick={() => swiper.slideTo(id)}
     >
-      <span className="material-symbols-outlined">{icon}</span>
+      <Icon name={icon} />
       <span className="hidden sm:inline">{label}</span>
     </button>
   ));
