@@ -1,4 +1,8 @@
-export default function formatTimer(timer: number) {
+export default function formatTimer(
+  timer: number | null,
+  textIfNull = "-"
+): string {
+  if (timer === null) return textIfNull;
   const toDisplay = [];
   const minutes = Math.floor(timer / 60000);
   const seconds = Math.floor(timer / 1000 - minutes * 60);
