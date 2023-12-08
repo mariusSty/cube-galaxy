@@ -30,7 +30,7 @@ export default function ResumePanel({ times, results }: ResumePanelProps) {
     }, null);
 
   return (
-    <div className="grid grid-cols-3 gap-2 sm:gap-8">
+    <div className="grid grid-cols-3 gap-2 sm:gap-8 md:gap-2 h-full">
       <ResumeBox>
         <SimpleText size="small">Solve</SimpleText>
         <SimpleText size="big">{`${times.length}`}</SimpleText>
