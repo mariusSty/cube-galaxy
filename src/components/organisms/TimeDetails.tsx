@@ -1,8 +1,9 @@
+import formatTimer from "@/utils/formatTime";
 import { Result } from "@/utils/getResult";
 import { useSwiper } from "swiper/react";
-import Button from "../atoms/Button";
-import Icon from "../atoms/Icon";
 import SimpleText from "../atoms/SimpleText";
+import BadgeButton from "../molecules/BadgeButton";
+import IconButton from "../molecules/IconButton";
 
 type TimeDetailsProps = {
   results: Result[];
@@ -32,49 +33,43 @@ export default function TimeDetails({
   return (
     <div className="flex flex-col justify-between w-full h-full">
       <div className="flex justify-between">
-        <Button handleClick={handleGoToTable} color="blue">
-          <Icon name="navigate_before" style="text-white" />
-        </Button>
+        <IconButton
+          iconName="navigate_before"
+          iconColor="white"
+          buttonColor="blue"
+          handleClick={handleGoToTable}
+        />
         <div className="flex gap-4">
-          <Button
+          <BadgeButton
+            text="+2"
             handleClick={() => markAsPlusTwo(id)}
-            color={isPlusTwo ? "orange" : "green"}
-          >
-            <span className="my-1 mx-2">
-              <SimpleText color="blue">+2</SimpleText>
-            </span>
-          </Button>
-          <Button
+            isActive={isPlusTwo}
+          />
+          <BadgeButton
+            text="DNF"
             handleClick={() => markAsDNF(id)}
-            color={isDNF ? "orange" : "green"}
-          >
-            <span className="my-1 mx-2">
-              <SimpleText color="blue">DNF</SimpleText>
-            </span>
-          </Button>
+            isActive={isDNF}
+          />
         </div>
-        <Button
+        <IconButton
+          iconName="delete"
+          buttonColor="orange"
+          iconColor="blue"
           handleClick={() => {
             swiper.slidePrev();
             removeTime(id);
           }}
-          color="orange"
-        >
-          <Icon name="delete" style="text-[#151E3F] m-1" />
-        </Button>
+        />
       </div>
 
       <div className="flex flex-col gap-2 justify-center align-middle h-full">
         <div className="flex justify-center align-middle">
-          {isPlusTwo || isDNF ? (
-            <SimpleText size="big" color="orange">
-              {time}
-            </SimpleText>
-          ) : (
-            <SimpleText size="big" color="green">
-              {time}
-            </SimpleText>
-          )}
+          <SimpleText
+            size="big"
+            color={isPlusTwo || isDNF ? "orange" : "green"}
+          >
+            {formatTimer(time)}
+          </SimpleText>
         </div>
         <div className="flex flex-wrap gap-2">
           {scramble.map((move, index) => (
@@ -87,10 +82,10 @@ export default function TimeDetails({
 
       <div className="flex flex-wrap justify-center align-middle gap-4 sm:gap-8">
         <div className="border-[1px] border-[#FFB400] rounded-2xl p-2 sm:p-4 ">
-          <SimpleText>{`ao5 : ${ao5}`}</SimpleText>
+          <SimpleText>{`ao5 : ${formatTimer(ao5)}`}</SimpleText>
         </div>
         <div className="border-[1px] border-[#FFB400] rounded-2xl p-2 sm:p-4 ">
-          <SimpleText>{`ao12 : ${ao12}`}</SimpleText>
+          <SimpleText>{`ao12 : ${formatTimer(ao12)}`}</SimpleText>
         </div>
       </div>
     </div>
