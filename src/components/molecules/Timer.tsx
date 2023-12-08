@@ -1,6 +1,5 @@
 import { TimerState } from "@/hooks/useTimer";
 import { SyntheticEvent, useCallback, useEffect } from "react";
-import NumberText from "../atoms/NumberText";
 
 type TimerProps = {
   readyTimer: () => void;
@@ -8,7 +7,7 @@ type TimerProps = {
   stopTimer: () => void;
   liberateTimer: () => void;
   timerState: TimerState;
-  currentResult: string;
+  renderTimerDigit: () => JSX.Element;
 };
 
 enum GestureType {
@@ -22,7 +21,7 @@ export default function Timer({
   stopTimer,
   liberateTimer,
   timerState,
-  currentResult,
+  renderTimerDigit,
 }: TimerProps) {
   const isTouchEventAvailable =
     typeof window !== "undefined" && "ontouchstart" in window;
@@ -101,7 +100,7 @@ export default function Timer({
       className={`flex flex-col justify-center items-center h-full cursor-pointer
       ${timerState === TimerState.Ready ? "bg-[#06A77D]" : "bg-[#151E3F]"}`}
     >
-      <NumberText size="big">{currentResult}</NumberText>
+      {renderTimerDigit()}
     </div>
   );
 }

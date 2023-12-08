@@ -1,10 +1,12 @@
 "use client";
 
+import NumberText from "@/components/atoms/NumberText";
 import CurrentResult from "@/components/molecules/CurrentResult";
 import Experience from "@/components/molecules/Experience";
 import Scramble from "@/components/molecules/Scramble";
 import SwiperMenu from "@/components/molecules/SwiperMenu";
 import Timer from "@/components/molecules/Timer";
+import TimesDiff from "@/components/molecules/TimesDiff";
 import PreviewPanel from "@/components/organisms/PreviewPanel";
 import ResumePanel from "@/components/organisms/ResumePanel";
 import TimesPanel from "@/components/organisms/TimesPanel";
@@ -82,6 +84,12 @@ export default function Home() {
     handleStop,
   });
 
+  let timesDiff: number | null = null;
+  if (times.length > 1) {
+    timesDiff = times[times.length - 1].value - times[times.length - 2].value;
+  }
+
+  const isBetterThanPrevious = !!timesDiff && timesDiff < 0;
   const isTimerFocused = timerState !== TimerState.Stop;
 
   useEffect(() => {
@@ -129,7 +137,19 @@ export default function Home() {
             stopTimer={stopTimer}
             liberateTimer={liberateTimer}
             timerState={timerState}
-            currentResult={currentResult}
+            renderTimerDigit={() => (
+              <>
+                <NumberText size="big" color="yellow">
+                  {currentResult}
+                </NumberText>
+                {!isTimerFocused && timesDiff && (
+                  <TimesDiff
+                    isBetterThanPrevious={isBetterThanPrevious}
+                    value={timesDiff}
+                  />
+                )}
+              </>
+            )}
           />
           {!isTimerFocused && <CurrentResult times={times} />}
         </SwiperSlide>

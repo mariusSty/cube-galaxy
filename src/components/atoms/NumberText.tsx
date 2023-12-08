@@ -3,9 +3,18 @@ import { Bebas_Neue } from "next/font/google";
 type NumberText = {
   children: string;
   size?: "small" | "medium" | "big";
+  color?: "white" | "yellow" | "orange" | "green" | "blue";
 };
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400" });
+
+const colors = new Map([
+  ["white", "text-[#FFFFFF]"],
+  ["yellow", "text-[#FFB400]"],
+  ["orange", "text-[#F6511D]"],
+  ["green", "text-[#06A77D]"],
+  ["blue", "text-[#151E3F]"],
+]);
 
 const sizes = new Map([
   ["small", "text-3xl"],
@@ -13,9 +22,17 @@ const sizes = new Map([
   ["big", "text-9xl"],
 ]);
 
-export default function NumberText({ children, size = "medium" }: NumberText) {
+export default function NumberText({
+  children,
+  size = "medium",
+  color = "white",
+}: NumberText) {
   return (
-    <span className={`${bebas.className} ${sizes.get(size)} text-[#FFB400]`}>
+    <span
+      className={`${bebas.className} 
+      ${sizes.get(size)} 
+      ${colors.get(color)}`}
+    >
       {children}
     </span>
   );
