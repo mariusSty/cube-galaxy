@@ -1,11 +1,12 @@
 import { Time } from "@/hooks/useTimes";
-import formatTimer from "./formatTime";
 
 export type Result = Omit<Time, "value" | "createdAt" | "updatedAt"> & {
-  time: string;
+  time: number;
   position: number;
-  ao5: string;
-  ao12: string;
+  ao5: number | null;
+  ao12: number | null;
+  isAo5DNF: boolean;
+  isAo12DNF: boolean;
 };
 
 export function getResult(times: Time[]): Result[] {
@@ -14,18 +15,21 @@ export function getResult(times: Time[]): Result[] {
     .reverse()
     .map((time, index) => {
       const position = times.length - index;
-      const ao5 = getAverageOf(times, position);
-      const ao12 = getAverageOf(times, position, 12);
+      const rangeValuesAo5 = getRangeValues(times, position);
+      const rangeValuesAo12 = getRangeValues(times, position, 12);
 
       return {
         id: time.id,
         position,
-        time: time.isDNF ? "DNF" : formatTimer(time.value),
+        time: time.value,
         scramble: time.scramble,
-        ao5: formatTimer(ao5),
-        ao12: formatTimer(ao12),
+        ao5: getAverageOf(times, position),
+        ao12: getAverageOf(times, position, 12),
         isDNF: time.isDNF,
         isPlusTwo: time.isPlusTwo,
+        isAo5DNF: rangeValuesAo5.length === 5 && isAverageDNF(rangeValuesAo5),
+        isAo12DNF:
+          rangeValuesAo12.length === 12 && isAverageDNF(rangeValuesAo12),
       };
     });
 }
@@ -53,11 +57,8 @@ export function getAverageOf(
   index = 0,
   count = 5
 ): number | null {
-  const rangeValues = [...times]
-    .sort((timeA, timeB) => timeA.createdAt - timeB.createdAt)
-    .slice(index - count < 0 ? 0 : index - count, index);
+  const rangeValues = getRangeValues(times, index, count);
   if (rangeValues.length < count) return null;
-  if (isAverageDNF(rangeValues)) return null;
   const hasDNF = rangeValues.find((time) => time.isDNF);
   const max = hasDNF
     ? hasDNF.value
@@ -81,4 +82,10 @@ export function getAverage(times: Time[]): number | null {
 
 export function isAverageDNF(times: Time[]): boolean {
   return times.filter((time) => time.isDNF === true).length > 1;
+}
+
+export function getRangeValues(times: Time[], index = 0, count = 5): Time[] {
+  return [...times]
+    .sort((timeA, timeB) => timeA.createdAt - timeB.createdAt)
+    .slice(index - count < 0 ? 0 : index - count, index);
 }

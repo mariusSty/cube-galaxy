@@ -1,7 +1,10 @@
 export default function formatTimer(
   timer: number | null,
+  isDNF = false,
+  textIfDNF = "DNF",
   textIfNull = "-"
 ): string {
+  if (isDNF) return textIfDNF;
   if (timer === null) return textIfNull;
   const toDisplay = [];
   const minutes = Math.floor(timer / 60000);

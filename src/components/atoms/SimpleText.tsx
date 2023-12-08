@@ -2,6 +2,8 @@ type SimpleTextProps = {
   children: string;
   color?: "white" | "yellow" | "orange" | "green" | "blue";
   size?: "small" | "medium" | "big";
+  bold?: boolean;
+  underline?: boolean;
 };
 
 const sizes = new Map([
@@ -22,9 +24,15 @@ export default function SimpleText({
   children,
   size = "medium",
   color = "white",
+  underline = false,
 }: SimpleTextProps) {
   return (
-    <span className={`${sizes.get(size)} ${colors.get(color)}`}>
+    <span
+      className={`
+      ${sizes.get(size)} 
+      ${colors.get(color)} 
+      ${underline ? "underline underline-offset-8" : ""}`}
+    >
       {children}
     </span>
   );

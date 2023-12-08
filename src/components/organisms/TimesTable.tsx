@@ -1,10 +1,7 @@
-import useBreakPoints from "@/hooks/useBreakPoints";
 import { Result } from "@/utils/getResult";
 import { useSwiper } from "swiper/react";
-import SimpleText from "../atoms/SimpleText";
-import Tr from "../atoms/Tr";
-import BadgeButton from "../molecules/BadgeButton";
-import IconButton from "../molecules/IconButton";
+import TimeResult from "./TimeResult";
+import TimesTableThead from "./TimesTableThead";
 
 type TimesTableProps = {
   results: Result[];
@@ -24,68 +21,47 @@ export default function TimesTable({
   setTimeFocused,
 }: TimesTableProps) {
   const swiper = useSwiper();
-  const { isSmallScreen } = useBreakPoints();
 
   function handleDetails(id: string) {
     setTimeFocused(id);
     swiper.slideNext();
   }
 
+  const bestTime = Math.min(
+    ...results.filter((result) => !result.isDNF).map((result) => result.time)
+  );
+
+  const bestAo5 = results
+    .map((result) => result.ao5)
+    .reduce((prevAo5, currentAo5) => {
+      if (!prevAo5) return currentAo5;
+      if (!currentAo5) return prevAo5;
+      return currentAo5 < prevAo5 ? currentAo5 : prevAo5;
+    }, null);
+
+  const bestAo12 = results
+    .map((result) => result.ao12)
+    .reduce((prevAo5, currentAo5) => {
+      if (!prevAo5) return currentAo5;
+      if (!currentAo5) return prevAo5;
+      return currentAo5 < prevAo5 ? currentAo5 : prevAo5;
+    }, null);
+
   return (
     <div className="h-full overflow-y-auto">
-      <Tr
-        isThead
-        renderLastItem={() => (
-          <IconButton
-            iconName="delete_history"
-            buttonColor="orange"
-            handleClick={removeAllTimes}
-          />
-        )}
-      >
-        <SimpleText>N°</SimpleText>
-        <SimpleText>Time</SimpleText>
-        <SimpleText>ao5</SimpleText>
-        <SimpleText>ao12</SimpleText>
-      </Tr>
-      {results.map(({ id, position, time, ao5, ao12, isDNF, isPlusTwo }) => (
-        <Tr
-          key={id}
-          renderLastItem={() =>
-            isSmallScreen ? (
-              <IconButton
-                iconName="navigate_next"
-                iconColor="white"
-                buttonColor="blue"
-                handleClick={() => handleDetails(id)}
-              />
-            ) : (
-              <IconButton
-                iconName="remove"
-                iconColor="blue"
-                buttonColor="orange"
-                handleClick={() => removeTime(id)}
-              />
-            )
-          }
-        >
-          <SimpleText>{`${position}`}</SimpleText>
-          <SimpleText color={isPlusTwo || isDNF ? "orange" : "green"}>
-            {time}
-          </SimpleText>
-          <SimpleText>{ao5}</SimpleText>
-          <SimpleText>{ao12}</SimpleText>
-          <BadgeButton
-            text="+2"
-            handleClick={() => markAsPlusTwo(id)}
-            isActive={isPlusTwo}
-          />
-          <BadgeButton
-            text="DNF"
-            handleClick={() => markAsDNF(id)}
-            isActive={isDNF}
-          />
-        </Tr>
+      <TimesTableThead removeAllTimes={removeAllTimes} />
+      {results.map((result) => (
+        <TimeResult
+          key={result.id}
+          result={result}
+          bestTime={bestTime}
+          bestAo5={bestAo5}
+          bestAo12={bestAo12}
+          handleDetails={handleDetails}
+          removeTime={removeTime}
+          markAsDNF={markAsDNF}
+          markAsPlusTwo={markAsPlusTwo}
+        />
       ))}
     </div>
   );

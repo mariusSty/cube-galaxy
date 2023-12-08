@@ -14,7 +14,8 @@ URL : https://cube-galaxy.vercel.app/
 ## 👨‍💻 Installation
 
 ```bash
-git clone https://github.com/mariusSty/cube-galaxy
+git clone https://github.com/mariusSty/cube-galaxy.git
+cd cube-galaxy
 npm install
 ```
 
