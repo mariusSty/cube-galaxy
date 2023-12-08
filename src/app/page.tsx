@@ -1,6 +1,7 @@
 "use client";
 
 import NumberText from "@/components/atoms/NumberText";
+import CloseToastButton from "@/components/molecules/CloseToastButton";
 import CurrentResult from "@/components/molecules/CurrentResult";
 import Experience from "@/components/molecules/Experience";
 import Scramble from "@/components/molecules/Scramble";
@@ -14,7 +15,7 @@ import useTimer, { TimerState } from "@/hooks/useTimer";
 import { useTimes } from "@/hooks/useTimes";
 import { Canvas } from "@react-three/fiber";
 import { Rubik } from "next/font/google";
-import { MouseEvent, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Scrambow } from "scrambow";
 import { Navigation, Pagination } from "swiper/modules";
@@ -50,16 +51,6 @@ export default function Home() {
       handleGenerateScramble();
     },
     [addTime, handleGenerateScramble, currentScramble]
-  );
-
-  const CloseButton = ({
-    closeToast,
-  }: {
-    closeToast: (e: MouseEvent<HTMLElement>) => void;
-  }) => (
-    <span className="material-symbols-outlined text-white" onClick={closeToast}>
-      close
-    </span>
   );
 
   function handleCopyToClipBoard() {
@@ -165,7 +156,7 @@ export default function Home() {
         {!isTimerFocused && <SwiperMenu activeSlide={activeSlide} />}
       </Swiper>
 
-      <ToastContainer closeButton={CloseButton} />
+      <ToastContainer closeButton={CloseToastButton} />
     </main>
   );
 }
