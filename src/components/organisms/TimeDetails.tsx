@@ -28,7 +28,17 @@ export default function TimeDetails({
 
   const resultFocused = results.find((result) => result.id === focusedId);
   if (!resultFocused) return;
-  const { id, ao5, ao12, scramble, time, isDNF, isPlusTwo } = resultFocused;
+  const {
+    id,
+    ao5,
+    ao12,
+    scramble,
+    time,
+    isDNF,
+    isPlusTwo,
+    isAo12DNF,
+    isAo5DNF,
+  } = resultFocused;
 
   return (
     <div className="flex flex-col justify-between w-full h-full">
@@ -68,7 +78,7 @@ export default function TimeDetails({
             size="big"
             color={isPlusTwo || isDNF ? "orange" : "green"}
           >
-            {formatTimer(time)}
+            {formatTimer(time, isDNF)}
           </SimpleText>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -82,10 +92,10 @@ export default function TimeDetails({
 
       <div className="flex flex-wrap justify-center align-middle gap-4 sm:gap-8">
         <div className="border-[1px] border-[#FFB400] rounded-2xl p-2 sm:p-4 ">
-          <SimpleText>{`ao5 : ${formatTimer(ao5)}`}</SimpleText>
+          <SimpleText>{`ao5 : ${formatTimer(ao5, isAo5DNF)}`}</SimpleText>
         </div>
         <div className="border-[1px] border-[#FFB400] rounded-2xl p-2 sm:p-4 ">
-          <SimpleText>{`ao12 : ${formatTimer(ao12)}`}</SimpleText>
+          <SimpleText>{`ao12 : ${formatTimer(ao12, isAo12DNF)}`}</SimpleText>
         </div>
       </div>
     </div>

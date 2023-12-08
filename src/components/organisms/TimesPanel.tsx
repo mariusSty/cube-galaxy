@@ -1,12 +1,11 @@
-import { Time } from "@/hooks/useTimes";
-import { getResult } from "@/utils/getResult";
+import { Result } from "@/utils/getResult";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import TimeDetails from "./TimeDetails";
 import TimesTable from "./TimesTable";
 
 type TimesPanelProps = {
-  times: Time[];
+  results: Result[];
   markAsDNF: (id: string) => void;
   markAsPlusTwo: (id: string) => void;
   removeTime: (id: string) => void;
@@ -14,15 +13,13 @@ type TimesPanelProps = {
 };
 
 export default function TimesPanel({
-  times,
+  results,
   markAsDNF,
   markAsPlusTwo,
   removeTime,
   removeAllTimes,
 }: TimesPanelProps) {
   const [focusedId, setFocusedId] = useState<string>();
-
-  const results = getResult(times);
 
   function updateTimeFocused(id: string) {
     setFocusedId(id);
