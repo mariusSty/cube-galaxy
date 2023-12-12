@@ -1,7 +1,7 @@
 import { Result } from "@/utils/getResult";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import TimeDetails from "./TimeDetails";
+import TimeDetailsPanel from "./TimeDetailsPanel";
 import TimesTable from "./TimesTable";
 
 type TimesPanelProps = {
@@ -44,7 +44,7 @@ export default function TimesPanel({
         </SwiperSlide>
         <SwiperSlide>
           {focusedId && (
-            <TimeDetails
+            <TimeDetailsPanel
               results={results}
               focusedId={focusedId}
               markAsDNF={markAsDNF}

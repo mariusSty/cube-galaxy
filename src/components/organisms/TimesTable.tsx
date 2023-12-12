@@ -1,6 +1,6 @@
 import { Result } from "@/utils/getResult";
 import { useSwiper } from "swiper/react";
-import TimeResult from "./TimeResult";
+import TimeRow from "./TimeRow";
 import TimesTableThead from "./TimesTableThead";
 
 type TimesTableProps = {
@@ -51,14 +51,13 @@ export default function TimesTable({
     <div className="h-full overflow-y-auto">
       <TimesTableThead removeAllTimes={removeAllTimes} />
       {results.map((result) => (
-        <TimeResult
+        <TimeRow
           key={result.id}
           result={result}
           bestTime={bestTime}
           bestAo5={bestAo5}
           bestAo12={bestAo12}
           handleDetails={handleDetails}
-          removeTime={removeTime}
           markAsDNF={markAsDNF}
           markAsPlusTwo={markAsPlusTwo}
         />

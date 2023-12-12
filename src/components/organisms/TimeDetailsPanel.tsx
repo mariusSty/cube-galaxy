@@ -5,7 +5,7 @@ import SimpleText from "../atoms/SimpleText";
 import BadgeButton from "../molecules/BadgeButton";
 import IconButton from "../molecules/IconButton";
 
-type TimeDetailsProps = {
+type TimeDetailsPanelProps = {
   results: Result[];
   focusedId?: string;
   markAsDNF: (id: string) => void;
@@ -13,13 +13,13 @@ type TimeDetailsProps = {
   removeTime: (id: string) => void;
 };
 
-export default function TimeDetails({
+export default function TimeDetailsPanel({
   results,
   focusedId,
   markAsDNF,
   markAsPlusTwo,
   removeTime,
-}: TimeDetailsProps) {
+}: TimeDetailsPanelProps) {
   const swiper = useSwiper();
 
   function handleGoToTable() {
@@ -91,11 +91,15 @@ export default function TimeDetails({
       </div>
 
       <div className="flex flex-wrap justify-center align-middle gap-4 sm:gap-8">
-        <div className="border-[1px] border-[#FFB400] rounded-2xl p-2 sm:p-4 ">
-          <SimpleText>{`ao5 : ${formatTimer(ao5, isAo5DNF)}`}</SimpleText>
+        <div className="rounded-2xl p-2 sm:p-4 ">
+          <SimpleText size="big" color="yellow">
+            {`ao5 : ${formatTimer(ao5, isAo5DNF)}`}
+          </SimpleText>
         </div>
-        <div className="border-[1px] border-[#FFB400] rounded-2xl p-2 sm:p-4 ">
-          <SimpleText>{`ao12 : ${formatTimer(ao12, isAo12DNF)}`}</SimpleText>
+        <div className="rounded-2xl p-2 sm:p-4 ">
+          <SimpleText size="big" color="yellow">
+            {`ao12 : ${formatTimer(ao12, isAo12DNF)}`}
+          </SimpleText>
         </div>
       </div>
     </div>

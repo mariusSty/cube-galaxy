@@ -1,17 +1,11 @@
 "use client";
 
-import NumberText from "@/components/atoms/NumberText";
-import SimpleText from "@/components/atoms/SimpleText";
 import CloseToastButton from "@/components/molecules/CloseToastButton";
-import CurrentResult from "@/components/molecules/CurrentResult";
 import Experience from "@/components/molecules/Experience";
-import Scramble from "@/components/molecules/Scramble";
-import SwiperMenu from "@/components/molecules/SwiperMenu";
 import Timer from "@/components/molecules/Timer";
-import TimesDiff from "@/components/molecules/TimesDiff";
-import PreviewPanel from "@/components/organisms/PreviewPanel";
+import AppTemplate from "@/components/organisms/AppTemplate";
 import ResumePanel from "@/components/organisms/ResumePanel";
-import Stats from "@/components/organisms/Stats";
+import TimerInformations from "@/components/organisms/TimerInformations";
 import TimesPanel from "@/components/organisms/TimesPanel";
 import useTimer, { TimerState } from "@/hooks/useTimer";
 import { useTimes } from "@/hooks/useTimes";
@@ -21,15 +15,12 @@ import { Rubik } from "next/font/google";
 import { useCallback, useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { Scrambow } from "scrambow";
-import { Navigation, Pagination } from "swiper/modules";
-import { Swiper, SwiperSlide } from "swiper/react";
 
 const rubik = Rubik({ subsets: ["latin"], weight: "500" });
 const scrambow = new Scrambow();
 
 export default function Home() {
   const [currentScramble, setCurrentScramble] = useState<string[]>([]);
-  const [activeSlide, setActiveSlide] = useState<number>(1);
 
   const {
     times,
@@ -56,17 +47,6 @@ export default function Home() {
     [addTime, handleGenerateScramble, currentScramble]
   );
 
-  function handleCopyToClipBoard() {
-    if (!currentScramble) return;
-    navigator.clipboard.writeText(currentScramble.join(" "));
-    toast.info(<span className={rubik.className}>Scramble copied !</span>, {
-      position: toast.POSITION.BOTTOM_CENTER,
-      toastId: "copy-id",
-      theme: "dark",
-      icon: false,
-    });
-  }
-
   const {
     currentResult,
     timerState,
@@ -78,17 +58,18 @@ export default function Home() {
     handleStop,
   });
 
-  let timesDiff: number | null = null;
-  if (times.length > 1) {
-    const [last, prelast] = [...times]
-      .sort((timeA, timeB) => timeA.createdAt - timeB.createdAt)
-      .slice(-2);
-    timesDiff = prelast.value - last.value;
+  function handleCopyToClipBoard() {
+    if (!currentScramble) return;
+    navigator.clipboard.writeText(currentScramble.join(" "));
+    toast.info(<span className={rubik.className}>Scramble copied !</span>, {
+      position: toast.POSITION.BOTTOM_CENTER,
+      toastId: "copy-id",
+      theme: "dark",
+      icon: false,
+    });
   }
 
   const results = getResult(times);
-
-  const isBetterThanPrevious = !!timesDiff && timesDiff < 0;
   const isTimerFocused = timerState !== TimerState.Stop;
 
   useEffect(() => {
@@ -100,76 +81,18 @@ export default function Home() {
       className={`w-full h-full bg-[#030027] ${rubik.className}`}
       onContextMenu={(e) => e.preventDefault()}
     >
-      <div className="block md:hidden w-full h-full">
-        <Swiper
-          allowTouchMove={false}
-          className="w-full h-full"
-          initialSlide={1}
-          modules={[Pagination, Navigation]}
-          onSlideChange={(swiper) => setActiveSlide(swiper.activeIndex)}
-          runCallbacksOnInit={false}
-        >
-          <SwiperSlide>
-            <Stats
-              times={times}
-              results={results}
-              removeTime={removeTime}
-              removeAllTimes={removeAllTimes}
-              markAsDNF={markAsDNF}
-              markAsPlusTwo={markAsPlusTwo}
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            {!isTimerFocused && (
-              <Scramble
-                handleGenerateScramble={handleGenerateScramble}
-                handleCopyToClipBoard={handleCopyToClipBoard}
-                scramble={currentScramble}
-              />
-            )}
-            <Timer
-              readyTimer={readyTimer}
-              startTimer={startTimer}
-              stopTimer={stopTimer}
-              liberateTimer={liberateTimer}
-              timerState={timerState}
-              renderTimerDigit={() => (
-                <>
-                  <NumberText size="big" color="yellow">
-                    {currentResult}
-                  </NumberText>
-                  {!isTimerFocused && timesDiff && (
-                    <TimesDiff
-                      isBetterThanPrevious={isBetterThanPrevious}
-                      value={timesDiff}
-                    />
-                  )}
-                </>
-              )}
-            />
-            {!isTimerFocused && <CurrentResult times={times} />}
-          </SwiperSlide>
-          <SwiperSlide>
-            <PreviewPanel>
-              <Canvas
-                camera={{ fov: 45, near: 0.1, far: 200, position: [6, 4, 8] }}
-              >
-                <Experience scramble={currentScramble} />
-              </Canvas>
-            </PreviewPanel>
-          </SwiperSlide>
-          {!isTimerFocused && <SwiperMenu activeSlide={activeSlide} />}
-        </Swiper>
-      </div>
-
-      <div className="hidden md:grid grid-cols-3 grid-rows-3 h-full w-full">
-        <div
-          className={`${
-            isTimerFocused
-              ? "fixed w-full h-full z-10"
-              : "row-start-1 row-end-3 col-start-2 col-end-4"
-          }`}
-        >
+      <AppTemplate
+        renderPreviewPanel={() => (
+          <Canvas
+            camera={{ fov: 45, near: 0.1, far: 200, position: [6, 4, 8] }}
+          >
+            <Experience scramble={currentScramble} />
+          </Canvas>
+        )}
+        renderResumePanel={() => (
+          <ResumePanel times={times} results={results} />
+        )}
+        renderTimerPanel={() => (
           <Timer
             readyTimer={readyTimer}
             startTimer={startTimer}
@@ -177,28 +100,16 @@ export default function Home() {
             liberateTimer={liberateTimer}
             timerState={timerState}
             renderTimerDigit={() => (
-              <>
-                <NumberText size="big" color="yellow">
-                  {currentResult}
-                </NumberText>
-                {!isTimerFocused && timesDiff && (
-                  <TimesDiff
-                    isBetterThanPrevious={isBetterThanPrevious}
-                    value={timesDiff}
-                  />
-                )}
-                {!isTimerFocused && (
-                  <div className="flex gap-2">
-                    {currentScramble.map((move, i) => (
-                      <SimpleText key={i}>{move}</SimpleText>
-                    ))}
-                  </div>
-                )}
-              </>
+              <TimerInformations
+                isTimerFocused={isTimerFocused}
+                currentResult={currentResult}
+                currentScramble={currentScramble}
+                times={times}
+              />
             )}
           />
-        </div>
-        <div className="row-start-1 row-end-4 p-8">
+        )}
+        renderTimesPanel={() => (
           <TimesPanel
             results={results}
             removeTime={removeTime}
@@ -206,18 +117,9 @@ export default function Home() {
             markAsDNF={markAsDNF}
             markAsPlusTwo={markAsPlusTwo}
           />
-        </div>
-        <div className="py-8 p-r-8">
-          <ResumePanel times={times} results={results} />
-        </div>
-        <div className="bg-[#151E3F] rounded-2xl m-8">
-          <Canvas
-            camera={{ fov: 45, near: 0.1, far: 200, position: [6, 4, 8] }}
-          >
-            <Experience scramble={currentScramble} />
-          </Canvas>
-        </div>
-      </div>
+        )}
+        isTimerFocused={isTimerFocused}
+      />
 
       <ToastContainer closeButton={CloseToastButton} />
     </main>

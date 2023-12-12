@@ -97,8 +97,12 @@ export default function Timer({
       onTouchEnd={(e) => handleTimer(GestureType.Up, e)}
       onMouseDown={(e) => handleTimer(GestureType.Down, e, true)}
       onMouseUp={(e) => handleTimer(GestureType.Up, e, true)}
-      className={`flex flex-col justify-center items-center h-full cursor-pointer 
-      ${timerState === TimerState.Stop ? "md:rounded-es-2xl" : ""}
+      className={`flex flex-col justify-center items-center h-full cursor-pointer gap-2
+      ${
+        timerState !== TimerState.Stop
+          ? "absolute w-full top-0 right-0 z-10"
+          : "md:rounded-2xl"
+      }
       ${timerState === TimerState.Ready ? "bg-[#06A77D]" : "bg-[#151E3F]"}`}
     >
       {renderTimerDigit()}

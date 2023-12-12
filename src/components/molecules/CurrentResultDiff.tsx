@@ -2,15 +2,15 @@ import formatTimer from "@/utils/formatTime";
 import Icon from "../atoms/Icon";
 import NumberText from "../atoms/NumberText";
 
-type TimesDiffProps = {
+type CurrentResultDiffProps = {
   value: number;
   isBetterThanPrevious: boolean;
 };
 
-export default function TimesDiff({
+export default function CurrentResultDiff({
   isBetterThanPrevious,
   value,
-}: TimesDiffProps) {
+}: CurrentResultDiffProps) {
   return (
     <div className="flex align-middle justify-center gap-2">
       <NumberText

@@ -16,7 +16,7 @@ export default function Tr({
   const { isVerySmallScreen, isMediumScreen, isLargeScreen } = useBreakPoints();
 
   let contentToDisplay, gridClass, lastTdClass;
-  if (isVerySmallScreen) {
+  if (isVerySmallScreen || isLargeScreen) {
     contentToDisplay = children.slice(0, 4);
     gridClass = "grid-cols-5";
     lastTdClass = "col-start-5";
@@ -24,10 +24,6 @@ export default function Tr({
     contentToDisplay = children.slice(0, 2);
     gridClass = "grid-cols-3";
     lastTdClass = "col-start-3";
-  } else if (isLargeScreen) {
-    contentToDisplay = children.slice(0, 4);
-    gridClass = "grid-cols-5";
-    lastTdClass = "col-start-5";
   } else {
     contentToDisplay = children.slice();
     gridClass = "grid-cols-7";

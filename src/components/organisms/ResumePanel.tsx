@@ -1,7 +1,7 @@
 import { Time } from "@/hooks/useTimes";
 import formatTimer from "@/utils/formatTime";
 import { Result, getAverage, getBest, getWorst } from "@/utils/getResult";
-import ResumeBox from "../atoms/ResumeBox";
+import Box from "../atoms/Box";
 import SimpleText from "../atoms/SimpleText";
 
 type ResumePanelProps = {
@@ -31,30 +31,30 @@ export default function ResumePanel({ times, results }: ResumePanelProps) {
 
   return (
     <div className="grid grid-cols-3 gap-2 sm:gap-8 md:gap-2 h-full">
-      <ResumeBox>
+      <Box>
         <SimpleText size="small">Solve</SimpleText>
         <SimpleText size="big">{`${times.length}`}</SimpleText>
-      </ResumeBox>
-      <ResumeBox>
+      </Box>
+      <Box>
         <SimpleText size="small">Best</SimpleText>
         <SimpleText size="big">{formatTimer(best)}</SimpleText>
-      </ResumeBox>
-      <ResumeBox>
+      </Box>
+      <Box>
         <SimpleText size="small">Worst</SimpleText>
         <SimpleText size="big">{formatTimer(worst)}</SimpleText>
-      </ResumeBox>
-      <ResumeBox>
+      </Box>
+      <Box>
         <SimpleText size="small">Average</SimpleText>
         <SimpleText size="big">{formatTimer(average)}</SimpleText>
-      </ResumeBox>
-      <ResumeBox>
+      </Box>
+      <Box>
         <SimpleText size="small">Best ao5</SimpleText>
         <SimpleText size="big">{formatTimer(bestAo5)}</SimpleText>
-      </ResumeBox>
-      <ResumeBox>
+      </Box>
+      <Box>
         <SimpleText size="small">Best ao12</SimpleText>
         <SimpleText size="big">{formatTimer(bestAo12)}</SimpleText>
-      </ResumeBox>
+      </Box>
     </div>
   );
 }
