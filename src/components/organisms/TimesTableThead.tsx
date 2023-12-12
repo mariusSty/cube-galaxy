@@ -14,9 +14,9 @@ export default function TimesTableThead({
       isThead
       renderLastItem={() => (
         <IconButton
-          iconColor="blue"
+          iconColor="lightBackground"
           iconName="delete"
-          buttonColor="orange"
+          buttonColor="danger"
           handleClick={removeAllTimes}
         />
       )}

@@ -26,7 +26,7 @@ export default function TimesPanel({
   }
 
   return (
-    <div className="h-full bg-[#151E3F] rounded-2xl p-4 overflow-y-auto">
+    <div className="h-full bg-lightBackground rounded-2xl p-4 overflow-y-auto">
       <Swiper
         allowTouchMove={false}
         className="w-full h-full"

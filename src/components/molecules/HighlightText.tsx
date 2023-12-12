@@ -1,17 +1,17 @@
-import SimpleText from "../atoms/SimpleText";
+import SimpleText, { Theme } from "../atoms/SimpleText";
 
 type HighlightTextProps = {
   text: string;
   isHighlight: boolean;
-  defaultColor?: "white" | "yellow" | "orange" | "green" | "blue";
-  highlightColor?: "white" | "yellow" | "orange" | "green" | "blue";
+  defaultColor?: Theme;
+  highlightColor?: Theme;
 };
 
 export default function HighlightText({
   text,
-  defaultColor = "white",
+  defaultColor = "primary",
   isHighlight,
-  highlightColor = "yellow",
+  highlightColor = "secondary",
 }: HighlightTextProps) {
   return (
     <SimpleText

@@ -15,7 +15,7 @@ export default function CurrentResultDiff({
     <div className="flex align-middle justify-center gap-2">
       <NumberText
         size="small"
-        color={isBetterThanPrevious ? "green" : "orange"}
+        color={isBetterThanPrevious ? "success" : "danger"}
       >
         {isBetterThanPrevious
           ? `- ${formatTimer(Math.abs(value))}`
@@ -24,7 +24,7 @@ export default function CurrentResultDiff({
       <Icon
         name={isBetterThanPrevious ? "trending_up" : "trending_down"}
         style={`${
-          isBetterThanPrevious ? "text-[#06A77D]" : "text-[#F6511D]"
+          isBetterThanPrevious ? "text-success" : "text-danger"
         } text-3xl`}
       />
     </div>

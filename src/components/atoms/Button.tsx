@@ -1,23 +1,16 @@
 import { MouseEvent, ReactNode } from "react";
+import { Theme, backgroundColors } from "./SimpleText";
 
 type ButtonProps = {
   handleClick: () => void;
   children: ReactNode;
-  color?: "white" | "yellow" | "orange" | "green" | "blue";
+  color?: Theme;
 };
-
-const colors = new Map([
-  ["white", "bg-[#FFFFFF]"],
-  ["yellow", "bg-[#FFB400]"],
-  ["orange", "bg-[#F6511D]"],
-  ["green", "bg-[#06A77D]"],
-  ["blue", "bg-[#151E3F]"],
-]);
 
 export default function Button({
   handleClick,
   children,
-  color = "yellow",
+  color = "secondary",
 }: ButtonProps) {
   function handleButtonClick(e: MouseEvent) {
     e.preventDefault();
@@ -27,7 +20,7 @@ export default function Button({
   return (
     <button
       onClick={handleButtonClick}
-      className={`flex items-center justify-center outline-none rounded-xl pointer-events-auto ${colors.get(
+      className={`flex items-center justify-center outline-none rounded-xl pointer-events-auto ${backgroundColors.get(
         color
       )}`}
     >

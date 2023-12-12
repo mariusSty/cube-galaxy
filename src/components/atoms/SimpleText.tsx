@@ -1,6 +1,14 @@
+export type Theme =
+  | "primary"
+  | "secondary"
+  | "danger"
+  | "success"
+  | "lightBackground"
+  | "darkBackground";
+
 type SimpleTextProps = {
   children: string;
-  color?: "white" | "yellow" | "orange" | "green" | "blue";
+  color?: Theme;
   size?: "small" | "medium" | "big";
   bold?: boolean;
   underline?: boolean;
@@ -12,18 +20,28 @@ const sizes = new Map([
   ["big", "text-xl"],
 ]);
 
-const colors = new Map([
-  ["white", "text-[#FFFFFF]"],
-  ["yellow", "text-[#FFB400]"],
-  ["orange", "text-[#F6511D]"],
-  ["green", "text-[#06A77D]"],
-  ["blue", "text-[#151E3F]"],
+export const colors = new Map([
+  ["primary", "text-primary"],
+  ["secondary", "text-secondary"],
+  ["danger", "text-danger"],
+  ["success", "text-success"],
+  ["lightBackground", "text-lightBackground"],
+  ["darkBackground", "text-darkBackground"],
+]);
+
+export const backgroundColors = new Map([
+  ["primary", "bg-primary"],
+  ["secondary", "bg-secondary"],
+  ["danger", "bg-danger"],
+  ["success", "bg-success"],
+  ["lightBackground", "bg-lightBackground"],
+  ["darkBackground", "bg-darkBackground"],
 ]);
 
 export default function SimpleText({
   children,
   size = "medium",
-  color = "white",
+  color = "primary",
   underline = false,
 }: SimpleTextProps) {
   return (

@@ -19,8 +19,8 @@ export default function SwiperMenu({ activeSlide }: SwiperMenuProps) {
       key={id}
       className={`flex justify-center align-middle gap-2 p-4  ${
         activeSlide === id
-          ? `text-[#F6511D] bg-[#030027]`
-          : `text-[#FFB400] bg-[#151E3F]`
+          ? `text-danger bg-darkBackground`
+          : `text-secondary bg-lightBackground`
       }`}
       onClick={() => swiper.slideTo(id)}
     >

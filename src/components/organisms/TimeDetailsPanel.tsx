@@ -37,8 +37,8 @@ export default function TimeDetailsPanel({
       <div className="flex justify-between">
         <IconButton
           iconName="navigate_before"
-          iconColor="white"
-          buttonColor="blue"
+          iconColor="primary"
+          buttonColor="lightBackground"
           handleClick={handleGoToTable}
         />
         <div className="flex gap-4">
@@ -55,8 +55,8 @@ export default function TimeDetailsPanel({
         </div>
         <IconButton
           iconName="delete"
-          buttonColor="orange"
-          iconColor="blue"
+          buttonColor="danger"
+          iconColor="lightBackground"
           handleClick={() => {
             swiper.slidePrev();
             removeTime(id);
@@ -68,7 +68,7 @@ export default function TimeDetailsPanel({
         <div className="flex justify-center align-middle">
           <SimpleText
             size="big"
-            color={isPlusTwo || isDNF ? "orange" : "green"}
+            color={isPlusTwo || isDNF ? "danger" : "success"}
           >
             {formatTimer(time, isDNF)}
           </SimpleText>

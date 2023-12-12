@@ -1,19 +1,13 @@
 import Button from "../atoms/Button";
 import Icon from "../atoms/Icon";
+import { Theme, colors } from "../atoms/SimpleText";
 
 type IconButtonProps = {
   iconName: string;
-  iconColor?: "white" | "yellow" | "orange" | "green" | "blue";
-  buttonColor?: "white" | "yellow" | "orange" | "green" | "blue";
+  iconColor?: Theme;
+  buttonColor?: Theme;
   handleClick: () => void;
 };
-const colors = new Map([
-  ["white", "text-[#FFFFFF]"],
-  ["yellow", "text-[#FFB400]"],
-  ["orange", "text-[#F6511D]"],
-  ["green", "text-[#06A77D]"],
-  ["blue", "text-[#151E3F]"],
-]);
 
 export default function IconButton({
   iconName,
@@ -25,7 +19,7 @@ export default function IconButton({
     <Button handleClick={handleClick} color={buttonColor}>
       <Icon
         name={iconName}
-        style={`m-1 ${iconColor ? colors.get(iconColor) : "text-white"}`}
+        style={`m-1 ${iconColor ? colors.get(iconColor) : "text-primary"}`}
       />
     </Button>
   );

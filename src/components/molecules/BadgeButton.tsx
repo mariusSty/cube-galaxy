@@ -13,9 +13,9 @@ export default function BadgeButton({
   text,
 }: BadgeButtonProps) {
   return (
-    <Button handleClick={handleClick} color={isActive ? "orange" : "green"}>
+    <Button handleClick={handleClick} color={isActive ? "danger" : "success"}>
       <span className="my-1 mx-2">
-        <SimpleText color="blue">{text}</SimpleText>
+        <SimpleText color="lightBackground">{text}</SimpleText>
       </span>
     </Button>
   );

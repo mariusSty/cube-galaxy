@@ -1,20 +1,13 @@
 import { Bebas_Neue } from "next/font/google";
+import { Theme, colors } from "./SimpleText";
 
 type NumberText = {
   children: string;
   size?: "small" | "medium" | "big";
-  color?: "white" | "yellow" | "orange" | "green" | "blue";
+  color?: Theme;
 };
 
 const bebas = Bebas_Neue({ subsets: ["latin"], weight: "400" });
-
-const colors = new Map([
-  ["white", "text-[#FFFFFF]"],
-  ["yellow", "text-[#FFB400]"],
-  ["orange", "text-[#F6511D]"],
-  ["green", "text-[#06A77D]"],
-  ["blue", "text-[#151E3F]"],
-]);
 
 const sizes = new Map([
   ["small", "text-3xl"],
@@ -25,7 +18,7 @@ const sizes = new Map([
 export default function NumberText({
   children,
   size = "medium",
-  color = "white",
+  color = "primary",
 }: NumberText) {
   return (
     <span

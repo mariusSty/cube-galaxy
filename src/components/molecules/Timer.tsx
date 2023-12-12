@@ -103,7 +103,7 @@ export default function Timer({
           ? "absolute w-full top-0 right-0 z-10"
           : "md:rounded-2xl"
       }
-      ${timerState === TimerState.Ready ? "bg-[#06A77D]" : "bg-[#151E3F]"}`}
+      ${timerState === TimerState.Ready ? "bg-success" : "bg-lightBackground"}`}
     >
       {renderTimerDigit()}
     </div>

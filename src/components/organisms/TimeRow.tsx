@@ -47,8 +47,8 @@ export default function TimeRow({
       renderLastItem={() => (
         <IconButton
           iconName="navigate_next"
-          iconColor="white"
-          buttonColor="blue"
+          iconColor="primary"
+          buttonColor="lightBackground"
           handleClick={() => handleDetails(id)}
         />
       )}
@@ -57,7 +57,7 @@ export default function TimeRow({
       <HighlightText
         isHighlight={isBestTime}
         text={formatTimer(time, isDNF)}
-        defaultColor={isPlusTwo || isDNF ? "orange" : "green"}
+        defaultColor={isPlusTwo || isDNF ? "danger" : "success"}
       />
       <HighlightText
         isHighlight={isBestAo5}

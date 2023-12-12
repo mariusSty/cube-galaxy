@@ -12,11 +12,11 @@ export default function AverageOf({ currentResult }: AverageOfProps) {
 
   return (
     <div className="flex flex-wrap align-middle justify-center gap-8">
-      <SimpleText color="yellow" size="big">{`ao5 : ${formatTimer(
+      <SimpleText color="secondary" size="big">{`ao5 : ${formatTimer(
         ao5,
         isAo5DNF
       )}`}</SimpleText>
-      <SimpleText color="yellow" size="big">{`ao12 : ${formatTimer(
+      <SimpleText color="secondary" size="big">{`ao12 : ${formatTimer(
         ao12,
         isAo12DNF
       )}`}</SimpleText>

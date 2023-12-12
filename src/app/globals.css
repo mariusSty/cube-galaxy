@@ -22,9 +22,15 @@ body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
 
-  --toastify-color-dark: #030027;
-  --toastify-color-info: #ffb400;
-  --toastify-color-progress-info: var(--toastify-color-info);
+  --color-primary: #ffffff;
+  --color-secondary: #ffb400;
+  --color-danger: #f6511d;
+  --color-success: #06a77d;
+  --color-light-background: #151e3f;
+  --color-dark-background: #030027;
+
+  --toastify-color-dark: var(--color-dark-background);
+  --toastify-color-progress-info: var(--color-secondary);
 }
 
 canvas {

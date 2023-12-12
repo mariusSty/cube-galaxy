@@ -79,7 +79,7 @@ export default function Home() {
 
   return (
     <main
-      className={`w-full h-full bg-[#030027] ${rubik.className}`}
+      className={`w-full h-full bg-darkBackground ${rubik.className}`}
       onContextMenu={(e) => e.preventDefault()}
     >
       <AppTemplate
