@@ -24,6 +24,10 @@ export default function useBreakPoints() {
     windowWidth,
     isGreaterThan,
     isLowerThan,
-    isSmallScreen: isLowerThan(641),
+    isVerySmallScreen: isLowerThan(640),
+    isSmallScreen: isGreaterThan(639) && isLowerThan(768),
+    isMediumScreen: isGreaterThan(767) && isLowerThan(1024),
+    isLargeScreen: isGreaterThan(1023) && isLowerThan(1280),
+    isXlScreen: isGreaterThan(1279),
   };
 }

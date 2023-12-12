@@ -13,24 +13,36 @@ export default function Tr({
   children = [],
   renderLastItem,
 }: TrProps) {
-  const { isSmallScreen } = useBreakPoints();
+  const { isVerySmallScreen, isMediumScreen, isLargeScreen } = useBreakPoints();
 
-  const contentToDisplay = isSmallScreen
-    ? children.slice(0, 4)
-    : children.slice();
+  let contentToDisplay, gridClass, lastTdClass;
+  if (isVerySmallScreen) {
+    contentToDisplay = children.slice(0, 4);
+    gridClass = "grid-cols-5";
+    lastTdClass = "col-start-5";
+  } else if (isMediumScreen) {
+    contentToDisplay = children.slice(0, 2);
+    gridClass = "grid-cols-3";
+    lastTdClass = "col-start-3";
+  } else if (isLargeScreen) {
+    contentToDisplay = children.slice(0, 4);
+    gridClass = "grid-cols-5";
+    lastTdClass = "col-start-5";
+  } else {
+    contentToDisplay = children.slice();
+    gridClass = "grid-cols-7";
+    lastTdClass = "col-start-7";
+  }
+
   const content = contentToDisplay.map((td, i) => <Td key={i}>{td}</Td>);
 
   return (
     <div
-      className={`grid ${isSmallScreen ? "grid-cols-5" : "grid-cols-7"} 
+      className={`grid ${gridClass} 
       ${isThead ? `border-b-2 border-white` : `border-0`}`}
     >
       {content}
-      {renderLastItem && (
-        <Td style={isSmallScreen ? "col-start-5" : "col-start-7"}>
-          {renderLastItem()}
-        </Td>
-      )}
+      {renderLastItem && <Td style={lastTdClass}>{renderLastItem()}</Td>}
     </div>
   );
 }

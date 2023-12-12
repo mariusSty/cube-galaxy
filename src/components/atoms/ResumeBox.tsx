@@ -9,7 +9,7 @@ export default function ResumeBox({ children, isColspan }: ResumeBoxProps) {
   const colspan = isColspan ? "col-span-3" : "col-span-1";
   return (
     <div
-      className={`flex flex-col justify-center items-center gap-2 p-4 ${colspan} rounded-2xl bg-[#151E3F]`}
+      className={`flex flex-col justify-center items-center gap-2 md:p-2 lg:p-4 ${colspan} rounded-2xl bg-[#151E3F]`}
     >
       {children}
     </div>

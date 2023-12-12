@@ -28,7 +28,8 @@ export default function TimeResult({
   markAsDNF,
   markAsPlusTwo,
 }: TimeResultProps) {
-  const { isSmallScreen } = useBreakPoints();
+  const { isSmallScreen, isXlScreen } = useBreakPoints();
+
   const {
     id,
     position,
@@ -49,19 +50,19 @@ export default function TimeResult({
     <Tr
       key={id}
       renderLastItem={() =>
-        isSmallScreen ? (
-          <IconButton
-            iconName="navigate_next"
-            iconColor="white"
-            buttonColor="blue"
-            handleClick={() => handleDetails(id)}
-          />
-        ) : (
+        isSmallScreen || isXlScreen ? (
           <IconButton
             iconName="remove"
             iconColor="blue"
             buttonColor="orange"
             handleClick={() => removeTime(id)}
+          />
+        ) : (
+          <IconButton
+            iconName="navigate_next"
+            iconColor="white"
+            buttonColor="blue"
+            handleClick={() => handleDetails(id)}
           />
         )
       }

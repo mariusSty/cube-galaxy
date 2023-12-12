@@ -1,6 +1,7 @@
 "use client";
 
 import NumberText from "@/components/atoms/NumberText";
+import SimpleText from "@/components/atoms/SimpleText";
 import CloseToastButton from "@/components/molecules/CloseToastButton";
 import CurrentResult from "@/components/molecules/CurrentResult";
 import Experience from "@/components/molecules/Experience";
@@ -162,7 +163,13 @@ export default function Home() {
       </div>
 
       <div className="hidden md:grid grid-cols-3 grid-rows-3 h-full w-full">
-        <div className="row-start-1 row-end-3 col-start-2 col-end-4">
+        <div
+          className={`${
+            isTimerFocused
+              ? "fixed w-full h-full z-10"
+              : "row-start-1 row-end-3 col-start-2 col-end-4"
+          }`}
+        >
           <Timer
             readyTimer={readyTimer}
             startTimer={startTimer}
@@ -179,6 +186,13 @@ export default function Home() {
                     isBetterThanPrevious={isBetterThanPrevious}
                     value={timesDiff}
                   />
+                )}
+                {!isTimerFocused && (
+                  <div className="flex gap-2">
+                    {currentScramble.map((move, i) => (
+                      <SimpleText key={i}>{move}</SimpleText>
+                    ))}
+                  </div>
                 )}
               </>
             )}
