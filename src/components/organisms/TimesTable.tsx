@@ -7,14 +7,12 @@ type TimesTableProps = {
   results: Result[];
   markAsDNF: (id: string) => void;
   markAsPlusTwo: (id: string) => void;
-  removeTime: (id: string) => void;
   removeAllTimes: () => void;
   setTimeFocused: (id: string) => void;
 };
 
 export default function TimesTable({
   results,
-  removeTime,
   removeAllTimes,
   markAsDNF,
   markAsPlusTwo,

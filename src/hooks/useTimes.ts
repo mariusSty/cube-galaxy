@@ -1,15 +1,6 @@
+import { Time } from "@/types/timer";
 import { useReducer } from "react";
 import { v4 as uuidv4 } from "uuid";
-
-export type Time = {
-  id: string;
-  value: number;
-  scramble: string[];
-  isDNF: boolean;
-  isPlusTwo: boolean;
-  createdAt: number;
-  updatedAt: number;
-};
 
 type TimeReducerAction = {
   type: string;

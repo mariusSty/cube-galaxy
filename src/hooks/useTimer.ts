@@ -1,12 +1,6 @@
+import { TimerState } from "@/types/timer";
 import formatTimer from "@/utils/formatTime";
 import { useCallback, useEffect, useRef, useState } from "react";
-
-export enum TimerState {
-  Ready = "READY",
-  Start = "START",
-  Stopping = "STOPPING",
-  Stop = "STOP",
-}
 
 type UseTimerProps = {
   handleReady?: (params?: any) => void;

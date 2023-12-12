@@ -1,4 +1,4 @@
-import { TimerState } from "@/hooks/useTimer";
+import { TimerState } from "@/types/timer";
 import { SyntheticEvent, useCallback, useEffect } from "react";
 
 type TimerProps = {

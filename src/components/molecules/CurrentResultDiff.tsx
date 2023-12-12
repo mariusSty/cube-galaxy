@@ -14,7 +14,7 @@ export default function CurrentResultDiff({
   return (
     <div className="flex align-middle justify-center gap-2">
       <NumberText
-        size="small"
+        size="big"
         color={isBetterThanPrevious ? "success" : "danger"}
       >
         {isBetterThanPrevious

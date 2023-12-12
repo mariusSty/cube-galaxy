@@ -53,7 +53,7 @@ export default function TimeRow({
         />
       )}
     >
-      <SimpleText>{`${position}`}</SimpleText>
+      <SimpleText size="small">{`${position}`}</SimpleText>
       <HighlightText
         isHighlight={isBestTime}
         text={formatTimer(time, isDNF)}

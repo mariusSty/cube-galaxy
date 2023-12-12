@@ -1,10 +1,11 @@
-import SimpleText, { Theme } from "../atoms/SimpleText";
+import { ColorsTheme } from "@/types/theme";
+import SimpleText from "../atoms/SimpleText";
 
 type HighlightTextProps = {
   text: string;
   isHighlight: boolean;
-  defaultColor?: Theme;
-  highlightColor?: Theme;
+  defaultColor?: ColorsTheme;
+  highlightColor?: ColorsTheme;
 };
 
 export default function HighlightText({
@@ -15,6 +16,7 @@ export default function HighlightText({
 }: HighlightTextProps) {
   return (
     <SimpleText
+      size="small"
       color={isHighlight ? highlightColor : defaultColor}
       underline={isHighlight}
     >

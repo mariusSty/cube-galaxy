@@ -7,7 +7,7 @@ type BoxProps = {
 export default function Box({ children }: BoxProps) {
   return (
     <div
-      className={`flex flex-col justify-center items-center gap-2 md:p-2 lg:p-4 rounded-2xl bg-lightBackground`}
+      className={`flex flex-col justify-center items-center gap-2 md:p-1 lg:p-2 rounded-2xl bg-lightBackground`}
     >
       {children}
     </div>

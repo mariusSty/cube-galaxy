@@ -1,10 +1,10 @@
+import { ColorsTheme, backgroundColors } from "@/types/theme";
 import { MouseEvent, ReactNode } from "react";
-import { Theme, backgroundColors } from "./SimpleText";
 
 type ButtonProps = {
   handleClick: () => void;
   children: ReactNode;
-  color?: Theme;
+  color?: ColorsTheme;
 };
 
 export default function Button({

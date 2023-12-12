@@ -33,27 +33,27 @@ export default function ResumePanel({ times, results }: ResumePanelProps) {
     <div className="grid grid-cols-3 gap-2 sm:gap-8 md:gap-2 h-full">
       <Box>
         <SimpleText size="small">Solve</SimpleText>
-        <SimpleText size="big">{`${times.length}`}</SimpleText>
+        <SimpleText>{`${times.length}`}</SimpleText>
       </Box>
       <Box>
         <SimpleText size="small">Best</SimpleText>
-        <SimpleText size="big">{formatTimer(best)}</SimpleText>
+        <SimpleText>{formatTimer(best)}</SimpleText>
       </Box>
       <Box>
         <SimpleText size="small">Worst</SimpleText>
-        <SimpleText size="big">{formatTimer(worst)}</SimpleText>
+        <SimpleText>{formatTimer(worst)}</SimpleText>
       </Box>
       <Box>
         <SimpleText size="small">Average</SimpleText>
-        <SimpleText size="big">{formatTimer(average)}</SimpleText>
+        <SimpleText>{formatTimer(average)}</SimpleText>
       </Box>
       <Box>
         <SimpleText size="small">Best ao5</SimpleText>
-        <SimpleText size="big">{formatTimer(bestAo5)}</SimpleText>
+        <SimpleText>{formatTimer(bestAo5)}</SimpleText>
       </Box>
       <Box>
         <SimpleText size="small">Best ao12</SimpleText>
-        <SimpleText size="big">{formatTimer(bestAo12)}</SimpleText>
+        <SimpleText>{formatTimer(bestAo12)}</SimpleText>
       </Box>
     </div>
   );

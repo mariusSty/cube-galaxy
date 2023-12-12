@@ -35,7 +35,7 @@ export default function TimerInformations({
 
   return (
     <>
-      <NumberText size="big" color="secondary">
+      <NumberText size="veryBig" color="secondary">
         {isTimerFocused ? timerValue : currentResult}
       </NumberText>
       {!isTimerFocused && timesDiff && (

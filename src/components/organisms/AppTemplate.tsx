@@ -26,7 +26,7 @@ export default function AppTemplate({
 
   if (isMediumScreen || isLargeScreen || isXlScreen) {
     return (
-      <div className="grid grid-cols-3 grid-rows-3 gap-8 p-8 h-full w-full">
+      <div className="grid grid-cols-3 grid-rows-3 gap-6 p-8 h-full w-full">
         <div className="row-start-1 row-end-3 col-start-2 col-end-4">
           {renderTimerPanel()}
         </div>

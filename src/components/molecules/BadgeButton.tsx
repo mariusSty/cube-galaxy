@@ -15,7 +15,9 @@ export default function BadgeButton({
   return (
     <Button handleClick={handleClick} color={isActive ? "danger" : "success"}>
       <span className="my-1 mx-2">
-        <SimpleText color="lightBackground">{text}</SimpleText>
+        <SimpleText size="small" color="lightBackground">
+          {text}
+        </SimpleText>
       </span>
     </Button>
   );

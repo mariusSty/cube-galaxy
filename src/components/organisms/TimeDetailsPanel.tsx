@@ -66,10 +66,7 @@ export default function TimeDetailsPanel({
 
       <div className="flex flex-col gap-2 justify-center align-middle h-full">
         <div className="flex justify-center align-middle">
-          <SimpleText
-            size="big"
-            color={isPlusTwo || isDNF ? "danger" : "success"}
-          >
+          <SimpleText color={isPlusTwo || isDNF ? "danger" : "success"}>
             {formatTimer(time, isDNF)}
           </SimpleText>
         </div>

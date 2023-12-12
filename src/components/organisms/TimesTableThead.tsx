@@ -21,10 +21,10 @@ export default function TimesTableThead({
         />
       )}
     >
-      <SimpleText>N°</SimpleText>
-      <SimpleText>Time</SimpleText>
-      <SimpleText>ao5</SimpleText>
-      <SimpleText>ao12</SimpleText>
+      <SimpleText size="small">N°</SimpleText>
+      <SimpleText size="small">Time</SimpleText>
+      <SimpleText size="small">ao5</SimpleText>
+      <SimpleText size="small">ao12</SimpleText>
     </Tr>
   );
 }

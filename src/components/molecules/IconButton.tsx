@@ -1,11 +1,11 @@
+import { ColorsTheme, textColors } from "@/types/theme";
 import Button from "../atoms/Button";
 import Icon from "../atoms/Icon";
-import { Theme, colors } from "../atoms/SimpleText";
 
 type IconButtonProps = {
   iconName: string;
-  iconColor?: Theme;
-  buttonColor?: Theme;
+  iconColor?: ColorsTheme;
+  buttonColor?: ColorsTheme;
   handleClick: () => void;
 };
 
@@ -19,7 +19,7 @@ export default function IconButton({
     <Button handleClick={handleClick} color={buttonColor}>
       <Icon
         name={iconName}
-        style={`m-1 ${iconColor ? colors.get(iconColor) : "text-primary"}`}
+        style={`m-1 ${iconColor ? textColors.get(iconColor) : "text-primary"}`}
       />
     </Button>
   );

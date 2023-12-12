@@ -37,7 +37,6 @@ export default function TimesPanel({
             results={results}
             markAsDNF={markAsDNF}
             markAsPlusTwo={markAsPlusTwo}
-            removeTime={removeTime}
             removeAllTimes={removeAllTimes}
             setTimeFocused={updateTimeFocused}
           />

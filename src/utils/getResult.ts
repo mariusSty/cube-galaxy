@@ -1,13 +1,4 @@
-import { Time } from "@/hooks/useTimes";
-
-export type Result = Omit<Time, "value" | "createdAt" | "updatedAt"> & {
-  time: number;
-  position: number;
-  ao5: number | null;
-  ao12: number | null;
-  isAo5DNF: boolean;
-  isAo12DNF: boolean;
-};
+import { Result, Time } from "@/types/timer";
 
 export function getResult(times: Time[]): Result[] {
   return [...times]
