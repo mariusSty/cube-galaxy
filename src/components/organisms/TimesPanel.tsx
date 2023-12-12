@@ -1,4 +1,4 @@
-import { Result } from "@/utils/getResult";
+import { Result } from "@/types/timer";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import TimeDetailsPanel from "./TimeDetailsPanel";

@@ -1,4 +1,4 @@
-import { Result } from "@/utils/getResult";
+import { Result } from "@/types/timer";
 import { useSwiper } from "swiper/react";
 import TimeRow from "./TimeRow";
 import TimesTableThead from "./TimesTableThead";

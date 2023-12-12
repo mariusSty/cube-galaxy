@@ -1,5 +1,5 @@
+import { Result } from "@/types/timer";
 import formatTimer from "@/utils/formatTime";
-import { Result } from "@/utils/getResult";
 import SimpleText from "../atoms/SimpleText";
 
 type AverageOfProps = {

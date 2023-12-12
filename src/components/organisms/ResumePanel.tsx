@@ -1,6 +1,6 @@
-import { Time } from "@/hooks/useTimes";
+import { Result, Time } from "@/types/timer";
 import formatTimer from "@/utils/formatTime";
-import { Result, getAverage, getBest, getWorst } from "@/utils/getResult";
+import { getAverage, getBest, getWorst } from "@/utils/getResult";
 import Box from "../atoms/Box";
 import SimpleText from "../atoms/SimpleText";
 
