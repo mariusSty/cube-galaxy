@@ -48,7 +48,7 @@ export default function Home() {
   );
 
   const {
-    currentResult,
+    timerValue,
     timerState,
     readyTimer,
     startTimer,
@@ -71,6 +71,7 @@ export default function Home() {
 
   const results = getResult(times);
   const isTimerFocused = timerState !== TimerState.Stop;
+  const lastResult = results[0];
 
   useEffect(() => {
     handleGenerateScramble();
@@ -102,9 +103,10 @@ export default function Home() {
             renderTimerDigit={() => (
               <TimerInformations
                 isTimerFocused={isTimerFocused}
-                currentResult={currentResult}
+                timerValue={timerValue}
                 currentScramble={currentScramble}
                 times={times}
+                lastResult={lastResult}
               />
             )}
           />

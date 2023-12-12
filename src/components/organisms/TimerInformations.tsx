@@ -1,21 +1,25 @@
 import { Time } from "@/hooks/useTimes";
+import formatTimer from "@/utils/formatTime";
+import { Result } from "@/utils/getResult";
 import NumberText from "../atoms/NumberText";
-import CurrentAverageOf from "../molecules/CurrentAverageOf";
+import AverageOf from "../molecules/AverageOf";
 import CurrentResultDiff from "../molecules/CurrentResultDiff";
-import CurrentScramble from "../molecules/CurrentScramble";
+import Scramble from "../molecules/Scramble";
 
 type TimerInformationProps = {
-  currentResult: string;
+  timerValue: string;
   currentScramble: string[];
   times: Time[];
   isTimerFocused: boolean;
+  lastResult: Result;
 };
 
 export default function TimerInformations({
-  currentResult,
+  timerValue,
   currentScramble,
   times,
   isTimerFocused,
+  lastResult,
 }: TimerInformationProps) {
   let timesDiff: number | null = null;
   if (times.length > 1) {
@@ -25,11 +29,14 @@ export default function TimerInformations({
     timesDiff = prelast.value - last.value;
   }
   const isBetterThanPrevious = !!timesDiff && timesDiff < 0;
+  const currentResult = lastResult
+    ? formatTimer(lastResult.time, lastResult.isDNF)
+    : timerValue;
 
   return (
     <>
       <NumberText size="big" color="yellow">
-        {currentResult}
+        {isTimerFocused ? timerValue : currentResult}
       </NumberText>
       {!isTimerFocused && timesDiff && (
         <CurrentResultDiff
@@ -39,8 +46,8 @@ export default function TimerInformations({
       )}
       {!isTimerFocused && (
         <div className="flex flex-col gap-2">
-          <CurrentScramble currentScramble={currentScramble} />
-          <CurrentAverageOf times={times} />
+          <Scramble scramble={currentScramble} />
+          <AverageOf currentResult={lastResult} />
         </div>
       )}
     </>

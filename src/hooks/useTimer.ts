@@ -27,6 +27,7 @@ export default function useTimer({
   const readyTimer = useCallback(
     function () {
       setTimerState(TimerState.Ready);
+      setStartTime(null);
       handleReady && handleReady();
     },
     [handleReady]
@@ -74,7 +75,7 @@ export default function useTimer({
   }, [timerState, runTimer]);
 
   return {
-    currentResult: formatTimer(now && startTime ? now - startTime : 0),
+    timerValue: formatTimer(now && startTime ? now - startTime : 0),
     timerState,
     readyTimer,
     startTimer,

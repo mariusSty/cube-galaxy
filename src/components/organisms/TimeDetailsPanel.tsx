@@ -2,8 +2,10 @@ import formatTimer from "@/utils/formatTime";
 import { Result } from "@/utils/getResult";
 import { useSwiper } from "swiper/react";
 import SimpleText from "../atoms/SimpleText";
+import AverageOf from "../molecules/AverageOf";
 import BadgeButton from "../molecules/BadgeButton";
 import IconButton from "../molecules/IconButton";
+import Scramble from "../molecules/Scramble";
 
 type TimeDetailsPanelProps = {
   results: Result[];
@@ -28,17 +30,7 @@ export default function TimeDetailsPanel({
 
   const resultFocused = results.find((result) => result.id === focusedId);
   if (!resultFocused) return;
-  const {
-    id,
-    ao5,
-    ao12,
-    scramble,
-    time,
-    isDNF,
-    isPlusTwo,
-    isAo12DNF,
-    isAo5DNF,
-  } = resultFocused;
+  const { id, scramble, time, isDNF, isPlusTwo } = resultFocused;
 
   return (
     <div className="flex flex-col justify-between w-full h-full">
@@ -81,27 +73,10 @@ export default function TimeDetailsPanel({
             {formatTimer(time, isDNF)}
           </SimpleText>
         </div>
-        <div className="flex flex-wrap gap-2">
-          {scramble.map((move, index) => (
-            <SimpleText key={index} size="small">
-              {move}
-            </SimpleText>
-          ))}
-        </div>
+        <Scramble scramble={scramble} />
       </div>
 
-      <div className="flex flex-wrap justify-center align-middle gap-4 sm:gap-8">
-        <div className="rounded-2xl p-2 sm:p-4 ">
-          <SimpleText size="big" color="yellow">
-            {`ao5 : ${formatTimer(ao5, isAo5DNF)}`}
-          </SimpleText>
-        </div>
-        <div className="rounded-2xl p-2 sm:p-4 ">
-          <SimpleText size="big" color="yellow">
-            {`ao12 : ${formatTimer(ao12, isAo12DNF)}`}
-          </SimpleText>
-        </div>
-      </div>
+      <AverageOf currentResult={resultFocused} />
     </div>
   );
 }
