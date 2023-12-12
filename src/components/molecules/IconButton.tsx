@@ -1,4 +1,4 @@
-import { ColorsTheme, textColors } from "@/types/theme";
+import { ColorsTheme } from "@/types/theme";
 import Button from "../atoms/Button";
 import Icon from "../atoms/Icon";
 
@@ -8,6 +8,15 @@ type IconButtonProps = {
   buttonColor?: ColorsTheme;
   handleClick: () => void;
 };
+
+const textColors = new Map<ColorsTheme, string>([
+  ["primary", "text-primary"],
+  ["secondary", "text-secondary"],
+  ["danger", "text-danger"],
+  ["success", "text-success"],
+  ["lightBackground", "text-lightBackground"],
+  ["darkBackground", "text-darkBackground"],
+]);
 
 export default function IconButton({
   iconName,

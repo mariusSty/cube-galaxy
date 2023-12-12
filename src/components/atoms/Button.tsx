@@ -1,4 +1,4 @@
-import { ColorsTheme, backgroundColors } from "@/types/theme";
+import { ColorsTheme } from "@/types/theme";
 import { MouseEvent, ReactNode } from "react";
 
 type ButtonProps = {
@@ -6,6 +6,15 @@ type ButtonProps = {
   children: ReactNode;
   color?: ColorsTheme;
 };
+
+const backgroundColors = new Map<ColorsTheme, string>([
+  ["primary", "bg-primary"],
+  ["secondary", "bg-secondary"],
+  ["danger", "bg-danger"],
+  ["success", "bg-success"],
+  ["lightBackground", "bg-lightBackground"],
+  ["darkBackground", "bg-darkBackground"],
+]);
 
 export default function Button({
   handleClick,

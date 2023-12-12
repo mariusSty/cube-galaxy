@@ -1,6 +1,5 @@
-import { Time } from "@/hooks/useTimes";
+import { Result, Time } from "@/types/timer";
 import formatTimer from "@/utils/formatTime";
-import { Result } from "@/utils/getResult";
 import NumberText from "../atoms/NumberText";
 import AverageOf from "../molecules/AverageOf";
 import CurrentResultDiff from "../molecules/CurrentResultDiff";
