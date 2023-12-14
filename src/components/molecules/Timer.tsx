@@ -97,7 +97,12 @@ export default function Timer({
       onTouchEnd={(e) => handleTimer(GestureType.Up, e)}
       onMouseDown={(e) => handleTimer(GestureType.Down, e, true)}
       onMouseUp={(e) => handleTimer(GestureType.Up, e, true)}
-      className={`flex flex-col justify-center items-center h-full cursor-pointer gap-2 p-8
+      className={`flex flex-col justify-center items-center h-full cursor-pointer gap-2 p-8 
+      ${
+        timerState === TimerState.Stop
+          ? "hover:brightness-110 transition-all duration-300"
+          : ""
+      }
       ${
         timerState !== TimerState.Stop
           ? "absolute w-full top-0 right-0 z-10"

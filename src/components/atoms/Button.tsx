@@ -29,9 +29,8 @@ export default function Button({
   return (
     <button
       onClick={handleButtonClick}
-      className={`flex items-center justify-center outline-none rounded-xl pointer-events-auto ${backgroundColors.get(
-        color
-      )}`}
+      className={`flex items-center justify-center outline-none rounded-xl pointer-events-auto hover:opacity-75 transition-all duration-300
+       ${backgroundColors.get(color)}`}
     >
       {children}
     </button>
