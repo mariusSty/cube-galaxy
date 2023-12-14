@@ -1,5 +1,5 @@
+import { getPositions } from "@/utils/getPositions";
 import { movements3x3 } from "@/utils/movements";
-import { getPositions } from "@/utils/positions";
 import { ContactShadows, OrbitControls } from "@react-three/drei";
 import { useEffect, useMemo, useRef } from "react";
 import { Group } from "three";
